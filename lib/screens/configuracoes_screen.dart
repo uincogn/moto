@@ -47,11 +47,10 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
       await _db.setCategoriasGastos(_categoriasGastos);
       _novaCategoria.clear();
       setState(() {});
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Categoria adicionada com sucesso!')),
-        );
-      }
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Categoria adicionada com sucesso!')),
+      );
     }
   }
 
@@ -59,11 +58,10 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
     _categoriasGastos.remove(categoria);
     await _db.setCategoriasGastos(_categoriasGastos);
     setState(() {});
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Categoria removida com sucesso!')),
-      );
-    }
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Categoria removida com sucesso!')),
+    );
   }
 
   Future<void> _adicionarTipo() async {
@@ -72,11 +70,10 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
       await _db.setTiposManutencao(_tiposManutencao);
       _novoTipo.clear();
       setState(() {});
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Tipo de manutenção adicionado com sucesso!')),
-        );
-      }
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Tipo de manutenção adicionado com sucesso!')),
+      );
     }
   }
 
@@ -84,11 +81,10 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
     _tiposManutencao.remove(tipo);
     await _db.setTiposManutencao(_tiposManutencao);
     setState(() {});
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Tipo removido com sucesso!')),
-      );
-    }
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Tipo removido com sucesso!')),
+    );
   }
 
   Future<void> _exportarDados() async {
@@ -116,11 +112,10 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
         text: 'Backup dos dados do Motouber',
       );
     } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao exportar dados: $e')),
-        );
-      }
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao exportar dados: $e')),
+      );
     }
   }
 
@@ -440,17 +435,15 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
       // Aqui você implementaria a limpeza do banco de dados
       // Por exemplo, deletar todas as tabelas e recriar
       
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Todos os dados foram removidos!')),
-        );
-      }
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Todos os dados foram removidos!')),
+      );
     } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao limpar dados: $e')),
-        );
-      }
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao limpar dados: $e')),
+      );
     }
   }
 }

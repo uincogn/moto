@@ -70,11 +70,10 @@ class _GastosScreenState extends State<GastosScreen> with SingleTickerProviderSt
       _clearForm();
       _loadGastos();
       
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Gasto salvo com sucesso!')),
-        );
-      }
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Gasto salvo com sucesso!')),
+      );
     }
   }
 
@@ -90,11 +89,10 @@ class _GastosScreenState extends State<GastosScreen> with SingleTickerProviderSt
   Future<void> _deleteGasto(int id) async {
     await _db.deleteGasto(id);
     _loadGastos();
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Gasto excluído com sucesso!')),
-      );
-    }
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Gasto excluído com sucesso!')),
+    );
   }
 
   @override

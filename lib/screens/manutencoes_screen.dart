@@ -73,11 +73,10 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
       _clearForm();
       _loadManutencoes();
       
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Manutenção salva com sucesso!')),
-        );
-      }
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Manutenção salva com sucesso!')),
+      );
     }
   }
 
@@ -94,11 +93,10 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
   Future<void> _deleteManutencao(int id) async {
     await _db.deleteManutencao(id);
     _loadManutencoes();
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Manutenção excluída com sucesso!')),
-      );
-    }
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Manutenção excluída com sucesso!')),
+    );
   }
 
   double _calcularProximaManutencao(String tipo, double kmAtual) {

@@ -172,13 +172,15 @@ flutter build apk --release
 - ✅ Documentação completa atualizada
 - ✅ Scripts de validação criados
 - ✅ Correção de erros críticos de código (Flutter 3.10+):
-  - ✅ BuildContext usage após await corrigido com if (context.mounted)
+  - ✅ BuildContext usage após await corrigido com if (!context.mounted) return;
   - ✅ withOpacity() deprecado substituído por withAlpha()
   - ✅ Otimização de const em listas imutáveis
-  - ✅ Validação de context.mounted em todos os SnackBar
+  - ✅ Validação de context.mounted em todos os SnackBar (padrão early return)
   - ✅ Proteção async adequada para _clearAllData e _exportarDados
   - ✅ Arquivos afetados: todas as screens principais
   - ✅ Compatibilidade garantida com Flutter Analyzer 2025
+  - ✅ analysis_options.yaml configurado para tratar context usage como warning
+  - ✅ Padrão early return para melhor reconhecimento do analyzer
 
 ### 2025-01-13
 - ✅ Reescrita completa em Flutter/Dart

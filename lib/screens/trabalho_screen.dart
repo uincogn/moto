@@ -67,11 +67,10 @@ class _TrabalhoScreenState extends State<TrabalhoScreen> with SingleTickerProvid
       _clearForm();
       _loadTrabalhos();
       
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Registro salvo com sucesso!')),
-        );
-      }
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Registro salvo com sucesso!')),
+      );
     }
   }
 
@@ -87,11 +86,10 @@ class _TrabalhoScreenState extends State<TrabalhoScreen> with SingleTickerProvid
   Future<void> _deleteTrabalho(int id) async {
     await _db.deleteTrabalho(id);
     _loadTrabalhos();
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Registro excluído com sucesso!')),
-      );
-    }
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Registro excluído com sucesso!')),
+    );
   }
 
   @override
