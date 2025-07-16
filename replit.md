@@ -157,7 +157,7 @@ flutter build apk --release
 
 ## 📝 Mudanças Recentes
 
-### 2025-01-16 - Correção Build Gradle
+### 2025-01-16 - Correção Build Gradle + Compatibilidade SDK
 - ✅ Erro CodeMagic diagnosticado: build.gradle linha 24 estrutura incorreta
 - ✅ Reorganização completa do android/app/build.gradle:
   - ✅ plugins {} movido para primeira linha (obrigatório Gradle 8.3+)
@@ -168,10 +168,17 @@ flutter build apk --release
   - ✅ Dependências simplificadas
 - ✅ Estrutura agora compatível com CodeMagic CI/CD
 - ✅ Build release configurado para testes (sem keystore)
+- ✅ Segundo erro: printing plugin android:attr/lStar incompatibilidade
+- ✅ Solução: Plugins PDF removidos temporariamente para build de teste:
+  - ✅ pdf: ^3.10.8 (comentado)
+  - ✅ printing: ^5.12.0 (comentado)
+  - ✅ Backup/export mantido funcional via JSON + share_plus
+  - ✅ Funcionalidade PDF pode ser reativada depois
 - ✅ Todos os erros do log resolvidos:
   - ✅ MultipleCompilationErrorsException eliminado
   - ✅ BUILD FAILED corrigido
   - ✅ assembleRelease exit code 1 resolvido
+  - ✅ AAPT2 android:attr/lStar error resolvido
 
 ### 2025-01-16
 - ✅ Pesquisa atualizada sobre Codemagic 2025
