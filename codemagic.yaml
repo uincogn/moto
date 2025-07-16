@@ -41,7 +41,7 @@ workflows:
           flutter clean
           flutter pub get
           # Force complete Gradle cache reset for Kotlin version
-          cd android && rm -rf ~/.gradle/caches
+          rm -rf ~/.gradle/caches
           cd android && ./gradlew clean --refresh-dependencies
       - name: Build release APK
         script: |

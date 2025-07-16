@@ -220,6 +220,13 @@ flutter build apk --release
   - ✅ **Ordem correta:** flutter clean → cache reset → gradle clean
 - 🎯 **BUILD #9:** Cache Kotlin 1.7.10 será completamente removido
 
+### 2025-01-16 - Correção Crítica: Diretório Android Path
+- ❌ **BUILD #9 ERRO:** `/var/folders/.../build_script: line 7: cd: android: No such directory`
+- 🔍 **ROOT CAUSE:** Script executando `cd android` no diretório errado
+- ✅ **CORREÇÃO:** Removido primeiro `cd android` antes do `rm -rf ~/.gradle/caches`
+- ✅ **ESTRATÉGIA:** Cache reset no diretório raiz, depois cd android para gradlew
+- 🎯 **BUILD #10:** Path corrigido para CodeMagic working directory
+
 ### 2025-01-16 - Correção Build Gradle + Compatibilidade SDK
 - ✅ Erro CodeMagic diagnosticado: build.gradle linha 24 estrutura incorreta
 - ✅ Reorganização completa do android/app/build.gradle:
