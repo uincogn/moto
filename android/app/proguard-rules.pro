@@ -28,9 +28,7 @@
 ## Share plus
 -keep class dev.fluttercommunity.plus.share.** { *; }
 
-## PDF
--keep class printing.** { *; }
--keep class pdf.** { *; }
+
 
 ## Generic rules
 -dontwarn io.flutter.embedding.**

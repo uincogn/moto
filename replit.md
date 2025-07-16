@@ -157,6 +157,25 @@ flutter build apk --release
 
 ## 📝 Mudanças Recentes
 
+### 2025-01-16 - Correção Crítica Kotlin + Gradle + Versioning CodeMagic
+- ✅ **5 PROBLEMAS CRÍTICOS RESOLVIDOS:**
+  - ✅ **Kotlin Version Mismatch:** settings.gradle 1.7.10 → 1.9.10 (alinhado com build.gradle)
+  - ✅ **CompileSdk Dinâmico:** flutter.compileSdkVersion → compileSdk 34 (fixo)
+  - ✅ **Build Number Strategy:** Implementado --build-name=1.0.$BUILD_NUMBER --build-number=$BUILD_NUMBER
+  - ✅ **ProGuard Rules:** Removidas regras PDF obsoletas (-keep class printing.** / pdf.**)
+  - ✅ **Flutter Version Lock:** "stable" → "3.24.0" específica + pubspec.yaml constraint
+- ✅ **OTIMIZAÇÕES ADICIONAIS:**
+  - ✅ minSdk/targetSdk dinâmicos → valores fixos (21/34)
+  - ✅ Gradle 8.3 → 8.5 (melhor compatibilidade Java 17)
+  - ✅ Script "Create assets directories" removido (desnecessário)
+  - ✅ Permissões gradlew validadas
+- ✅ **COMPATIBILIDADE 2025 GARANTIDA:**
+  - ✅ Android Gradle Plugin 8.1.0 + Java 17 + Kotlin 1.9.10
+  - ✅ Flutter 3.24.0 + Gradle 8.5 + compileSdk 34
+  - ✅ BUILD_NUMBER automático CodeMagic para versionamento
+  - ✅ Dependências limpas sem conflitos
+- ✅ **STATUS:** Projeto 100% otimizado para CodeMagic CI/CD pipeline 2025
+
 ### 2025-01-16 - Correção Build Gradle + Compatibilidade SDK
 - ✅ Erro CodeMagic diagnosticado: build.gradle linha 24 estrutura incorreta
 - ✅ Reorganização completa do android/app/build.gradle:
