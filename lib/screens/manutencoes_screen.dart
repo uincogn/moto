@@ -535,17 +535,17 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
+                children: const [
+                  Text(
                     'Dicas de Manutenção',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 8),
-                  const Text('• Mantenha sempre o óleo em dia'),
-                  const Text('• Verifique os pneus regularmente'),
-                  const Text('• Não negligencie os freios'),
-                  const Text('• Faça revisões preventivas'),
-                  const Text('• Mantenha registros organizados'),
+                  SizedBox(height: 8),
+                  Text('• Mantenha sempre o óleo em dia'),
+                  Text('• Verifique os pneus regularmente'),
+                  Text('• Não negligencie os freios'),
+                  Text('• Faça revisões preventivas'),
+                  Text('• Mantenha registros organizados'),
                 ],
               ),
             ),

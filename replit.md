@@ -181,6 +181,8 @@ flutter build apk --release
   - ✅ Compatibilidade garantida com Flutter Analyzer 2025
   - ✅ analysis_options.yaml configurado para tratar context usage como warning
   - ✅ Padrão early return para melhor reconhecimento do analyzer
+  - ✅ Const optimization: widgets imutáveis marcados com const (linhas 323 e 538)
+  - ✅ Zero warnings/errors: código pronto para Codemagic build
 
 ### 2025-01-13
 - ✅ Reescrita completa em Flutter/Dart
