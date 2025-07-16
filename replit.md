@@ -209,6 +209,17 @@ flutter build apk --release
   - ✅ **Design:** Ícone circular azul/verde com "M" estilizado (Motouber)
 - 🎯 **BUILD #9:** Todos os 3 problemas resolvidos (namespace + ícone + kotlin cache)
 
+### 2025-01-16 - Análise Completa Build #8: Kotlin Cache Root Cause
+- 🔍 **ANÁLISE DETALHADA REVELOU O PROBLEMA REAL:**
+  - ❌ **32 erros "Cannot use Kotlin build script compile avoidance"**
+  - ❌ **Root cause:** Gradle cache persistente usando Kotlin 1.7.10
+  - ❌ **Gradle deprecation warnings** (incompatível com Gradle 9.0)
+- ✅ **SOLUÇÃO RADICAL APLICADA:**
+  - ✅ **Cache reset:** `rm -rf ~/.gradle/caches` (força reconstrução total)
+  - ✅ **Dependencies refresh:** `--refresh-dependencies` (redownload tudo)
+  - ✅ **Ordem correta:** flutter clean → cache reset → gradle clean
+- 🎯 **BUILD #9:** Cache Kotlin 1.7.10 será completamente removido
+
 ### 2025-01-16 - Correção Build Gradle + Compatibilidade SDK
 - ✅ Erro CodeMagic diagnosticado: build.gradle linha 24 estrutura incorreta
 - ✅ Reorganização completa do android/app/build.gradle:
