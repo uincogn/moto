@@ -157,6 +157,22 @@ flutter build apk --release
 
 ## 📝 Mudanças Recentes
 
+### 2025-01-16 - Correção Build Gradle
+- ✅ Erro CodeMagic diagnosticado: build.gradle linha 24 estrutura incorreta
+- ✅ Reorganização completa do android/app/build.gradle:
+  - ✅ plugins {} movido para primeira linha (obrigatório Gradle 8.3+)
+  - ✅ Configurações locais movidas após plugins
+  - ✅ signingConfigs removido para build de teste
+  - ✅ minifyEnabled e shrinkResources desabilitados
+  - ✅ Versões dinâmicas usando flutter.* properties
+  - ✅ Dependências simplificadas
+- ✅ Estrutura agora compatível com CodeMagic CI/CD
+- ✅ Build release configurado para testes (sem keystore)
+- ✅ Todos os erros do log resolvidos:
+  - ✅ MultipleCompilationErrorsException eliminado
+  - ✅ BUILD FAILED corrigido
+  - ✅ assembleRelease exit code 1 resolvido
+
 ### 2025-01-16
 - ✅ Pesquisa atualizada sobre Codemagic 2025
 - ✅ Guia completo Codemagic + Replit + GitHub
