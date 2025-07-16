@@ -186,6 +186,14 @@ flutter build apk --release
   - ✅ Unnecessary const removidos: linhas 362, 364, 383, 385 (configuracoes_screen.dart)
   - ✅ Codigo 100% otimizado para Codemagic CI/CD pipeline
   - ✅ Teste dummy criado (test/dummy_test.dart) para evitar erro flutter test
+  - ✅ Android embedding v2 configurado completamente:
+    - ✅ MainActivity.kt usando FlutterActivity
+    - ✅ AndroidManifest.xml com flutterEmbedding: 2
+    - ✅ Gradle 8.3 e Android Gradle Plugin 8.1.0
+    - ✅ Kotlin 1.9.10 e SDK 34
+    - ✅ Arquivos gradle.properties e settings.gradle criados
+    - ✅ ProGuard rules configuradas
+    - ✅ Gradle wrapper executável criado
 
 ### 2025-01-13
 - ✅ Reescrita completa em Flutter/Dart

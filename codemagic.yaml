@@ -5,9 +5,15 @@ workflows:
     max_build_duration: 60
     instance_type: mac_mini_m1
     environment:
-      flutter: stable
+      flutter: 3.24.3
       xcode: latest
       cocoapods: default
+      java: 17
+      vars:
+        FLUTTER_EMBEDDING_VERSION: "2"
+        ANDROID_COMPILE_SDK: "34"
+        ANDROID_MIN_SDK: "21"
+        ANDROID_TARGET_SDK: "34"
     triggering:
       events:
         - push
