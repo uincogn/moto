@@ -32,5 +32,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        
+        <!-- Ensure Android Embedding v2 is properly configured -->
+        <meta-data
+            android:name="io.flutter.embedding.android.EnableSplashScreen"
+            android:value="false" />
     </application>
 </manifest>
