@@ -8,6 +8,17 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
+    triggering:
+      events:
+        - push
+        - pull_request
+      branch_patterns:
+        - pattern: 'main'
+          include: true
+        - pattern: 'develop'
+          include: true
+        - pattern: 'feature/*'
+          include: false
     scripts:
       - name: Get Flutter packages
         script: |
@@ -16,6 +27,12 @@ workflows:
         script: |
           mkdir -p assets/images
           mkdir -p assets/icons
+      - name: Flutter analyze
+        script: |
+          flutter analyze
+      - name: Flutter test
+        script: |
+          flutter test
       - name: Clean and build
         script: |
           flutter clean
@@ -26,6 +43,7 @@ workflows:
     artifacts:
       - build/app/outputs/**/*.apk
       - build/app/outputs/**/mapping.txt
+      - build/app/outputs/**/bundle.aab
       - flutter_drive.log
     publishing:
       email:

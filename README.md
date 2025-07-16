@@ -1,3 +1,19 @@
+# 📱 Motouber - Controle Financeiro para Motoristas
+
+Sistema de controle financeiro para motoristas de aplicativo desenvolvido em Flutter/Dart com foco em usabilidade e funcionalidades completas.
+
+## 🎯 Funcionalidades
+
+- **Dashboard Principal**: Métricas do dia e mês
+- **Registro de Trabalho**: Controle de ganhos e horas
+- **Gastos**: Categorização e relatórios  
+- **Manutenções**: Controle e alertas
+- **Relatórios**: Gráficos e análises
+- **Backup/Restore**: Segurança dos dados
+
+## 🏗️ Estrutura do Projeto
+
+```
 motouber/
 ├── lib/
 │   ├── main.dart              # Ponto de entrada
@@ -6,51 +22,53 @@ motouber/
 │   ├── screens/               # Telas do aplicativo
 │   └── theme/                 # Tema personalizado
 ├── android/                   # Configurações Android
+├── assets/                    # Recursos (imagens, ícones)
 ├── codemagic.yaml            # CI/CD Codemagic
-└── build_apk.sh              # Script de build VPS
+├── REPLIT_SETUP.md           # Configuração Replit
+├── CODEMAGIC_GUIDE_2025.md   # Guia CI/CD 2025
+└── REPLIT_GITHUB_INTEGRATION.md  # Integração completa
 ```
 
-## 🚀 Como usar
+## 🚀 Desenvolvimento
 
-### Pré-requisitos
-- Flutter SDK 3.0+
-- Android SDK (para APK)
-- Dart SDK
+### Replit (Recomendado)
+1. **Abra o projeto no Replit**
+2. **Execute para web**: `flutter run --web-port=5000 --web-hostname=0.0.0.0`
+3. **Conecte ao GitHub**: Use o Git integrado
+4. **Push automático**: Commit e push para trigger CI/CD
 
-### Instalação
+### Local
 ```bash
-# Clone o repositório
+# Pré-requisitos
+- Flutter SDK 3.24+
+- Android SDK 34+
+- Dart SDK 3.0+
+
+# Instalação
 git clone https://github.com/SEU-USUARIO/motouber.git
 cd motouber
-
-# Instale as dependências
 flutter pub get
 
-# Execute o app
-flutter run
+# Executar
+flutter run                    # Mobile
+flutter run -d chrome         # Web
 ```
 
-### Build APK
+## 📦 Build APK
+
+### Codemagic CI/CD (Recomendado)
+1. **Conecte ao [Codemagic](https://codemagic.io)**
+2. **Instale GitHub App** e autorize repositório
+3. **Pipeline automático**: Push → Build → APK → Email
+4. **Plano gratuito**: 500 minutos/mês
+
+### Build Local
 ```bash
-# Build para produção
 flutter build apk --release
-
-# APK estará em: build/app/outputs/flutter-apk/app-release.apk
+# APK em: build/app/outputs/flutter-apk/app-release.apk
 ```
 
-## 🎯 Deploy Automatizado
-
-### Codemagic (Recomendado)
-1. Conecte seu repositório ao [Codemagic](https://codemagic.io)
-2. Use o arquivo `codemagic.yaml` já configurado
-3. APK será gerado automaticamente
-
-### VPS Build
+### VPS Build (Alternativa)
 ```bash
-# Configure o ambiente (Ubuntu 22.04)
-chmod +x setup_vps.sh
-./setup_vps.sh
-
-# Build APK
-chmod +x build_apk.sh
-./build_apk.sh
+chmod +x setup_vps.sh && ./setup_vps.sh
+chmod +x build_apk.sh && ./build_apk.sh
