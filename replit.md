@@ -97,6 +97,14 @@ flutter build apk --release
 - Script `build_apk.sh` para compilação
 - Suporte para Vultr VPS Ubuntu 22.04
 
+### CI/CD Pipeline (Recomendado)
+- **Replit**: Desenvolvimento colaborativo
+- **GitHub**: Versionamento e código fonte
+- **Codemagic**: Build automático e CI/CD
+- **Fluxo**: Replit → GitHub → Codemagic → APK
+- **Plano gratuito**: 500 minutos/mês Codemagic
+- **Máquinas**: macOS M2 para builds Android/iOS
+
 ## 🎨 Design e UX
 
 ### Tema Personalizado
@@ -148,6 +156,15 @@ flutter build apk --release
 - Sem acesso à internet desnecessário
 
 ## 📝 Mudanças Recentes
+
+### 2025-01-16
+- ✅ Pesquisa atualizada sobre Codemagic 2025
+- ✅ Guia completo Codemagic + Replit + GitHub
+- ✅ Documentação de compatibilidades 2025
+- ✅ Planos de preços e limitações atualizados
+- ✅ Fluxo de integração Replit → GitHub → Codemagic
+- ✅ Troubleshooting e otimizações
+- ✅ Guias específicos para pipeline CI/CD
 
 ### 2025-01-13
 - ✅ Reescrita completa em Flutter/Dart
