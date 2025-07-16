@@ -199,6 +199,16 @@ flutter build apk --release
 - ✅ **CORREÇÃO:** Package declarado apenas no AndroidManifest.xml
 - 🎯 **PRÓXIMO BUILD (#9):** Deve funcionar perfeitamente
 
+### 2025-01-16 - Correção Dupla: Ícone + Kotlin Cache
+- ❌ **BUILD #8: ANÁLISE COMPLETA REVELOU 2 ERROS:**
+  - ❌ **ERRO #1:** `resource mipmap/ic_launcher not found`
+  - ❌ **ERRO #2:** Kotlin 1.7.10 no cache (deveria ser 1.9.10)
+- ✅ **CORREÇÕES APLICADAS:**
+  - ✅ **Ícones gerados:** mipmap-{mdpi,hdpi,xhdpi,xxhdpi,xxxhdpi}/ic_launcher.png
+  - ✅ **Gradle clean:** `cd android && ./gradlew clean` para limpar cache Kotlin
+  - ✅ **Design:** Ícone circular azul/verde com "M" estilizado (Motouber)
+- 🎯 **BUILD #9:** Todos os 3 problemas resolvidos (namespace + ícone + kotlin cache)
+
 ### 2025-01-16 - Correção Build Gradle + Compatibilidade SDK
 - ✅ Erro CodeMagic diagnosticado: build.gradle linha 24 estrutura incorreta
 - ✅ Reorganização completa do android/app/build.gradle:
