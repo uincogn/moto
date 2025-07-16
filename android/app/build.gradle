@@ -26,9 +26,9 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    namespace "com.motouber.app"
+    namespace 'com.motouber.app'
     compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
+    buildToolsVersion "34.0.0"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -39,10 +39,6 @@ android {
         jvmTarget = '1.8'
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-
     defaultConfig {
         applicationId "com.motouber.app"
         minSdkVersion 21
@@ -50,7 +46,7 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
-        
+
         ndk {
             abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64'
         }
