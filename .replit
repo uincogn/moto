@@ -18,6 +18,14 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
+args = "export PATH=\"$PATH:/opt/flutter/bin\""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "flutter pub get"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
 args = "flutter run --web-port=5000 --web-hostname=0.0.0.0"
 
 [[ports]]
