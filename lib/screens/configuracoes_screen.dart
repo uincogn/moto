@@ -440,13 +440,17 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
       // Aqui você implementaria a limpeza do banco de dados
       // Por exemplo, deletar todas as tabelas e recriar
       
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Todos os dados foram removidos!')),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Todos os dados foram removidos!')),
+        );
+      }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro ao limpar dados: $e')),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao limpar dados: $e')),
+        );
+      }
     }
   }
 }
