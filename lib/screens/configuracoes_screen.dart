@@ -359,9 +359,9 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
             ),
           ),
           
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           
-          const Card(
+          Card(
             child: Padding(
               padding: EdgeInsets.all(16),
               child: Column(
@@ -380,9 +380,9 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
             ),
           ),
           
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           
-          const Card(
+          Card(
             child: Padding(
               padding: EdgeInsets.all(16),
               child: Column(
