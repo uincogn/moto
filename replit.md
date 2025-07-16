@@ -174,11 +174,14 @@ flutter build apk --release
   - ✅ printing: ^5.12.0 (comentado)
   - ✅ Backup/export mantido funcional via JSON + share_plus
   - ✅ Funcionalidade PDF pode ser reativada depois
+- ✅ Terceiro erro: styles.xml malformado linha 2:6
+- ✅ Solução: Arquivo XML recriado sem linha vazia inicial
 - ✅ Todos os erros do log resolvidos:
   - ✅ MultipleCompilationErrorsException eliminado
   - ✅ BUILD FAILED corrigido
   - ✅ assembleRelease exit code 1 resolvido
   - ✅ AAPT2 android:attr/lStar error resolvido
+  - ✅ XML processing instruction error resolvido
 
 ### 2025-01-16
 - ✅ Pesquisa atualizada sobre Codemagic 2025
