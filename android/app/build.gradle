@@ -28,7 +28,6 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace 'com.motouber.app'
     compileSdk 34
     ndkVersion flutter.ndkVersion
 

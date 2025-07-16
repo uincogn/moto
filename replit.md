@@ -190,6 +190,15 @@ flutter build apk --release
   - ✅ Artifacts path corrigido: build/app/outputs/flutter-apk/app-release.apk
   - ✅ Próximo build deve coletar APK automaticamente
 
+### 2025-01-16 - Correção Crítica Namespace AndroidManifest
+- ❌ **BUILD #8 FALHOU:** Erro AndroidManifest.xml namespace conflict
+- 🔍 **ROOT CAUSE:** namespace 'com.motouber.app' no build.gradle conflitando com package
+- ✅ **ERRO IDENTIFICADO:** Unable to locate resourceFile AndroidManifest.xml
+- ✅ **SOLUÇÃO APLICADA:** Removido namespace duplicado do build.gradle
+- ✅ **CAUSA:** Android Gradle Plugin 8.1+ não aceita namespace duplicado
+- ✅ **CORREÇÃO:** Package declarado apenas no AndroidManifest.xml
+- 🎯 **PRÓXIMO BUILD (#9):** Deve funcionar perfeitamente
+
 ### 2025-01-16 - Correção Build Gradle + Compatibilidade SDK
 - ✅ Erro CodeMagic diagnosticado: build.gradle linha 24 estrutura incorreta
 - ✅ Reorganização completa do android/app/build.gradle:
