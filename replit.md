@@ -171,6 +171,12 @@ flutter build apk --release
 - ✅ .gitignore otimizado para Flutter + Replit
 - ✅ Documentação completa atualizada
 - ✅ Scripts de validação criados
+- ✅ Correção de erros críticos de código:
+  - ✅ BuildContext usage após await corrigido
+  - ✅ withOpacity() deprecado substituído por withAlpha()
+  - ✅ Otimização de const em listas imutáveis
+  - ✅ Validação de context.mounted em todos os SnackBar
+  - ✅ Arquivos afetados: todas as screens principais
 
 ### 2025-01-13
 - ✅ Reescrita completa em Flutter/Dart

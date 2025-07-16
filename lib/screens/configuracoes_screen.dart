@@ -47,9 +47,11 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
       await _db.setCategoriasGastos(_categoriasGastos);
       _novaCategoria.clear();
       setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Categoria adicionada com sucesso!')),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Categoria adicionada com sucesso!')),
+        );
+      }
     }
   }
 
@@ -57,9 +59,11 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
     _categoriasGastos.remove(categoria);
     await _db.setCategoriasGastos(_categoriasGastos);
     setState(() {});
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Categoria removida com sucesso!')),
-    );
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Categoria removida com sucesso!')),
+      );
+    }
   }
 
   Future<void> _adicionarTipo() async {
@@ -68,9 +72,11 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
       await _db.setTiposManutencao(_tiposManutencao);
       _novoTipo.clear();
       setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Tipo de manutenção adicionado com sucesso!')),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Tipo de manutenção adicionado com sucesso!')),
+        );
+      }
     }
   }
 
@@ -78,9 +84,11 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
     _tiposManutencao.remove(tipo);
     await _db.setTiposManutencao(_tiposManutencao);
     setState(() {});
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Tipo removido com sucesso!')),
-    );
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Tipo removido com sucesso!')),
+      );
+    }
   }
 
   Future<void> _exportarDados() async {
@@ -108,9 +116,11 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
         text: 'Backup dos dados do Motouber',
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro ao exportar dados: $e')),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao exportar dados: $e')),
+        );
+      }
     }
   }
 
@@ -180,7 +190,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
               return Chip(
                 label: Text(categoria),
                 onDeleted: () => _removerCategoria(categoria),
-                backgroundColor: AppTheme.primaryColor.withOpacity(0.1),
+                backgroundColor: AppTheme.primaryColor.withAlpha((255 * 0.1).toInt()),
               );
             }).toList(),
           ),
@@ -222,7 +232,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
               return Chip(
                 label: Text(tipo),
                 onDeleted: () => _removerTipo(tipo),
-                backgroundColor: AppTheme.warningColor.withOpacity(0.1),
+                backgroundColor: AppTheme.warningColor.withAlpha((255 * 0.1).toInt()),
               );
             }).toList(),
           ),

@@ -73,9 +73,11 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
       _clearForm();
       _loadManutencoes();
       
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Manutenção salva com sucesso!')),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Manutenção salva com sucesso!')),
+        );
+      }
     }
   }
 
@@ -92,9 +94,11 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
   Future<void> _deleteManutencao(int id) async {
     await _db.deleteManutencao(id);
     _loadManutencoes();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Manutenção excluída com sucesso!')),
-    );
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Manutenção excluída com sucesso!')),
+      );
+    }
   }
 
   double _calcularProximaManutencao(String tipo, double kmAtual) {
@@ -414,7 +418,7 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: AppTheme.successColor.withOpacity(0.1),
+                              color: AppTheme.successColor.withAlpha((255 * 0.1).toInt()),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
@@ -443,7 +447,7 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).toInt()),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -511,7 +515,7 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
                 trailing: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   decoration: BoxDecoration(
-                    color: AppTheme.warningColor.withOpacity(0.1),
+                    color: AppTheme.warningColor.withAlpha((255 * 0.1).toInt()),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
