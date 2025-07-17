@@ -29,7 +29,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.motouber.app"
-    compileSdk 35
+    compileSdk 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -48,7 +48,7 @@ android {
     defaultConfig {
         applicationId "com.motouber.app"
         minSdk 21
-        targetSdk 35
+        targetSdk 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -73,6 +73,13 @@ android {
             minifyEnabled false
             debuggable true
         }
+    }
+
+    // Configuração para evitar problemas de resource merging
+    aaptOptions {
+        ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        noCompress 'tflite'
+        cruncherEnabled false
     }
 }
 

@@ -157,6 +157,17 @@ flutter build apk --release
 
 ## 📝 Mudanças Recentes
 
+### 2025-01-17 - ✅ BUILD RESOURCE MERGE: Correção Crítica Aplicada
+- ✅ **PROBLEMA IDENTIFICADO:** Erro MergeResources durante build APK
+- ✅ **CORREÇÕES APLICADAS:**
+  - ✅ Arquivos SVG conflitantes removidos (mantidos apenas PNG)
+  - ✅ compileSdk/targetSdk ajustado: 35 → 34 (maior estabilidade)
+  - ✅ Cache Gradle expandido: cleanBuildCache adicionado
+  - ✅ aaptOptions configurado para evitar conflitos de recursos
+  - ✅ Script de limpeza melhorado no codemagic.yaml
+- ✅ **RESULTADO:** Configuração otimizada para evitar erros de resource merging
+- ✅ **STATUS:** Pronto para novo build no Codemagic
+
 ### 2025-01-17 - ✅ ÍCONE PERSONALIZADO: Motociclista com Lua Implementado
 - ✅ **NOVO ÍCONE DO APP:**
   - ✅ Imagem: Motociclista tocando a lua - tema perfeito para Motouber

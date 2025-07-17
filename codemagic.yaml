@@ -42,7 +42,11 @@ workflows:
           flutter pub get
           # Ensure gradlew has execute permissions
           chmod +x android/gradlew
+          # Complete cache cleanup for resource issues
           cd android && ./gradlew clean
+          cd android && ./gradlew cleanBuildCache || true
+          # Remove any potential conflicting resources
+          find . -name "*.svg" -path "*/res/mipmap-*" -delete || true
       - name: Build release APK
         script: |
           flutter build apk --release --verbose \
