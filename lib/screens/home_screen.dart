@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../services/database_service.dart';
-import '../services/goals_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/modern_card.dart';
 import '../widgets/animated_counter.dart';

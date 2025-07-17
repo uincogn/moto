@@ -91,7 +91,7 @@ class GoalsService {
     final trabalhos = await db.getTrabalhosByPeriod(startOfMonth, endOfMonth);
     final gastos = await db.getGastosByPeriod(startOfMonth, endOfMonth);
 
-    final totalKm = trabalhos.fold<double>(0, (sum, t) => sum + t.kmRodados);
+    final totalKm = trabalhos.fold<double>(0, (sum, t) => sum + t.km);
     final gastoCombustivel = gastos
         .where((g) => g.categoria.toLowerCase().contains('combustível') || 
                       g.categoria.toLowerCase().contains('gasolina') ||

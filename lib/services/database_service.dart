@@ -355,8 +355,5 @@ class DatabaseService {
     });
   }
 
-  // Método para inicialização (compatibilidade)
-  Future<void> init() async {
-    await database; // Força a inicialização do banco
-  }
+  // Método de inicialização já existe na linha 115-117
 }

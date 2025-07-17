@@ -91,37 +91,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
     );
   }
 
-  Future<void> _exportarDados() async {
-    try {
-      final trabalhos = await _db.getTrabalhos();
-      final gastos = await _db.getGastos();
-      final manutencoes = await _db.getManutencoes();
-
-      final dados = {
-        'trabalhos': trabalhos.map((t) => t.toMap()).toList(),
-        'gastos': gastos.map((g) => g.toMap()).toList(),
-        'manutencoes': manutencoes.map((m) => m.toMap()).toList(),
-        'categorias_gastos': _categoriasGastos,
-        'tipos_manutencao': _tiposManutencao,
-        'data_backup': DateTime.now().toIso8601String(),
-      };
-
-      final json = jsonEncode(dados);
-      await Share.shareXFiles(
-        [XFile.fromData(
-          utf8.encode(json),
-          name: 'motouber_backup_${DateTime.now().millisecondsSinceEpoch}.json',
-          mimeType: 'application/json',
-        )],
-        text: 'Backup dos dados do Motouber',
-      );
-    } catch (e) {
-      if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro ao exportar dados: $e')),
-      );
-    }
-  }
+  // Função _exportarDados removida - não utilizada
 
   Future<void> _shareModernBackup() async {
     try {
@@ -138,23 +108,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
     }
   }
 
-  Future<void> _restoreBackup() async {
-    try {
-      final success = await BackupService.restoreBackup();
-      if (success) {
-        await _loadConfiguracoes();
-        if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('✅ Backup restaurado com sucesso!')),
-        );
-      }
-    } catch (e) {
-      if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('❌ Erro ao restaurar backup: $e')),
-      );
-    }
-  }
+  // Função _restoreBackup removida - não utilizada
 
   void _showTechInfo() {
     showDialog(
@@ -511,10 +465,9 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
                     onPressed: () => _shareModernBackup(),
                     icon: const Icon(Icons.share),
                     label: const Text('Compartilhar Backup'),
-                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           
@@ -557,95 +510,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
     );
   }
 
-  Widget _buildSobreTab() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
-            'Sobre o Motouber',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 16),
-          
-          Card(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Motouber - Controle Financeiro',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text('Versão: 1.0.0'),
-                  SizedBox(height: 8),
-                  Text(
-                    'Sistema completo de controle financeiro desenvolvido especialmente para motoristas de aplicativo.',
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    'Funcionalidades:',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text('• Registro diário de trabalho'),
-                  Text('• Controle de gastos categorizados'),
-                  Text('• Gestão de manutenções'),
-                  Text('• Relatórios e análises'),
-                  Text('• Backup e restauração de dados'),
-                ],
-              ),
-            ),
-          ),
-          
-          SizedBox(height: 16),
-          
-          Card(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Privacidade',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Todos os dados são armazenados localmente no seu dispositivo. Nenhuma informação é enviada para servidores externos.',
-                  ),
-                ],
-              ),
-            ),
-          ),
-          
-          SizedBox(height: 16),
-          
-          Card(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Desenvolvido com ❤️',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Para a comunidade de motoristas de aplicativo',
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Função _buildSobreTab removida - não utilizada
 
   void _showClearDataDialog() {
     showDialog(

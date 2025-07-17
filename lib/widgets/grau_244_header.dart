@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:motouber/theme/app_theme.dart';
-import 'package:motouber/widgets/modern_card.dart';
 
 class Grau244Header extends StatefulWidget {
   final String title;

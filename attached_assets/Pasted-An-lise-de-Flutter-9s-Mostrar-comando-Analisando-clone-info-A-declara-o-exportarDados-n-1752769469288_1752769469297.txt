@@ -1,0 +1,65 @@
+Análise de Flutter
+9s
+
+Mostrar comando 
+Analisando clone... 
+
+info • A declaração '_exportarDados' não é referenciada • lib/screens/configuracoes_screen.dart:94:16 • unused_element 
+info • A declaração '_restoreBackup' não é referenciada • lib/screens/configuracoes_screen.dart:141:16 • unused_element 
+erro • Esperava-se encontrar ']' • lib/screens/configuracoes_screen.dart:519:11 • expected_token 
+erro • Esperado um identificador • lib/screens/configuracoes_screen.dart:555:9 • missing_identifier 
+erro • Esperava-se encontrar ')' • lib/screens/configuracoes_screen.dart:555:9 • expected_token 
+erro • Esperava-se encontrar ';' • lib/screens/configuracoes_screen.dart:556:7 • expected_token 
+aviso • Código morto • lib/screens/configuracoes_screen.dart:556:8 • código_morto 
+erro • Esperado um identificador • lib/screens/configuracoes_screen.dart:556:8 • missing_identifier 
+erro • Esperava-se encontrar ';' • lib/screens/configuracoes_screen.dart:556:8 • expected_token 
+erro • Texto inesperado ';' • lib/screens/configuracoes_screen.dart:556:8 • unexpected_token 
+erro • Esperado um identificador • lib/screens/configuracoes_screen.dart:557:5 • missing_identifier 
+erro • Texto inesperado ';' • lib/screens/configuracoes_screen.dart:557:5 • unexpected_token 
+info • Declaração vazia desnecessária • lib/screens/configuracoes_screen.dart:557:6 • empty_statements 
+info • A declaração '_buildSobreTab' não é referenciada • lib/screens/configuracoes_screen.dart:560:10 • unused_element 
+aviso • Importação não utilizada: 'pacote:intl/intl.dart' • lib/screens/goals_screen.dart:7:8 • unused_import 
+erro • O parâmetro nomeado 'opacidade' não está definido • lib/screens/goals_screen.dart:129:54 • undefined_named_parameter 
+erro • O parâmetro nomeado 'opacidade' não está definido • lib/screens/goals_screen.dart:153:54 • undefined_named_parameter 
+aviso • O valor da variável local 'ganhosMes' não foi usado • lib/screens/goals_screen.dart:417:11 • unused_local_variable 
+Aviso • Importação não utilizada: '../services/goals_service.dart' • lib/screens/home_screen.dart:4:8 • unused_import 
+erro • O nome 'init' já está definido • lib/services/database_service.dart:359:16 • duplicate_definition 
+erro • O getter 'kmRodados' não está definido para o tipo 'TrabalhoModel' • lib/services/goals_service.dart:94:67 • undefined_getter 
+info • 'window' está obsoleto e não deve ser usado. Consulte a FlutterView atual no contexto via View.of(context) ou consulte o PlatformDispatcher diretamente. Obsoleto para se preparar para o suporte a múltiplas janelas que está por vir. Este recurso foi descontinuado após a versão v3.7.0-32.0.pre • lib/services/theme_service.dart:12:38 • deprecated_member_use 
+Aviso • Importação não utilizada: 'pacote:motouber/widgets/modern_card.dart' • lib/widgets/grau_244_header.dart:3:8 • importação_não_utilizada 
+
+23 problemas encontrados. (executado em 8,0s) 
+
+
+Falha na compilação :| 
+O script da etapa 4 `Flutter analyse` saiu com o código de status 1 
+
+moto
+moto
+github.com/uincogn/moto
+Visão geral da construção
+Clique nas etapas de construção para obter detalhes.
+Preparando a máquina de construção
+33s
+Buscando fontes de aplicativos
+3s
+Instalando SDKs
+30 anos
+Obtenha pacotes Flutter
+32s
+Teste de vibração
+< 1s
+Limpar e construir
+< 1s
+Construir e liberar APK
+< 1s
+Publicação
+< 1s
+Limpeza
+< 1s
+Step 4 script `Flutter analyze` exited with status code 1
+Aplicações
+Construções
+Visualização do aplicativo
+Equipes
+Cobrança

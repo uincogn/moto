@@ -4,7 +4,6 @@ import 'package:motouber/services/goals_service.dart';
 import 'package:motouber/theme/app_theme.dart';
 import 'package:motouber/widgets/modern_card.dart';
 import 'package:motouber/widgets/animated_counter.dart';
-import 'package:intl/intl.dart';
 
 class GoalsScreen extends StatefulWidget {
   const GoalsScreen({super.key});
@@ -124,9 +123,9 @@ class _GoalsScreenState extends State<GoalsScreen> {
               Expanded(
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       'Esta semana',
-                      style: TextStyle(fontSize: 12, opacity: 0.7),
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                     AnimatedCounter(
                       value: weekEarnings,
@@ -148,9 +147,9 @@ class _GoalsScreenState extends State<GoalsScreen> {
               Expanded(
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       'Melhor dia',
-                      style: TextStyle(fontSize: 12, opacity: 0.7),
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                     AnimatedCounter(
                       value: bestDay,
@@ -414,7 +413,6 @@ class _GoalsScreenState extends State<GoalsScreen> {
   Widget _buildStatsSection() {
     final diasTrabalhados = _motivationalStats['dias_trabalhados_mes'] ?? 0;
     final mediaDiaria = _motivationalStats['media_diaria_mes'] ?? 0.0;
-    final ganhosMes = _motivationalStats['ganhos_mes'] ?? 0.0;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
