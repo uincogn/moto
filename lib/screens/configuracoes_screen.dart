@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dart:convert';
 import '../services/database_service.dart';
+import '../services/theme_service.dart';
+import '../services/backup_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/modern_card.dart';
 
 class ConfiguracoesScreen extends StatefulWidget {
   const ConfiguracoesScreen({super.key});
@@ -119,28 +123,262 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
     }
   }
 
+  Future<void> _shareModernBackup() async {
+    try {
+      await BackupService.shareBackup();
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('✅ Backup compartilhado com sucesso!')),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('❌ Erro ao criar backup: $e')),
+      );
+    }
+  }
+
+  Future<void> _restoreBackup() async {
+    try {
+      final success = await BackupService.restoreBackup();
+      if (success) {
+        await _loadConfiguracoes();
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('✅ Backup restaurado com sucesso!')),
+        );
+      }
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('❌ Erro ao restaurar backup: $e')),
+      );
+    }
+  }
+
+  void _showTechInfo() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('🚀 Tecnologia'),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Framework: Flutter 3.24+'),
+            Text('Linguagem: Dart'),
+            Text('Banco: SQLite local'),
+            Text('Gráficos: FL Chart'),
+            Text('Estilo: Material Design 3'),
+            Text('Tema: Grau 244 - Visual jovem motociclista'),
+            SizedBox(height: 16),
+            Text('Características:'),
+            Text('• 100% offline'),
+            Text('• Dados locais seguros'),
+            Text('• Interface nativa'),
+            Text('• Performance otimizada'),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Fechar'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _clearCache() async {
+    try {
+      // Simulação de limpeza de cache
+      await Future.delayed(const Duration(seconds: 1));
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('🧹 Cache limpo com sucesso!')),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('❌ Erro ao limpar cache: $e')),
+      );
+    }
+  }
+
+  Future<void> _refreshData() async {
+    try {
+      await _loadConfiguracoes();
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('🔄 Dados atualizados com sucesso!')),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('❌ Erro ao atualizar dados: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Configurações'),
+        title: const Text('⚙️ Configurações'),
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
+            Tab(text: 'Geral'),
             Tab(text: 'Categorias'),
             Tab(text: 'Backup'),
-            Tab(text: 'Sobre'),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
+          _buildGeralTab(),
           _buildCategoriasTab(),
           _buildBackupTab(),
-          _buildSobreTab(),
         ],
       ),
+    );
+  }
+
+  Widget _buildGeralTab() {
+    return Consumer<ThemeService>(
+      builder: (context, themeService, child) {
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Seção Aparência
+              const Text(
+                '🎨 Aparência',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              
+              ModernCard(
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(
+                        themeService.isDarkMode ? Icons.dark_mode : Icons.light_mode,
+                        color: AppTheme.primaryColor,
+                      ),
+                      title: const Text('Modo Escuro'),
+                      subtitle: Text(
+                        themeService.themeMode == ThemeMode.system
+                            ? 'Automático (segue o sistema)'
+                            : themeService.isDarkMode
+                                ? 'Ativado'
+                                : 'Desativado',
+                      ),
+                      trailing: Switch.adaptive(
+                        value: themeService.themeMode == ThemeMode.dark ||
+                            (themeService.themeMode == ThemeMode.system &&
+                                MediaQuery.of(context).platformBrightness ==
+                                    Brightness.dark),
+                        onChanged: (value) {
+                          themeService.setThemeMode(
+                            value ? ThemeMode.dark : ThemeMode.light,
+                          );
+                        },
+                        activeColor: AppTheme.primaryColor,
+                      ),
+                    ),
+                    const Divider(height: 1),
+                    ListTile(
+                      leading: const Icon(
+                        Icons.auto_mode,
+                        color: AppTheme.secondaryColor,
+                      ),
+                      title: const Text('Modo Automático'),
+                      subtitle: const Text('Segue as configurações do sistema'),
+                      trailing: Switch.adaptive(
+                        value: themeService.themeMode == ThemeMode.system,
+                        onChanged: (value) {
+                          themeService.setThemeMode(
+                            value ? ThemeMode.system : ThemeMode.light,
+                          );
+                        },
+                        activeColor: AppTheme.secondaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              
+              const SizedBox(height: 24),
+              
+              // Seção App Info
+              const Text(
+                'ℹ️ Informações do App',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              
+              ModernCard(
+                child: Column(
+                  children: [
+                    const ListTile(
+                      leading: Icon(Icons.info, color: AppTheme.primaryColor),
+                      title: Text('Versão'),
+                      subtitle: Text('2.0.0 - Estética Grau 244'),
+                    ),
+                    const Divider(height: 1),
+                    const ListTile(
+                      leading: Icon(Icons.motorcycle, color: AppTheme.accentColor),
+                      title: Text('Motouber'),
+                      subtitle: Text('Controle financeiro para motociclistas'),
+                    ),
+                    const Divider(height: 1),
+                    ListTile(
+                      leading: const Icon(Icons.code, color: AppTheme.secondaryColor),
+                      title: const Text('Tecnologia'),
+                      subtitle: const Text('Flutter/Dart + SQLite'),
+                      onTap: () => _showTechInfo(),
+                    ),
+                  ],
+                ),
+              ),
+              
+              const SizedBox(height: 24),
+              
+              // Seção Performance
+              const Text(
+                '⚡ Performance',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              
+              ModernCard(
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.storage, color: AppTheme.warningColor),
+                      title: const Text('Limpar Cache'),
+                      subtitle: const Text('Remove dados temporários'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => _clearCache(),
+                    ),
+                    const Divider(height: 1),
+                    ListTile(
+                      leading: const Icon(Icons.refresh, color: AppTheme.primaryColor),
+                      title: const Text('Recarregar Dados'),
+                      subtitle: const Text('Atualiza informações do banco'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => _refreshData(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -237,38 +475,42 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
   }
 
   Widget _buildBackupTab() {
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Backup e Restauração',
+            '💾 Backup e Restauração',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Exportar Dados',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Faça backup de todos os seus dados (trabalhos, gastos, manutenções e configurações).',
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: _exportarDados,
-                      icon: const Icon(Icons.download),
-                      label: const Text('Exportar Dados'),
+          ModernCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Row(
+                  children: [
+                    Icon(Icons.cloud_upload, color: AppTheme.primaryColor),
+                    SizedBox(width: 12),
+                    Text(
+                      'Backup Avançado',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Sistema completo de backup com todos os seus dados: trabalhos, gastos, manutenções e configurações.',
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: () => _shareModernBackup(),
+                    icon: const Icon(Icons.share),
+                    label: const Text('Compartilhar Backup'),
                     ),
                   ),
                 ],

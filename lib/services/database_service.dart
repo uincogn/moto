@@ -292,4 +292,71 @@ class DatabaseService {
   Future<void> setTiposManutencao(List<String> tipos) async {
     await setConfig('tipos_manutencao', tipos.join(','));
   }
+
+  // Novos métodos para suporte a GoalsService e BackupService
+  Future<List<TrabalhoModel>> getAllTrabalhos() async {
+    final db = await database;
+    final maps = await db.query('trabalho', orderBy: 'data DESC');
+    return maps.map((map) => TrabalhoModel.fromMap(map)).toList();
+  }
+
+  Future<List<GastoModel>> getAllGastos() async {
+    final db = await database;
+    final maps = await db.query('gastos', orderBy: 'data DESC');
+    return maps.map((map) => GastoModel.fromMap(map)).toList();
+  }
+
+  Future<List<ManutencaoModel>> getAllManutencoes() async {
+    final db = await database;
+    final maps = await db.query('manutencoes', orderBy: 'data DESC');
+    return maps.map((map) => ManutencaoModel.fromMap(map)).toList();
+  }
+
+  Future<List<TrabalhoModel>> getTrabalhosByPeriod(DateTime start, DateTime end) async {
+    final db = await database;
+    final maps = await db.query(
+      'trabalho',
+      where: 'data BETWEEN ? AND ?',
+      whereArgs: [start.toIso8601String().split('T')[0], end.toIso8601String().split('T')[0]],
+      orderBy: 'data DESC',
+    );
+    return maps.map((map) => TrabalhoModel.fromMap(map)).toList();
+  }
+
+  Future<List<GastoModel>> getGastosByPeriod(DateTime start, DateTime end) async {
+    final db = await database;
+    final maps = await db.query(
+      'gastos',
+      where: 'data BETWEEN ? AND ?',
+      whereArgs: [start.toIso8601String().split('T')[0], end.toIso8601String().split('T')[0]],
+      orderBy: 'data DESC',
+    );
+    return maps.map((map) => GastoModel.fromMap(map)).toList();
+  }
+
+  Future<List<ManutencaoModel>> getManutencoesByPeriod(DateTime start, DateTime end) async {
+    final db = await database;
+    final maps = await db.query(
+      'manutencoes',
+      where: 'data BETWEEN ? AND ?',
+      whereArgs: [start.toIso8601String().split('T')[0], end.toIso8601String().split('T')[0]],
+      orderBy: 'data DESC',
+    );
+    return maps.map((map) => ManutencaoModel.fromMap(map)).toList();
+  }
+
+  Future<void> clearAllData() async {
+    final db = await database;
+    await db.transaction((txn) async {
+      await txn.delete('trabalho');
+      await txn.delete('gastos');
+      await txn.delete('manutencoes');
+      // Não limpar config para manter configurações do usuário
+    });
+  }
+
+  // Método para inicialização (compatibilidade)
+  Future<void> init() async {
+    await database; // Força a inicialização do banco
+  }
 }

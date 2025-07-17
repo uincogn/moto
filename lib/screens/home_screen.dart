@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../services/database_service.dart';
+import '../services/goals_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/modern_card.dart';
+import '../widgets/animated_counter.dart';
 import 'trabalho_screen.dart';
 import 'gastos_screen.dart';
 import 'manutencoes_screen.dart';
 import 'relatorios_screen.dart';
+import 'goals_screen.dart';
+import 'configuracoes_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -205,23 +210,26 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildMetricCard(String title, double value, Color color, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: color.withAlpha((255 * 0.1).toInt()),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withAlpha((255 * 0.3).toInt())),
-      ),
+    return ModernCard(
+      backgroundColor: color.withOpacity(0.05),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(icon, color: color, size: 24),
-              Text(
-                'R\$ ${value.toStringAsFixed(2)}',
-                style: TextStyle(
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(icon, color: color, size: 24),
+              ),
+              AnimatedCounter(
+                value: value,
+                prefix: 'R\$ ',
+                textStyle: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: color,
@@ -229,13 +237,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Text(
             title,
             style: TextStyle(
               fontSize: 12,
               color: color,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
@@ -264,39 +272,49 @@ class _HomeScreenState extends State<HomeScreen> {
             }),
             _buildNavButton('Gastos', Icons.money_off, () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => const GastosScreen()));
-            }),
+            }, color: AppTheme.errorColor),
             _buildNavButton('Manutenções', Icons.build, () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => const ManutencoesScreen()));
-            }),
+            }, color: AppTheme.warningColor),
+            _buildNavButton('Metas', Icons.emoji_events, () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const GoalsScreen()));
+            }, color: AppTheme.accentColor),
             _buildNavButton('Relatórios', Icons.analytics, () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => const RelatoriosScreen()));
-            }),
+            }, color: AppTheme.secondaryColor),
+            _buildNavButton('Configurações', Icons.settings, () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ConfiguracoesScreen()));
+            }, color: AppTheme.chromeColor),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildNavButton(String title, IconData icon, VoidCallback onTap) {
-    return Card(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 32, color: AppTheme.primaryColor),
-              const SizedBox(height: 8),
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-            ],
+  Widget _buildNavButton(String title, IconData icon, VoidCallback onTap, {Color? color}) {
+    final buttonColor = color ?? AppTheme.primaryColor;
+    
+    return ModernCard(
+      onTap: onTap,
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: buttonColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, size: 32, color: buttonColor),
           ),
-        ),
+          const SizedBox(height: 12),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+          ),
+        ],
       ),
     );
   }
