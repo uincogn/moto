@@ -234,6 +234,16 @@ flutter build apk --release
 - ✅ **CORREÇÃO:** Adicionado `chmod +x android/gradlew` antes de executar
 - 🎯 **BUILD #11:** Permissões gradlew garantidas no CodeMagic
 
+### 2025-01-16 - Correção Crítica: Gradle Wrapper no .gitignore
+- ❌ **BUILD #10 ROOT CAUSE:** Gradle wrapper files ignorados pelo Git
+- 🔍 **ARQUIVOS BLOQUEADOS:** gradlew, gradlew.bat, gradle-wrapper.jar
+- ✅ **CORREÇÃO:** Removidos do .gitignore para permitir acesso CodeMagic
+- ✅ **ARQUIVOS LIBERADOS:**
+  - `**/android/gradlew` (removido do .gitignore)
+  - `**/android/gradlew.bat` (removido do .gitignore)  
+  - `**/android/**/gradle-wrapper.jar` (removido do .gitignore)
+- 🎯 **BUILD #11:** CodeMagic agora terá acesso aos arquivos Gradle wrapper
+
 ### 2025-01-16 - Correção Build Gradle + Compatibilidade SDK
 - ✅ Erro CodeMagic diagnosticado: build.gradle linha 24 estrutura incorreta
 - ✅ Reorganização completa do android/app/build.gradle:
