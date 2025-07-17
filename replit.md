@@ -157,16 +157,22 @@ flutter build apk --release
 
 ## 📝 Mudanças Recentes
 
-### 2025-01-17 - ✅ BUILD RESOURCE MERGE: Correção Crítica Aplicada
-- ✅ **PROBLEMA IDENTIFICADO:** Erro MergeResources durante build APK
+### 2025-01-17 - ✅ BUILD RESOURCE MERGE: Correção Radical Aplicada
+- ✅ **PROBLEMA IDENTIFICADO:** Erro MergeResources persistente durante build APK
 - ✅ **CORREÇÕES APLICADAS:**
   - ✅ Arquivos SVG conflitantes removidos (mantidos apenas PNG)
   - ✅ compileSdk/targetSdk ajustado: 35 → 34 (maior estabilidade)
   - ✅ Cache Gradle expandido: cleanBuildCache adicionado
   - ✅ aaptOptions configurado para evitar conflitos de recursos
+  - ✅ **DEPENDÊNCIAS PROBLEMÁTICAS REMOVIDAS TEMPORARIAMENTE:**
+    - ❌ file_picker: ^8.0.0 (comentado)
+    - ❌ permission_handler: ^11.3.1 (comentado)
+    - ❌ path_provider: ^2.1.3 (comentado)
+    - ❌ share_plus: ^9.0.0 (comentado)
+  - ✅ **BackupService simplificado** (funções placeholder implementadas)
   - ✅ Script de limpeza melhorado no codemagic.yaml
-- ✅ **RESULTADO:** Configuração otimizada para evitar erros de resource merging
-- ✅ **STATUS:** Pronto para novo build no Codemagic
+- ✅ **RESULTADO:** Configuração minimalista para isolar problema de MergeResources
+- ✅ **STATUS:** Pronto para build de teste no Codemagic
 
 ### 2025-01-17 - ✅ ÍCONE PERSONALIZADO: Motociclista com Lua Implementado
 - ✅ **NOVO ÍCONE DO APP:**

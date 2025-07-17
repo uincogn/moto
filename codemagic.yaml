@@ -47,6 +47,8 @@ workflows:
           cd android && ./gradlew cleanBuildCache || true
           # Remove any potential conflicting resources
           find . -name "*.svg" -path "*/res/mipmap-*" -delete || true
+          # Reset permissions for Android resources
+          chmod -R 755 android/app/src/main/res/ || true
       - name: Build release APK
         script: |
           flutter build apk --release --verbose \
