@@ -40,11 +40,9 @@ workflows:
         script: |
           flutter clean
           flutter pub get
-          # Force complete Gradle cache reset for Kotlin version
-          rm -rf ~/.gradle/caches
           # Ensure gradlew has execute permissions
           chmod +x android/gradlew
-          cd android && ./gradlew clean --refresh-dependencies
+          cd android && ./gradlew clean
       - name: Build release APK
         script: |
           flutter build apk --release --verbose \
