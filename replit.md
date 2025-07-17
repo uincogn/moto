@@ -227,6 +227,13 @@ flutter build apk --release
 - ✅ **ESTRATÉGIA:** Cache reset no diretório raiz, depois cd android para gradlew
 - 🎯 **BUILD #10:** Path corrigido para CodeMagic working directory
 
+### 2025-01-16 - Correção Permissões Gradlew
+- ❌ **BUILD #10 ERRO:** `./gradlew: No such file or directory` (exit code 127)
+- 🔍 **ROOT CAUSE:** CodeMagic não preserva permissões executáveis do gradlew
+- ✅ **DIAGNÓSTICO:** Arquivo existe mas sem permissão de execução
+- ✅ **CORREÇÃO:** Adicionado `chmod +x android/gradlew` antes de executar
+- 🎯 **BUILD #11:** Permissões gradlew garantidas no CodeMagic
+
 ### 2025-01-16 - Correção Build Gradle + Compatibilidade SDK
 - ✅ Erro CodeMagic diagnosticado: build.gradle linha 24 estrutura incorreta
 - ✅ Reorganização completa do android/app/build.gradle:
