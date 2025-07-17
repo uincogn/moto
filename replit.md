@@ -157,6 +157,21 @@ flutter build apk --release
 
 ## 📝 Mudanças Recentes
 
+### 2025-01-17 - ✅ BUILD SUCESSO: APK Instalando Corretamente
+- ✅ **PROBLEMA RESOLVIDO:** APK agora instala em Android 9 (Moto G6 Play)
+- ✅ **CORREÇÕES APLICADAS:**
+  - ✅ compileSdk/targetSdk 34 → 35 (resolve warnings plugins)
+  - ✅ Arquiteturas otimizadas: arm64-v8a + armeabi-v7a (máxima compatibilidade)
+  - ✅ Configurações deprecated removidas (android.enableR8, enableDexingArtifactTransform)
+  - ✅ Assinatura release melhorada (signingConfig debug para testes)
+- ✅ **COMPATIBILIDADE CONFIRMADA:**
+  - ✅ Moto G6 Play (Snapdragon 427 ARM 64-bit) - TESTADO ✅
+  - ✅ Celulares ARM modernos (arm64-v8a)
+  - ✅ Celulares ARM antigos (armeabi-v7a)
+  - ✅ Android 5.0+ (minSdk 21)
+- ✅ **RESULTADO:** APK instalação bem-sucedida, erro "app não foi instalado" resolvido
+- ✅ **PIPELINE:** Codemagic build → APK funcional → Instalação OK
+
 ### 2025-01-16 - Correção Crítica Kotlin + Gradle + Versioning CodeMagic
 - ✅ **5 PROBLEMAS CRÍTICOS RESOLVIDOS:**
   - ✅ **Kotlin Version Mismatch:** settings.gradle 1.7.10 → 1.9.10 (alinhado com build.gradle)
