@@ -225,7 +225,7 @@ class DatabaseService {
 
     if (dataInicio != null && dataFim != null) {
       where = 'data BETWEEN ? AND ?';
-      whereArgs = [dataInicio.toIso8601String(), dataFim.toIso8601String()];
+      whereArgs = [dataInicio.toIso8601String().split('T')[0], dataFim.toIso8601String().split('T')[0]];
     }
 
     final List<Map<String, dynamic>> maps = await db.query(
@@ -270,7 +270,7 @@ class DatabaseService {
 
     if (dataInicio != null && dataFim != null) {
       where = 'data BETWEEN ? AND ?';
-      whereArgs = [dataInicio.toIso8601String(), dataFim.toIso8601String()];
+      whereArgs = [dataInicio.toIso8601String().split('T')[0], dataFim.toIso8601String().split('T')[0]];
     }
 
     final List<Map<String, dynamic>> maps = await db.query(
@@ -315,7 +315,7 @@ class DatabaseService {
 
     if (dataInicio != null && dataFim != null) {
       where = 'data BETWEEN ? AND ?';
-      whereArgs = [dataInicio.toIso8601String(), dataFim.toIso8601String()];
+      whereArgs = [dataInicio.toIso8601String().split('T')[0], dataFim.toIso8601String().split('T')[0]];
     }
 
     final List<Map<String, dynamic>> maps = await db.query(

@@ -61,7 +61,7 @@ st.markdown("""
 O aplicativo Flutter passou por refatoração completa e correção de erros. Todas as alterações foram implementadas mantendo compatibilidade com versões anteriores através de migração automática do banco de dados.
 """)
 
-st.success("🎯 **Status**: Pronto para compilação! Todos os 10 problemas foram corrigidos e o aplicativo deve compilar sem problemas.")
+st.success("🎯 **Status**: Pronto para compilação! Todos os problemas corrigidos incluindo cálculo de dados diários.")
 st.info("💡 **Próximo Passo**: Execute o build no Codemagic para gerar o APK atualizado com as novas funcionalidades.")
 
 # Mostrar estrutura das mudanças
@@ -85,4 +85,5 @@ with st.expander("🔍 Detalhes Técnicos das Mudanças"):
     - **Nova Tabela**: `intervalos_manutencao`
     - **Migração**: Versão 1 → 2 automática
     - **Compatibilidade**: Preserva todos os dados existentes
+    - **Correção**: Filtros de data corrigidos para exibir dados de hoje corretamente
     """)

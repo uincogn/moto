@@ -36,10 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
     final inicioMes = DateTime(hoje.year, hoje.month, 1);
     final fimMes = DateTime(hoje.year, hoje.month + 1, 0);
     
-    // Dados de hoje
-    final trabalhosHoje = await _db.getTrabalhos(dataInicio: hoje, dataFim: hoje);
-    final gastosHoje = await _db.getGastos(dataInicio: hoje, dataFim: hoje);
-    final manutencoesHoje = await _db.getManutencoes(dataInicio: hoje, dataFim: hoje);
+    // Dados de hoje (início e fim do dia)
+    final inicioHoje = DateTime(hoje.year, hoje.month, hoje.day);
+    final fimHoje = DateTime(hoje.year, hoje.month, hoje.day, 23, 59, 59);
+    final trabalhosHoje = await _db.getTrabalhos(dataInicio: inicioHoje, dataFim: fimHoje);
+    final gastosHoje = await _db.getGastos(dataInicio: inicioHoje, dataFim: fimHoje);
+    final manutencoesHoje = await _db.getManutencoes(dataInicio: inicioHoje, dataFim: fimHoje);
     
     // Dados do mês
     final trabalhosMes = await _db.getTrabalhos(dataInicio: inicioMes, dataFim: fimMes);
