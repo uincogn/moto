@@ -12,7 +12,7 @@ st.success("✅ Refatoração do Registro Diário implementada e corrigida com s
 
 st.markdown("### 🔧 Correções de Compilação Aplicadas")
 st.info("""
-**9 erros de compilação identificados e corrigidos:**
+**10 problemas de compilação identificados e corrigidos:**
 - ✅ Métodos Future corrigidos em manutencoes_screen.dart
 - ✅ Import não utilizado removido de registro_integrado_screen.dart
 - ✅ Todas as referências 'combustivel' removidas de relatorios_screen.dart
@@ -20,6 +20,7 @@ st.info("""
 - ✅ Cálculos de gastos atualizados para usar gastos em vez de combustível
 - ✅ Interface de trabalho simplificada sem combustível
 - ✅ Migração de banco de dados configurada corretamente
+- ✅ Método não utilizado '_calcularProximaManutencao' removido
 """)
 
 st.markdown("""
@@ -58,7 +59,7 @@ st.markdown("""
 O aplicativo Flutter passou por refatoração completa e correção de erros. Todas as alterações foram implementadas mantendo compatibilidade com versões anteriores através de migração automática do banco de dados.
 """)
 
-st.success("🎯 **Status**: Pronto para compilação! Todos os 9 erros foram corrigidos e o aplicativo deve compilar sem problemas.")
+st.success("🎯 **Status**: Pronto para compilação! Todos os 10 problemas foram corrigidos e o aplicativo deve compilar sem problemas.")
 st.info("💡 **Próximo Passo**: Execute o build no Codemagic para gerar o APK atualizado com as novas funcionalidades.")
 
 # Mostrar estrutura das mudanças

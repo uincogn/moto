@@ -99,9 +99,7 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
     );
   }
 
-  Future<double> _calcularProximaManutencao(String tipo, double kmAtual) async {
-    return await _db.calcularProximaManutencao(tipo, kmAtual);
-  }
+
 
   @override
   Widget build(BuildContext context) {
