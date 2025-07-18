@@ -192,26 +192,7 @@ class _TrabalhoScreenState extends State<TrabalhoScreen> with SingleTickerProvid
             
             const SizedBox(height: 16),
             
-            // Combustível
-            TextFormField(
-              controller: _combustivelController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Combustível (R\$)',
-                prefixIcon: Icon(Icons.local_gas_station),
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Campo obrigatório';
-                }
-                if (double.tryParse(value) == null) {
-                  return 'Valor inválido';
-                }
-                return null;
-              },
-            ),
-            
-            const SizedBox(height: 16),
+
             
             // Horas
             TextFormField(
@@ -270,7 +251,7 @@ class _TrabalhoScreenState extends State<TrabalhoScreen> with SingleTickerProvid
                 itemCount: _trabalhos.length,
                 itemBuilder: (context, index) {
                   final trabalho = _trabalhos[index];
-                  final lucro = trabalho.ganhos - trabalho.combustivel;
+                  final lucro = trabalho.ganhos;
                   
                   return Card(
                     margin: const EdgeInsets.only(bottom: 8),
@@ -304,9 +285,9 @@ class _TrabalhoScreenState extends State<TrabalhoScreen> with SingleTickerProvid
                                   const SizedBox(width: 8),
                                   Expanded(
                                     child: _buildInfoCard(
-                                      'Combustível',
-                                      'R\$ ${trabalho.combustivel.toStringAsFixed(2)}',
-                                      AppTheme.errorColor,
+                                      'Líquido',
+                                      'R\$ ${trabalho.ganhos.toStringAsFixed(2)}',
+                                      AppTheme.successColor,
                                     ),
                                   ),
                                 ],
@@ -393,10 +374,9 @@ class _TrabalhoScreenState extends State<TrabalhoScreen> with SingleTickerProvid
     }
 
     final totalGanhos = _trabalhos.fold(0.0, (sum, t) => sum + t.ganhos);
-    final totalCombustivel = _trabalhos.fold(0.0, (sum, t) => sum + t.combustivel);
     final totalKm = _trabalhos.fold(0.0, (sum, t) => sum + t.km);
     final totalHoras = _trabalhos.fold(0.0, (sum, t) => sum + t.horas);
-    final totalLiquido = totalGanhos - totalCombustivel;
+    final totalLiquido = totalGanhos;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -415,7 +395,6 @@ class _TrabalhoScreenState extends State<TrabalhoScreen> with SingleTickerProvid
               child: Column(
                 children: [
                   _buildResumoItem('Total de Ganhos', totalGanhos, AppTheme.successColor),
-                  _buildResumoItem('Total de Combustível', totalCombustivel, AppTheme.errorColor),
                   _buildResumoItem('Total Líquido', totalLiquido, AppTheme.primaryColor),
                   _buildResumoItem('Total de KM', totalKm, AppTheme.secondaryColor, suffixText: ' km'),
                   _buildResumoItem('Total de Horas', totalHoras, AppTheme.warningColor, suffixText: ' h'),

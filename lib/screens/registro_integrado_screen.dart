@@ -4,7 +4,7 @@ import '../services/database_service.dart';
 import '../models/trabalho_model.dart';
 import '../models/gasto_model.dart';
 import '../models/manutencao_model.dart';
-import '../theme/app_theme.dart';
+
 
 class RegistroIntegradoScreen extends StatefulWidget {
   const RegistroIntegradoScreen({super.key});

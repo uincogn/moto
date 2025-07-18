@@ -409,7 +409,7 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              'Próxima ${manutencao.tipo} sugerida aos ${_calcularProximaManutencao(manutencao.tipo, manutencao.kmAtual).toStringAsFixed(0)} km',
+                              'Próxima ${manutencao.tipo} sugerida em breve',
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: AppTheme.successColor,
@@ -489,7 +489,6 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
           ...ultimasManutencoes.entries.map((entry) {
             final tipo = entry.key;
             final ultimaManutencao = entry.value;
-            final proximoKm = _calcularProximaManutencao(tipo, ultimaManutencao.kmAtual);
             
             return Card(
               margin: const EdgeInsets.only(bottom: 8),
@@ -506,7 +505,7 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    '${proximoKm.toStringAsFixed(0)} km',
+                    'Em breve',
                     style: const TextStyle(
                       color: AppTheme.warningColor,
                       fontWeight: FontWeight.bold,

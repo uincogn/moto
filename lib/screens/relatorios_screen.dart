@@ -159,8 +159,7 @@ class _RelatoriosScreenState extends State<RelatoriosScreen> {
 
   Widget _buildResumoFinanceiro() {
     final totalGanhos = _trabalhos.fold(0.0, (sum, t) => sum + t.ganhos);
-    final totalGastos = _gastos.fold(0.0, (sum, g) => sum + g.valor) +
-                       _trabalhos.fold(0.0, (sum, t) => sum + t.combustivel);
+    final totalGastos = _gastos.fold(0.0, (sum, g) => sum + g.valor);
     final totalManutencoes = _manutencoes.fold(0.0, (sum, m) => sum + m.valor);
     final totalLiquido = totalGanhos - totalGastos - totalManutencoes;
 
@@ -408,7 +407,7 @@ class _RelatoriosScreenState extends State<RelatoriosScreen> {
     final totalGanhos = _trabalhos.fold(0.0, (sum, t) => sum + t.ganhos);
     final totalKm = _trabalhos.fold(0.0, (sum, t) => sum + t.km);
     final totalHoras = _trabalhos.fold(0.0, (sum, t) => sum + t.horas);
-    final totalCombustivel = _trabalhos.fold(0.0, (sum, t) => sum + t.combustivel);
+    final totalCombustivel = _gastos.where((g) => g.categoria == 'Combustível').fold(0.0, (sum, g) => sum + g.valor);
 
     return Card(
       child: Padding(
