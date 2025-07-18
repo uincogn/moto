@@ -224,7 +224,7 @@ class DatabaseService {
     List<dynamic> whereArgs = [];
 
     if (dataInicio != null && dataFim != null) {
-      where = 'data BETWEEN ? AND ?';
+      where = 'DATE(data) BETWEEN ? AND ?';
       whereArgs = [dataInicio.toIso8601String().split('T')[0], dataFim.toIso8601String().split('T')[0]];
     }
 
@@ -234,6 +234,17 @@ class DatabaseService {
       whereArgs: whereArgs.isNotEmpty ? whereArgs : null,
       orderBy: 'data DESC',
     );
+    
+    // Debug log
+    if (dataInicio != null && dataFim != null) {
+      print('=== DEBUG DATABASE TRABALHOS ===');
+      print('Query WHERE: $where');
+      print('Query Args: $whereArgs');
+      print('Resultados encontrados: ${maps.length}');
+      if (maps.isNotEmpty) {
+        print('Primeira data encontrada: ${maps.first['data']}');
+      }
+    }
 
     return List.generate(maps.length, (i) => TrabalhoModel.fromMap(maps[i]));
   }
@@ -269,7 +280,7 @@ class DatabaseService {
     List<dynamic> whereArgs = [];
 
     if (dataInicio != null && dataFim != null) {
-      where = 'data BETWEEN ? AND ?';
+      where = 'DATE(data) BETWEEN ? AND ?';
       whereArgs = [dataInicio.toIso8601String().split('T')[0], dataFim.toIso8601String().split('T')[0]];
     }
 
@@ -314,7 +325,7 @@ class DatabaseService {
     List<dynamic> whereArgs = [];
 
     if (dataInicio != null && dataFim != null) {
-      where = 'data BETWEEN ? AND ?';
+      where = 'DATE(data) BETWEEN ? AND ?';
       whereArgs = [dataInicio.toIso8601String().split('T')[0], dataFim.toIso8601String().split('T')[0]];
     }
 

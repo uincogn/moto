@@ -48,10 +48,21 @@ class _HomeScreenState extends State<HomeScreen> {
     final gastosMes = await _db.getGastos(dataInicio: inicioMes, dataFim: fimMes);
     final manutencoesMes = await _db.getManutencoes(dataInicio: inicioMes, dataFim: fimMes);
     
+    // Debug: imprimir dados encontrados
+    print('=== DEBUG HOME SCREEN ===');
+    print('Data de hoje: ${inicioHoje.toIso8601String().split('T')[0]}');
+    print('Trabalhos encontrados hoje: ${trabalhosHoje.length}');
+    print('Gastos encontrados hoje: ${gastosHoje.length}');
+    print('Manutenções encontradas hoje: ${manutencoesHoje.length}');
+    
     // Calcular totais
     final ganhosHoje = trabalhosHoje.fold(0.0, (sum, t) => sum + t.ganhos);
     final gastosHojeTotal = gastosHoje.fold(0.0, (sum, g) => sum + g.valor);
     final manutencoesHojeTotal = manutencoesHoje.fold(0.0, (sum, m) => sum + m.valor);
+    
+    print('Ganhos hoje calculados: $ganhosHoje');
+    print('Gastos hoje calculados: $gastosHojeTotal');
+    print('Manutenções hoje calculadas: $manutencoesHojeTotal');
     
     final ganhosMes = trabalhosMes.fold(0.0, (sum, t) => sum + t.ganhos);
     final gastosMesTotal = gastosMes.fold(0.0, (sum, g) => sum + g.valor);
