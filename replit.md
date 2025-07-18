@@ -37,11 +37,12 @@ motouber/
 - Últimos registros
 - Atualização automática dos dados
 
-### ✅ Registro de Trabalho
-- Formulário para registro diário
-- Histórico de trabalhos
-- Resumo com médias e totais
-- Validação de dados
+### ✅ Registro Diário Integrado
+- **Novo**: Formulário unificado para trabalho, gastos e manutenções
+- **Removido**: Campo de combustível (agora via gastos)
+- **Opcional**: Switches para adicionar gastos/manutenções no mesmo registro
+- **Histórico**: Visualização integrada de todos os registros do dia
+- **Resumo**: Cálculos automáticos incluindo gastos e manutenções
 
 ### ✅ Controle de Gastos
 - Categorização de gastos
@@ -50,10 +51,11 @@ motouber/
 - Gráficos de distribuição
 
 ### ✅ Manutenções
-- Registro de manutenções
-- Alertas de próximas manutenções
-- Histórico detalhado
-- Cálculo automático de intervalos
+- **Intervalos Personalizáveis**: Cada tipo de manutenção tem intervalo configurável
+- **Gestão Inteligente**: Novos tipos recebem automaticamente 5000km padrão
+- **Interface de Configuração**: Edição fácil de intervalos via Configurações
+- **Alertas Dinâmicos**: Cálculos baseados nos intervalos personalizados
+- **Histórico detalhado**: Registro completo com valores e quilometragem
 
 ### ✅ Relatórios
 - Gráficos de ganhos ao longo do tempo
@@ -118,6 +120,25 @@ flutter build apk --release
 - Navegação intuitiva entre telas
 - Botões de ação flutuantes
 - Formulários validados
+
+## 🚀 Melhorias Recentes (Janeiro 2025)
+
+### ✅ Refatoração do Registro Diário
+- **Módulo Integrado**: Criada nova tela `RegistroIntegradoScreen` que unifica Registro Diário, Gastos e Manutenções
+- **Campo Combustível Removido**: Eliminado do formulário de trabalho - agora registrado via módulo de Gastos
+- **Intervalos Personalizáveis**: Sistema de intervalos de manutenção configuráveis por tipo
+- **Nova Tabela**: `intervalos_manutencao` com intervalos customizáveis por usuário
+- **UI Melhorada**: Interface com switches para adicionar gastos/manutenções opcionalmente
+
+### ✅ Configurações Avançadas
+- **Intervalos de Manutenção**: Interface para editar intervalos por tipo (ex: óleo 3000km, pneus 10000km)
+- **Gestão Inteligente**: Novos tipos automaticamente recebem intervalo padrão de 5000km
+- **Cálculo Dinâmico**: Sistema usa intervalos personalizados para calcular próximas manutenções
+
+### ✅ Melhorias no Banco de Dados
+- **Compatibilidade**: Modelo `TrabalhoModel` atualizado sem campo combustível
+- **Migração**: Sistema suporta intervalos dinâmicos via nova tabela
+- **Performance**: Métodos otimizados para cálculos de manutenção
 
 ## 🚀 Próximos Passos
 

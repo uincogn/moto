@@ -4,7 +4,7 @@ import '../services/database_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/modern_card.dart';
 import '../widgets/animated_counter.dart';
-import 'trabalho_screen.dart';
+import 'registro_integrado_screen.dart';
 import 'gastos_screen.dart';
 import 'manutencoes_screen.dart';
 import 'relatorios_screen.dart';
@@ -50,13 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
     
     // Calcular totais
     final ganhosHoje = trabalhosHoje.fold(0.0, (sum, t) => sum + t.ganhos);
-    final gastosHojeTotal = gastosHoje.fold(0.0, (sum, g) => sum + g.valor) +
-                           trabalhosHoje.fold(0.0, (sum, t) => sum + t.combustivel);
+    final gastosHojeTotal = gastosHoje.fold(0.0, (sum, g) => sum + g.valor);
     final manutencoesHojeTotal = manutencoesHoje.fold(0.0, (sum, m) => sum + m.valor);
     
     final ganhosMes = trabalhosMes.fold(0.0, (sum, t) => sum + t.ganhos);
-    final gastosMesTotal = gastosMes.fold(0.0, (sum, g) => sum + g.valor) +
-                          trabalhosMes.fold(0.0, (sum, t) => sum + t.combustivel);
+    final gastosMesTotal = gastosMes.fold(0.0, (sum, g) => sum + g.valor);
     final manutencoesMesTotal = manutencoesMes.fold(0.0, (sum, m) => sum + m.valor);
     
     dadosHoje = {
@@ -267,7 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisSpacing: 12,
           children: [
             _buildNavButton('Registro Diário', Icons.work, () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const TrabalhoScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const RegistroIntegradoScreen()));
             }),
             _buildNavButton('Gastos', Icons.money_off, () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => const GastosScreen()));

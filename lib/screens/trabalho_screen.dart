@@ -18,7 +18,6 @@ class _TrabalhoScreenState extends State<TrabalhoScreen> with SingleTickerProvid
   
   final _ganhosController = TextEditingController();
   final _kmController = TextEditingController();
-  final _combustivelController = TextEditingController();
   final _horasController = TextEditingController();
   final _observacoesController = TextEditingController();
   
@@ -38,7 +37,6 @@ class _TrabalhoScreenState extends State<TrabalhoScreen> with SingleTickerProvid
     _tabController.dispose();
     _ganhosController.dispose();
     _kmController.dispose();
-    _combustivelController.dispose();
     _horasController.dispose();
     _observacoesController.dispose();
     super.dispose();
@@ -56,7 +54,6 @@ class _TrabalhoScreenState extends State<TrabalhoScreen> with SingleTickerProvid
         data: _selectedDate,
         ganhos: double.parse(_ganhosController.text),
         km: double.parse(_kmController.text),
-        combustivel: double.parse(_combustivelController.text),
         horas: double.parse(_horasController.text),
         observacoes: _observacoesController.text,
         dataRegistro: DateTime.now(),
@@ -77,7 +74,6 @@ class _TrabalhoScreenState extends State<TrabalhoScreen> with SingleTickerProvid
   void _clearForm() {
     _ganhosController.clear();
     _kmController.clear();
-    _combustivelController.clear();
     _horasController.clear();
     _observacoesController.clear();
     _selectedDate = DateTime.now();

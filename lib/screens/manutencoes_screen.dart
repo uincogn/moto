@@ -99,19 +99,8 @@ class _ManutencoesScreenState extends State<ManutencoesScreen> with SingleTicker
     );
   }
 
-  double _calcularProximaManutencao(String tipo, double kmAtual) {
-    final intervalos = {
-      'Troca de óleo': 3000,
-      'Revisão geral': 5000,
-      'Pneus': 10000,
-      'Freios': 8000,
-      'Filtros': 6000,
-      'Velas': 12000,
-      'Correia': 15000,
-    };
-    
-    final intervalo = intervalos[tipo] ?? 5000;
-    return kmAtual + intervalo;
+  Future<double> _calcularProximaManutencao(String tipo, double kmAtual) async {
+    return await _db.calcularProximaManutencao(tipo, kmAtual);
   }
 
   @override

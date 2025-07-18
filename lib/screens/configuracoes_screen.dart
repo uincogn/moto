@@ -19,6 +19,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
   
   List<String> _categoriasGastos = [];
   List<String> _tiposManutencao = [];
+  Map<String, int> _intervalosManutencao = {};
   final _novaCategoria = TextEditingController();
   final _novoTipo = TextEditingController();
 
@@ -40,6 +41,7 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
   Future<void> _loadConfiguracoes() async {
     _categoriasGastos = await _db.getCategoriasGastos();
     _tiposManutencao = await _db.getTiposManutencao();
+    _intervalosManutencao = await _db.getAllIntervalosManutencao();
     setState(() {});
   }
 
@@ -70,6 +72,9 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
     if (_novoTipo.text.isNotEmpty) {
       _tiposManutencao.add(_novoTipo.text);
       await _db.setTiposManutencao(_tiposManutencao);
+      // Adicionar intervalo padrão de 5000 km para o novo tipo
+      await _db.setIntervaloManutencao(_novoTipo.text, 5000);
+      _intervalosManutencao[_novoTipo.text] = 5000;
       _novoTipo.clear();
       setState(() {});
       if (!context.mounted) return;
@@ -82,10 +87,60 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
   Future<void> _removerTipo(String tipo) async {
     _tiposManutencao.remove(tipo);
     await _db.setTiposManutencao(_tiposManutencao);
+    _intervalosManutencao.remove(tipo);
     setState(() {});
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Tipo removido com sucesso!')),
+    );
+  }
+
+  Future<void> _editarIntervaloManutencao(String tipo, int intervaloAtual) async {
+    final TextEditingController controller = TextEditingController(text: intervaloAtual.toString());
+    
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Editar Intervalo - $tipo'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Defina o intervalo em quilômetros para $tipo:'),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: controller,
+              decoration: const InputDecoration(
+                labelText: 'Intervalo (km)',
+                border: OutlineInputBorder(),
+                suffixText: 'km',
+              ),
+              keyboardType: TextInputType.number,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final novoIntervalo = int.tryParse(controller.text);
+              if (novoIntervalo != null && novoIntervalo > 0) {
+                await _db.setIntervaloManutencao(tipo, novoIntervalo);
+                _intervalosManutencao[tipo] = novoIntervalo;
+                setState(() {});
+                Navigator.pop(context);
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Intervalo de $tipo atualizado para $novoIntervalo km')),
+                );
+              }
+            },
+            child: const Text('Salvar'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -421,6 +476,43 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> with SingleTi
               );
             }).toList(),
           ),
+          
+          const SizedBox(height: 32),
+          
+          // Intervalos de Manutenção Personalizáveis
+          const Text(
+            'Intervalos de Manutenção (km)',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          
+          if (_intervalosManutencao.isEmpty)
+            const Card(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  'Carregando intervalos de manutenção...',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
+            )
+          else
+            Column(
+              children: _intervalosManutencao.entries.map((entry) {
+                return Card(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: ListTile(
+                    leading: const Icon(Icons.settings, color: AppTheme.primaryColor),
+                    title: Text(entry.key),
+                    subtitle: Text('Intervalo: ${entry.value} km'),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.edit, color: AppTheme.secondaryColor),
+                      onPressed: () => _editarIntervaloManutencao(entry.key, entry.value),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
         ],
       ),
     );

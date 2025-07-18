@@ -22,8 +22,9 @@ class DatabaseService {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _createDB,
+      onUpgrade: _upgradeDB,
     );
   }
 
@@ -35,7 +36,6 @@ class DatabaseService {
         data TEXT NOT NULL,
         ganhos REAL NOT NULL,
         km REAL NOT NULL,
-        combustivel REAL NOT NULL,
         horas REAL NOT NULL,
         observacoes TEXT,
         data_registro TEXT NOT NULL
@@ -76,6 +76,15 @@ class DatabaseService {
       )
     ''');
 
+    // Tabela de intervalos de manutenção personalizáveis
+    await db.execute('''
+      CREATE TABLE intervalos_manutencao (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        tipo TEXT UNIQUE NOT NULL,
+        intervalo_km INTEGER NOT NULL DEFAULT 5000
+      )
+    ''');
+
     // Inserir configurações padrão
     await _insertDefaultConfig(db);
   }
@@ -110,6 +119,93 @@ class DatabaseService {
       'chave': 'tipos_manutencao',
       'valor': defaultMaintenanceTypes.join(','),
     });
+
+    // Inserir intervalos padrão de manutenção
+    final defaultIntervals = {
+      'Troca de óleo': 3000,
+      'Revisão geral': 5000,
+      'Pneus': 10000,
+      'Freios': 8000,
+      'Filtros': 6000,
+      'Velas': 12000,
+      'Correia': 15000,
+      'Relação': 5000,
+      'Óleo de freio': 5000,
+      'Outros': 5000,
+    };
+
+    for (var entry in defaultIntervals.entries) {
+      await db.insert('intervalos_manutencao', {
+        'tipo': entry.key,
+        'intervalo_km': entry.value,
+      });
+    }
+  }
+
+  Future _upgradeDB(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      // Migração para versão 2: Remover coluna combustível e adicionar tabela de intervalos
+      
+      // Criar nova tabela de intervalos de manutenção
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS intervalos_manutencao (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          tipo TEXT UNIQUE NOT NULL,
+          intervalo_km INTEGER NOT NULL DEFAULT 5000
+        )
+      ''');
+
+      // Verificar se a coluna combustível existe na tabela trabalho
+      var tableInfo = await db.rawQuery("PRAGMA table_info(trabalho)");
+      bool hasCombustivelColumn = tableInfo.any((column) => column['name'] == 'combustivel');
+
+      if (hasCombustivelColumn) {
+        // Migrar dados para nova estrutura (sem coluna combustível)
+        await db.execute('''
+          CREATE TABLE trabalho_new (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            data TEXT NOT NULL,
+            ganhos REAL NOT NULL,
+            km REAL NOT NULL,
+            horas REAL NOT NULL,
+            observacoes TEXT,
+            data_registro TEXT NOT NULL
+          )
+        ''');
+
+        // Copiar dados excluindo a coluna combustível
+        await db.execute('''
+          INSERT INTO trabalho_new (id, data, ganhos, km, horas, observacoes, data_registro)
+          SELECT id, data, ganhos, km, horas, observacoes, data_registro FROM trabalho
+        ''');
+
+        // Remover tabela antiga e renomear nova
+        await db.execute('DROP TABLE trabalho');
+        await db.execute('ALTER TABLE trabalho_new RENAME TO trabalho');
+      }
+
+      // Inserir intervalos padrão de manutenção se não existirem
+      final defaultIntervals = {
+        'Troca de óleo': 3000,
+        'Revisão geral': 5000,
+        'Pneus': 10000,
+        'Freios': 8000,
+        'Filtros': 6000,
+        'Velas': 12000,
+        'Correia': 15000,
+        'Relação': 5000,
+        'Óleo de freio': 5000,
+        'Outros': 5000,
+      };
+
+      for (var entry in defaultIntervals.entries) {
+        await db.insert(
+          'intervalos_manutencao',
+          {'tipo': entry.key, 'intervalo_km': entry.value},
+          conflictAlgorithm: ConflictAlgorithm.ignore,
+        );
+      }
+    }
   }
 
   Future<void> init() async {
@@ -321,6 +417,46 @@ class DatabaseService {
       orderBy: 'data DESC',
     );
     return maps.map((map) => TrabalhoModel.fromMap(map)).toList();
+  }
+
+  // Métodos para intervalos de manutenção
+  Future<int> getIntervaloManutencao(String tipo) async {
+    final db = await database;
+    final maps = await db.query(
+      'intervalos_manutencao',
+      where: 'tipo = ?',
+      whereArgs: [tipo],
+    );
+    
+    if (maps.isNotEmpty) {
+      return maps.first['intervalo_km'] as int;
+    }
+    return 5000; // Valor padrão
+  }
+
+  Future<void> setIntervaloManutencao(String tipo, int intervalokm) async {
+    final db = await database;
+    await db.insert(
+      'intervalos_manutencao',
+      {'tipo': tipo, 'intervalo_km': intervalokm},
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<Map<String, int>> getAllIntervalosManutencao() async {
+    final db = await database;
+    final maps = await db.query('intervalos_manutencao');
+    
+    Map<String, int> intervalos = {};
+    for (var map in maps) {
+      intervalos[map['tipo'] as String] = map['intervalo_km'] as int;
+    }
+    return intervalos;
+  }
+
+  Future<double> calcularProximaManutencao(String tipo, double kmAtual) async {
+    final intervalo = await getIntervaloManutencao(tipo);
+    return kmAtual + intervalo;
   }
 
   Future<List<GastoModel>> getGastosByPeriod(DateTime start, DateTime end) async {
