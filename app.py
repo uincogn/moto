@@ -44,15 +44,17 @@ st.markdown("""
 
 ### 🔧 Melhorias Técnicas
 - **Modelo Atualizado**: `TrabalhoModel` sem campo combustível
-- **Navegação**: Home screen agora aponta para o registro integrado
+- **Navegação Simplificada**: Home screen removeu botões separados de Gastos/Manutenções
+- **Registro Integrado**: Única tela para trabalho, gastos e manutenções
 - **Performance**: Métodos otimizados para cálculos de manutenção
 
 ## 🚀 Como Usar
 
-1. **Registro Diário**: Acesse via botão na tela inicial
-2. **Gastos**: Use o switch para adicionar gastos ao registro
-3. **Manutenções**: Use o switch para adicionar manutenções ao registro  
+1. **Registro Diário**: Acesse via botão na tela inicial (inclui trabalho, gastos e manutenções)
+2. **Gastos**: Use o switch para adicionar gastos durante o registro diário
+3. **Manutenções**: Use o switch para adicionar manutenções durante o registro diário  
 4. **Configurar Intervalos**: Vá em Configurações > Categorias > Intervalos de Manutenção
+5. **Interface Simplificada**: Botões separados de Gastos/Manutenções removidos da tela inicial
 
 ## 📱 Status do Projeto
 

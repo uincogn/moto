@@ -140,6 +140,12 @@ flutter build apk --release
 - **Migração**: Sistema suporta intervalos dinâmicos via nova tabela
 - **Performance**: Métodos otimizados para cálculos de manutenção
 
+### ✅ Interface Simplificada
+- **Navegação Limpa**: Botões separados de "Gastos" e "Manutenções" removidos da tela inicial
+- **Acesso Integrado**: Gastos e manutenções acessíveis apenas via Registro Diário
+- **UX Melhorada**: 4 botões principais na navegação (Registro, Metas, Relatórios, Configurações)
+- **Fluxo Unificado**: Uma única tela para todas as operações diárias
+
 ## 🚀 Próximos Passos
 
 ### Para Implementar

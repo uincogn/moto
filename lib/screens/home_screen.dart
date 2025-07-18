@@ -5,8 +5,6 @@ import '../theme/app_theme.dart';
 import '../widgets/modern_card.dart';
 import '../widgets/animated_counter.dart';
 import 'registro_integrado_screen.dart';
-import 'gastos_screen.dart';
-import 'manutencoes_screen.dart';
 import 'relatorios_screen.dart';
 import 'goals_screen.dart';
 import 'configuracoes_screen.dart';
@@ -267,12 +265,6 @@ class _HomeScreenState extends State<HomeScreen> {
             _buildNavButton('Registro Diário', Icons.work, () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => const RegistroIntegradoScreen()));
             }),
-            _buildNavButton('Gastos', Icons.money_off, () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const GastosScreen()));
-            }, color: AppTheme.errorColor),
-            _buildNavButton('Manutenções', Icons.build, () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const ManutencoesScreen()));
-            }, color: AppTheme.warningColor),
             _buildNavButton('Metas', Icons.emoji_events, () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => const GoalsScreen()));
             }, color: AppTheme.accentColor),
