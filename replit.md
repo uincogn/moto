@@ -146,6 +146,12 @@ flutter build apk --release
 - **UX Melhorada**: 4 botões principais na navegação (Registro, Metas, Relatórios, Configurações)
 - **Fluxo Unificado**: Uma única tela para todas as operações diárias
 
+### ✅ Correção Crítica: Filtros de Data
+- **Problema Identificado**: Dados de hoje não apareciam nos cartões da tela inicial
+- **Causa**: Incompatibilidade entre formato de data salvo vs. formato de busca
+- **Solução**: Padronização para salvar apenas YYYY-MM-DD em todos os modelos
+- **Resultado**: Cartões "Ganhos Hoje", "Gastos Hoje" e "Líquido Hoje" funcionam corretamente
+
 ## 🚀 Próximos Passos
 
 ### Para Implementar

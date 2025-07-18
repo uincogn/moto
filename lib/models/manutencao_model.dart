@@ -20,7 +20,7 @@ class ManutencaoModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'data': data.toIso8601String(),
+      'data': data.toIso8601String().split('T')[0], // Salvar apenas a data YYYY-MM-DD
       'tipo': tipo,
       'valor': valor,
       'km_atual': kmAtual,

@@ -234,17 +234,6 @@ class DatabaseService {
       whereArgs: whereArgs.isNotEmpty ? whereArgs : null,
       orderBy: 'data DESC',
     );
-    
-    // Debug log
-    if (dataInicio != null && dataFim != null) {
-      print('=== DEBUG DATABASE TRABALHOS ===');
-      print('Query WHERE: $where');
-      print('Query Args: $whereArgs');
-      print('Resultados encontrados: ${maps.length}');
-      if (maps.isNotEmpty) {
-        print('Primeira data encontrada: ${maps.first['data']}');
-      }
-    }
 
     return List.generate(maps.length, (i) => TrabalhoModel.fromMap(maps[i]));
   }

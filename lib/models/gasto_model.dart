@@ -18,7 +18,7 @@ class GastoModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'data': data.toIso8601String(),
+      'data': data.toIso8601String().split('T')[0], // Salvar apenas a data YYYY-MM-DD
       'categoria': categoria,
       'valor': valor,
       'descricao': descricao,
