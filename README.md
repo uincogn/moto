@@ -311,13 +311,99 @@ FASE 4 - Refino e Expansão:
 - **Codemagic CI/CD**: Build automático app + backend
 - **Custos iniciais**: ~R$ 0-50/mês (planos gratuitos)
 
+### 🏗️ **BACKEND NO MESMO REPOSITÓRIO**
+
+#### **Estratégia Decidida: Monorepo**
+```
+motouber/
+├── lib/                    # Flutter App (atual)
+├── backend/               # Backend API (novo)
+│   ├── src/
+│   │   ├── routes/        # Rotas da API
+│   │   ├── models/        # Modelos de dados
+│   │   ├── services/      # Lógica de negócio
+│   │   └── middleware/    # Autenticação, CORS
+│   ├── package.json       # Dependências Node.js
+│   └── server.js          # Servidor principal
+├── android/               # Config Android
+└── README.md             # Documentação completa
+```
+
+#### **Vantagens do Monorepo**
+- **Desenvolvimento unificado**: Tudo em um lugar
+- **Builds separados**: APK independente do backend
+- **Deploy independente**: App e API podem ter deploys diferentes
+- **Migração futura**: Fácil separar depois se necessário
+- **Sincronização**: Mudanças coordenadas entre app e API
+
+#### **Estrutura de Deploy**
+```
+Desenvolvimento:
+- Replit: App Flutter + Backend Node.js
+- Dois comandos separados para testar
+
+Produção:
+- APK: Codemagic (mesmo processo atual)
+- Backend: Replit Deployment (URL fixa para API)
+- Comunicação: App → https://motouber-api.replit.app
+```
+
+#### **Comandos Separados**
+```bash
+# Executar Flutter (atual)
+flutter run --web-port=5000 --web-hostname=0.0.0.0
+
+# Executar Backend (novo)
+cd backend && npm start
+
+# Build APK (atual - sem backend)
+flutter build apk --release
+```
+
+#### **Próxima Implementação**
+
+**FASE 1: Criar Backend (Node.js)**
+```
+backend/
+├── src/
+│   ├── routes/
+│   │   ├── auth.js          # /register, /login
+│   │   ├── premium.js       # /upgrade, /status  
+│   │   └── backup.js        # /upload, /download
+│   ├── middleware/
+│   │   └── auth.js          # JWT validation
+│   ├── models/
+│   │   ├── User.js          # Schema usuário
+│   │   └── Backup.js        # Schema backup
+│   └── services/
+│       ├── database.js      # PostgreSQL connection
+│       └── payment.js       # PagSeguro integration
+├── package.json
+└── server.js                # Express app
+```
+
+**FASE 2: Integrar no App**
+```
+lib/services/
+├── api_service.dart         # HTTP calls para backend
+├── auth_service.dart        # Login/cadastro
+└── premium_service.dart     # Controle Premium
+```
+
+**FASE 3: Deploy Separado**
+```
+- APK: Mesmo processo Codemagic atual
+- Backend: Replit Autoscale Deployment
+- Comunicação: App aponta para URL do backend
+```
+
 ### 📝 **Próximas Decisões Necessárias**
 
-1. **Escolher stack backend** (Node.js recomendado)
+1. **Escolher stack backend** (Node.js + Express recomendado)
 2. **Definir preços Premium** (sugestão: R$ 9,90/mês)
 3. **Mapear recursos Free vs Premium**
-4. **Decidir ordem implementação** (backend primeiro)
-5. **Configurar repositórios** (separados recomendado)
+4. **Implementar backend na pasta dedicada**
+5. **Manter builds separados** (APK independente)
 
 ---
 
