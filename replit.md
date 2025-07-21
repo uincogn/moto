@@ -1,4 +1,4 @@
-# Motouber - Reescrito Completamente em Flutter/Dart
+# KM$ - Reescrito Completamente em Flutter/Dart
 
 ## 📋 Visão Geral
 Sistema de controle financeiro para motoristas de aplicativo reescrito completamente em Flutter/Dart, eliminando toda dependência Python/Streamlit.
@@ -202,6 +202,30 @@ flutter build apk --release
 - Sem acesso à internet desnecessário
 
 ## 📝 Mudanças Recentes
+
+### 2025-01-21 - ✅ REBRAND + DECISÕES CRÍTICAS: KM$ e HTTPS Implementados
+- ✅ **REBRAND COMPLETO:**
+  - ✅ **Nome**: Motouber → KM$ (todos os arquivos atualizados)
+  - ✅ **Backend**: Renomeado para km_dollar_backend
+  - ✅ **URLs**: api.kmdollar.com preparado
+  - ✅ **Identidade**: Pronto para nova marca
+- ✅ **HTTPS OBRIGATÓRIO:**
+  - ✅ **Headers de Segurança**: HSTS, XSS Protection, Content-Type
+  - ✅ **SSL/TLS**: Configuração preparada no .env
+  - ✅ **Enforcement**: Middleware para forçar HTTPS
+- ✅ **FLUXO DE USUÁRIO DEFINIDO:**
+  - ✅ **Login Pós-Compra**: Cliente faz login após criar conta
+  - ✅ **Multi-Device**: Sincronização entre aparelhos garantida
+  - ✅ **Migração Dados**: Preserva dados em troca de aparelho
+- ✅ **ESTRATÉGIA DE CONFLITOS:**
+  - ✅ **Mesclagem Inteligente**: Sistema de merge implementado
+  - ✅ **Orientações Claras**: Avisos para backup saudável
+  - ✅ **Best Practices**: Guias para usuário final
+- ✅ **OPÇÕES BANCO DADOS:**
+  - ✅ **Análise Completa**: 6 opções detalhadas (PostgreSQL, MongoDB, Firebase, SQLite+Cloud, Supabase, PlanetScale)
+  - ✅ **Recomendação**: Supabase como escolha ideal para MVP
+  - ✅ **Custos Mapeados**: Projeções para 1000+ usuários
+- ⏳ **PENDENTE**: Decisão final sobre qual banco de dados usar
 
 ### 2025-01-21 - ✅ MONOREPO ORGANIZADO: Estrutura Limpa Implementada
 - ✅ **REORGANIZAÇÃO COMPLETA:**

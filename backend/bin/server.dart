@@ -11,9 +11,10 @@ import '../lib/routes/premium_routes.dart';
 import '../lib/routes/backup_routes.dart';
 import '../lib/middleware/rate_limiter.dart';
 import '../lib/middleware/error_handler.dart';
+import '../lib/middleware/https_enforcer.dart';
 import '../lib/services/database_service.dart';
 
-final _logger = Logger('MotouberServer');
+final _logger = Logger('KMDollarServer');
 
 void main() async {
   // Configurar logging
@@ -53,6 +54,7 @@ void main() async {
   // Configurar middleware stack
   final handler = Pipeline()
     .addMiddleware(logRequests())
+    .addMiddleware(httpsEnforcerMiddleware()) // HTTPS primeiro
     .addMiddleware(corsHeaders())
     .addMiddleware(rateLimiterMiddleware())
     .addMiddleware(errorHandler())
@@ -61,8 +63,9 @@ void main() async {
   // Iniciar servidor
   final server = await serve(handler, host, port);
   
-  _logger.info('🚀 Motouber Backend Dart rodando em ${server.address.host}:${server.port}');
-  _logger.info('📡 Health check: http://${server.address.host}:${server.port}/health');
+  _logger.info('🚀 KM$ Backend Dart rodando em ${server.address.host}:${server.port}');
+  _logger.info('📡 Health check: https://${server.address.host}:${server.port}/health');
+  _logger.info('🔒 HTTPS OBRIGATÓRIO - Todas as comunicações devem usar SSL/TLS');
   
   // Graceful shutdown
   ProcessSignal.sigint.watch().listen((_) async {
@@ -75,8 +78,14 @@ void main() async {
 
 Response _healthHandler(Request request) {
   return Response.ok(
-    '{"status": "OK", "message": "Motouber Backend Dart funcionando", "timestamp": "${DateTime.now().toIso8601String()}"}',
-    headers: {'Content-Type': 'application/json'},
+    '{"status": "OK", "message": "KM$ Backend Dart funcionando", "timestamp": "${DateTime.now().toIso8601String()}", "https_required": true}',
+    headers: {
+      'Content-Type': 'application/json',
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+      'X-XSS-Protection': '1; mode=block'
+    },
   );
 }
 

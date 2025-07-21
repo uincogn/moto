@@ -1,26 +1,26 @@
-# 🏗️ Motouber - Monorepo Organizado
+# 🏗️ KM$ - Monorepo Organizado
 
 ## 📋 Visão Geral
 
-Monorepo organizado do Motouber, sistema de controle financeiro para motoristas de aplicativo, dividido em duas partes principais:
+Monorepo organizado do KM$, sistema de controle financeiro para motoristas de aplicativo, dividido em duas partes principais:
 
 - **Frontend**: Aplicativo Flutter para Android
-- **Backend**: API REST em Node.js para funcionalidades Premium
+- **Backend**: API REST em Dart para funcionalidades Premium
 
 ## 📁 Estrutura do Projeto
 
 ```
-motouber/
+km$/
 ├── frontend/              # Aplicativo Flutter (Android)
 │   ├── lib/              # Código Dart do app
 │   ├── android/          # Configurações Android
 │   ├── assets/           # Recursos (imagens, ícones)
 │   ├── pubspec.yaml      # Dependências Flutter
 │   └── README.md         # Documentação Frontend
-├── backend/              # API Node.js para Premium
-│   ├── src/              # Código fonte da API
-│   ├── package.json      # Dependências Node.js
-│   ├── server.js         # Servidor principal
+├── backend/              # API Dart para Premium
+│   ├── lib/              # Código fonte da API
+│   ├── bin/              # Executável servidor
+│   ├── pubspec.yaml      # Dependências Dart
 │   └── README.md         # Documentação Backend
 ├── README.md             # Este arquivo (visão geral)
 └── replit.md             # Documentação técnica detalhada
@@ -119,6 +119,8 @@ Por enquanto, mantemos organizados em pastas separadas para facilitar desenvolvi
 - [Frontend README](frontend/README.md) - Documentação do app Flutter
 - [Backend README](backend/README.md) - Documentação da API Dart
 - [CONFLITOS E QUESTÕES](CONFLITOS_E_QUESTOES.md) - Questões críticas para debate
+- [DECISÕES TOMADAS](DECISOES_TOMADAS.md) - Decisões confirmadas pelo usuário  
+- [OPÇÕES BANCO DADOS](OPCOES_BANCO_DADOS.md) - Análise detalhada de opções de BD
 - [replit.md](replit.md) - Histórico técnico e decisões arquiteturais
 
 ---

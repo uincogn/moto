@@ -1,0 +1,51 @@
+import 'package:shelf/shelf.dart';
+import 'package:logging/logging.dart';
+
+final _logger = Logger('HTTPSEnforcer');
+
+/// Middleware para forçar HTTPS em todas as requisições
+Middleware httpsEnforcerMiddleware() {
+  return (Handler innerHandler) {
+    return (Request request) async {
+      // Verificar se a requisição é HTTPS
+      final isHttps = request.headers['x-forwarded-proto'] == 'https' ||
+                      request.url.scheme == 'https' ||
+                      request.headers['x-forwarded-ssl'] == 'on';
+      
+      // Em desenvolvimento, permitir HTTP local
+      final isDevelopment = 
+        request.headers['host']?.contains('localhost') == true ||
+        request.headers['host']?.contains('127.0.0.1') == true ||
+        request.headers['host']?.contains('replit.') == true;
+      
+      if (!isHttps && !isDevelopment) {
+        _logger.warning('Requisição HTTP rejeitada de ${request.headers['host']}');
+        
+        return Response.movedPermanently(
+          'https://${request.headers['host']}${request.url.path}${request.url.hasQuery ? '?${request.url.query}' : ''}',
+          headers: {
+            'Content-Type': 'application/json',
+            'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+          },
+          body: '{"error": "HTTPS_REQUIRED", "message": "Esta API requer HTTPS para máxima segurança"}'
+        );
+      }
+      
+      // Prosseguir com a requisição, adicionando headers de segurança
+      final response = await innerHandler(request);
+      
+      // Adicionar headers de segurança em todas as respostas
+      final secureHeaders = Map<String, String>.from(response.headers ?? {})
+        ..addAll({
+          'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+          'X-Content-Type-Options': 'nosniff',
+          'X-Frame-Options': 'DENY',
+          'X-XSS-Protection': '1; mode=block',
+          'Referrer-Policy': 'strict-origin-when-cross-origin',
+          'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none';",
+        });
+      
+      return response.change(headers: secureHeaders);
+    };
+  };
+}
