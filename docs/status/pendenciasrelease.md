@@ -102,16 +102,22 @@ curl -X GET https://api.kmdollar.com/api/premium/status \
 
 ---
 
-## ⚡ Próximos Passos (Ordem)
+## ⚡ Próximos Passos (Ordem Crítica Atualizada)
 
-1. ✅ **Executar índices SQL** (5 min)
-2. 🔧 **Configurar SSL** (30 min)
-3. 💳 **Configurar gateway pagamento** (1 hora)
-4. 🌐 **Configurar domínio** (30 min)
-5. 🧪 **Testes integrados** (1 hora)
-6. 🚀 **Deploy produção** (30 min)
+### ⚠️ **LIMITAÇÃO IMPORTANTE**
+**Impossível testar SDKs no Replit**: Flutter e Dart não funcionam neste ambiente.
+**Processo obrigatório**: Desenvolvimento → GitHub → Codemagic → APK real
 
-**Tempo total estimado: ~4 horas**
+### 🔥 **ORDEM CRÍTICA**
+1. 🚀 **Deploy Backend** (30 min) - Replit/Railway com HTTPS
+2. 🔗 **Integração Frontend-Backend** (2 horas) - Conectar ApiService 
+3. 💳 **Ativar Gateway Pagamento** (1 hora) - PagSeguro/Stripe funcional
+4. 📱 **Build APK via Codemagic** (30 min) - Teste em device real
+5. 🧪 **Testes Integrados Completos** (1 hora) - Validação total
+6. ✅ **Configurações Finais** (30 min) - SSL, domínio, otimizações
+
+**Tempo total estimado: ~5.5 horas**
+**Meta: App KM$ 100% funcional até final da semana**
 
 ---
 

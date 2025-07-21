@@ -1,292 +1,272 @@
 import 'dart:convert';
-import 'package:motouber/services/api_service.dart';
-import 'package:motouber/services/database_service.dart';
-import 'package:motouber/services/premium_service.dart';
-import 'package:motouber/models/trabalho_model.dart';
-import 'package:motouber/models/gasto_model.dart';
-import 'package:motouber/models/manutencao_model.dart';
+import 'package:flutter/foundation.dart';
+import 'api_service.dart';
+import 'database_service.dart';
+import '../models/trabalho_model.dart';
+import '../models/gasto_model.dart';
+import '../models/manutencao_model.dart';
 
-class SyncService {
-  static const String _lastSyncKey = 'last_sync_timestamp';
+/// Serviço de sincronização entre SQLite local e backend
+/// Gerencia upload/download de dados com estratégia last-write-wins
+class SyncService extends ChangeNotifier {
+  static final SyncService instance = SyncService._internal();
+  SyncService._internal();
+
+  final DatabaseService _db = DatabaseService.instance;
   
-  // Sincronização completa
-  static Future<SyncResult> syncData({
-    bool forceFullSync = false,
-  }) async {
-    try {
-      // Verificar se usuário é Premium
-      final premiumStatus = await PremiumService.checkPremiumStatus();
-      if (!premiumStatus.isPremium) {
-        return SyncResult(
-          success: false,
-          message: 'Sincronização disponível apenas para usuários Premium',
-          syncType: SyncType.blocked,
-        );
-      }
+  bool _isSyncing = false;
+  String _syncStatus = 'Aguardando';
+  double _syncProgress = 0.0;
+  DateTime? _lastSyncTime;
 
-      // Verificar conectividade
-      if (!premiumStatus.isOnline) {
-        return SyncResult(
-          success: false,
-          message: 'Sem conexão com a internet',
-          syncType: SyncType.offline,
-        );
-      }
+  // Getters
+  bool get isSyncing => _isSyncing;
+  String get syncStatus => _syncStatus;
+  double get syncProgress => _syncProgress;
+  DateTime? get lastSyncTime => _lastSyncTime;
 
-      // Verificar se usuário está logado
-      if (!await ApiService.isLoggedIn()) {
-        return SyncResult(
-          success: false,
-          message: 'Usuário não está logado',
-          syncType: SyncType.authRequired,
-        );
-      }
-
-      SyncResult result;
-      if (forceFullSync) {
-        result = await _performFullSync();
-      } else {
-        result = await _performIncrementalSync();
-      }
-
-      if (result.success) {
-        await PremiumService.markLastSync();
-      }
-
-      return result;
-    } catch (e) {
+  /// Sincronização completa (upload + download)
+  Future<SyncResult> fullSync() async {
+    if (_isSyncing) {
       return SyncResult(
         success: false,
-        message: 'Erro durante sincronização: $e',
-        syncType: SyncType.error,
+        message: 'Sincronização já em andamento',
       );
     }
-  }
 
-  // Sincronização completa (upload + download)
-  static Future<SyncResult> _performFullSync() async {
+    _setSyncState(true, 'Iniciando sincronização...', 0.0);
+
     try {
-      final db = DatabaseService.instance;
-      
-      // 1. Fazer backup dos dados locais
-      final localData = await _exportLocalData();
-      
-      // 2. Fazer upload dos dados locais
-      final uploadResult = await ApiService.uploadBackup(localData);
-      if (!uploadResult.success) {
-        return SyncResult(
-          success: false,
-          message: 'Falha no upload: ${uploadResult.message}',
-          syncType: SyncType.uploadFailed,
-        );
+      // 1. Verificar se está logado
+      final isLoggedIn = await ApiService.isLoggedIn();
+      if (!isLoggedIn) {
+        throw Exception('Usuário não está logado');
       }
 
-      // 3. Baixar dados do servidor
-      final downloadResult = await ApiService.downloadBackup();
-      if (!downloadResult.success) {
-        return SyncResult(
-          success: false,
-          message: 'Falha no download: ${downloadResult.message}',
-          syncType: SyncType.downloadFailed,
-        );
+      // 2. Verificar conectividade
+      _setSyncState(true, 'Verificando conexão...', 0.1);
+      final isOnline = await ApiService.isOnline();
+      if (!isOnline) {
+        throw Exception('Sem conexão com o servidor');
       }
 
-      // 4. Mesclar dados (resolver conflitos)
-      if (downloadResult.data != null && downloadResult.data!['data'] != null) {
-        final serverData = downloadResult.data!['data'] as Map<String, dynamic>;
-        final mergeResult = await _mergeData(localData['data'], serverData);
-        
-        return SyncResult(
-          success: true,
-          message: 'Sincronização completa realizada com sucesso',
-          syncType: SyncType.fullSync,
-          conflictsResolved: mergeResult.conflictsCount,
-          recordsSynced: mergeResult.recordsProcessed,
-        );
-      }
+      // 3. Upload de dados locais
+      _setSyncState(true, 'Enviando dados...', 0.2);
+      await _uploadAllData();
+
+      // 4. Download de dados do servidor
+      _setSyncState(true, 'Baixando dados...', 0.6);
+      await _downloadAllData();
+
+      // 5. Finalizar
+      _lastSyncTime = DateTime.now();
+      _setSyncState(false, 'Sincronização concluída', 1.0);
 
       return SyncResult(
         success: true,
-        message: 'Upload realizado com sucesso',
-        syncType: SyncType.uploadOnly,
+        message: 'Dados sincronizados com sucesso',
+        syncTime: _lastSyncTime!,
       );
+
     } catch (e) {
+      _setSyncState(false, 'Erro: $e', 0.0);
       return SyncResult(
         success: false,
-        message: 'Erro na sincronização completa: $e',
-        syncType: SyncType.error,
+        message: 'Erro na sincronização: $e',
       );
     }
   }
 
-  // Sincronização incremental (apenas mudanças)
-  static Future<SyncResult> _performIncrementalSync() async {
-    // Por enquanto, usar sincronização completa
-    // TODO: Implementar lógica incremental baseada em timestamps
-    return await _performFullSync();
-  }
+  /// Upload apenas (enviar dados locais para servidor)
+  Future<SyncResult> uploadOnly() async {
+    if (_isSyncing) {
+      return SyncResult(success: false, message: 'Sincronização em andamento');
+    }
 
-  // Exportar dados locais
-  static Future<Map<String, dynamic>> _exportLocalData() async {
-    final db = DatabaseService.instance;
-    
-    final trabalhos = await db.getAllTrabalhos();
-    final gastos = await db.getAllGastos();
-    final manutencoes = await db.getAllManutencoes();
-
-    return {
-      'version': '2.0',
-      'export_date': DateTime.now().toIso8601String(),
-      'data': {
-        'trabalhos': trabalhos.map((t) => t.toMap()).toList(),
-        'gastos': gastos.map((g) => g.toMap()).toList(),
-        'manutencoes': manutencoes.map((m) => m.toMap()).toList(),
-      },
-      'stats': {
-        'total_trabalhos': trabalhos.length,
-        'total_gastos': gastos.length,
-        'total_manutencoes': manutencoes.length,
-      }
-    };
-  }
-
-  // Mesclar dados locais e do servidor
-  static Future<MergeResult> _mergeData(
-    Map<String, dynamic> localData,
-    Map<String, dynamic> serverData,
-  ) async {
-    int conflictsCount = 0;
-    int recordsProcessed = 0;
+    _setSyncState(true, 'Enviando dados...', 0.0);
 
     try {
-      final db = DatabaseService.instance;
+      await _uploadAllData();
+      _setSyncState(false, 'Dados enviados', 1.0);
 
-      // Mesclar trabalhos
-      if (serverData['trabalhos'] != null) {
-        final serverTrabalhos = (serverData['trabalhos'] as List)
-            .map((data) => TrabalhoModel.fromMap(data))
-            .toList();
-        
-        for (final trabalho in serverTrabalhos) {
-          final existing = await db.getTrabalhoByDate(trabalho.data);
-          if (existing != null) {
-            // Conflito detectado - usar "last write wins"
-            if (trabalho.dataRegistro.isAfter(existing.dataRegistro)) {
-              await db.updateTrabalho(trabalho);
-              conflictsCount++;
-            }
-          } else {
-            await db.insertTrabalho(trabalho);
-          }
-          recordsProcessed++;
-        }
-      }
-
-      // Mesclar gastos
-      if (serverData['gastos'] != null) {
-        final serverGastos = (serverData['gastos'] as List)
-            .map((data) => GastoModel.fromMap(data))
-            .toList();
-        
-        for (final gasto in serverGastos) {
-          // Para gastos, inserir sempre (podem haver múltiplos por dia)
-          await db.insertGasto(gasto);
-          recordsProcessed++;
-        }
-      }
-
-      // Mesclar manutenções
-      if (serverData['manutencoes'] != null) {
-        final serverManutencoes = (serverData['manutencoes'] as List)
-            .map((data) => ManutencaoModel.fromMap(data))
-            .toList();
-        
-        for (final manutencao in serverManutencoes) {
-          // Para manutenções, inserir sempre
-          await db.insertManutencao(manutencao);
-          recordsProcessed++;
-        }
-      }
-
-      return MergeResult(
-        conflictsCount: conflictsCount,
-        recordsProcessed: recordsProcessed,
+      return SyncResult(
+        success: true,
+        message: 'Dados enviados com sucesso',
+        syncTime: DateTime.now(),
       );
     } catch (e) {
-      throw Exception('Erro ao mesclar dados: $e');
+      _setSyncState(false, 'Erro no envio: $e', 0.0);
+      return SyncResult(success: false, message: 'Erro no envio: $e');
     }
   }
 
-  // Verificar se precisa sincronizar
-  static Future<bool> needsSync() async {
-    final lastSync = await PremiumService.getLastSync();
-    if (lastSync == null) return true;
+  /// Download apenas (baixar dados do servidor)
+  Future<SyncResult> downloadOnly() async {
+    if (_isSyncing) {
+      return SyncResult(success: false, message: 'Sincronização em andamento');
+    }
 
-    final now = DateTime.now();
-    final difference = now.difference(lastSync);
+    _setSyncState(true, 'Baixando dados...', 0.0);
 
-    // Sincronizar se passou mais de 1 hora
-    return difference.inHours >= 1;
+    try {
+      await _downloadAllData();
+      _setSyncState(false, 'Dados baixados', 1.0);
+
+      return SyncResult(
+        success: true,
+        message: 'Dados baixados com sucesso',
+        syncTime: DateTime.now(),
+      );
+    } catch (e) {
+      _setSyncState(false, 'Erro no download: $e', 0.0);
+      return SyncResult(success: false, message: 'Erro no download: $e');
+    }
   }
 
-  // Status da sincronização
-  static Future<Map<String, dynamic>> getSyncStatus() async {
-    final isPremium = await PremiumService.isPremium();
-    final lastSync = await PremiumService.getLastSync();
-    final needsSync = await SyncService.needsSync();
-    final isOnline = await ApiService.isOnline();
+  /// Upload de todos os dados locais
+  Future<void> _uploadAllData() async {
+    // Upload trabalhos
+    _setSyncState(true, 'Enviando trabalhos...', 0.2);
+    final trabalhos = await _db.getTrabalhos();
+    final trabalhosJson = trabalhos.map((t) => t.toJson()).toList();
     
-    return {
-      'is_premium': isPremium,
-      'can_sync': isPremium && isOnline,
-      'last_sync': lastSync?.toIso8601String(),
-      'needs_sync': needsSync,
-      'is_online': isOnline,
-      'sync_available': isPremium,
-    };
+    final trabalhoResult = await ApiService.uploadTrabalhos(trabalhosJson);
+    if (!trabalhoResult.success) {
+      throw Exception('Erro ao enviar trabalhos: ${trabalhoResult.message}');
+    }
+
+    // Upload gastos
+    _setSyncState(true, 'Enviando gastos...', 0.35);
+    final gastos = await _db.getGastos();
+    final gastosJson = gastos.map((g) => g.toJson()).toList();
+    
+    final gastosResult = await ApiService.uploadGastos(gastosJson);
+    if (!gastosResult.success) {
+      throw Exception('Erro ao enviar gastos: ${gastosResult.message}');
+    }
+
+    // Upload manutenções
+    _setSyncState(true, 'Enviando manutenções...', 0.5);
+    final manutencoes = await _db.getManutencoes();
+    final manutencoesJson = manutencoes.map((m) => m.toJson()).toList();
+    
+    final manutencoesResult = await ApiService.uploadManutencoes(manutencoesJson);
+    if (!manutencoesResult.success) {
+      throw Exception('Erro ao enviar manutenções: ${manutencoesResult.message}');
+    }
+  }
+
+  /// Download de todos os dados do servidor
+  Future<void> _downloadAllData() async {
+    // Download trabalhos
+    _setSyncState(true, 'Baixando trabalhos...', 0.6);
+    final trabalhoResult = await ApiService.downloadTrabalhos();
+    if (trabalhoResult.success && trabalhoResult.data != null) {
+      await _mergeTrabalhos(trabalhoResult.data!['trabalho'] as List);
+    }
+
+    // Download gastos  
+    _setSyncState(true, 'Baixando gastos...', 0.75);
+    final gastosResult = await ApiService.downloadGastos();
+    if (gastosResult.success && gastosResult.data != null) {
+      await _mergeGastos(gastosResult.data!['gastos'] as List);
+    }
+
+    // Download manutenções
+    _setSyncState(true, 'Baixando manutenções...', 0.9);
+    final manutencoesResult = await ApiService.downloadManutencoes();
+    if (manutencoesResult.success && manutencoesResult.data != null) {
+      await _mergeManutencoes(manutencoesResult.data!['manutencoes'] as List);
+    }
+  }
+
+  /// Merge trabalhos com estratégia last-write-wins
+  Future<void> _mergeTrabalhos(List trabalhosList) async {
+    for (final trabalhoData in trabalhosList) {
+      try {
+        final trabalho = TrabalhoModel.fromJson(trabalhoData as Map<String, dynamic>);
+        
+        // Verificar se já existe localmente
+        final existing = await _db.getTrabalhoById(trabalho.id);
+        
+        if (existing == null) {
+          // Novo registro - inserir
+          await _db.insertTrabalho(trabalho);
+        } else {
+          // Registro existe - comparar data de atualização (last-write-wins)
+          if (trabalho.dataRegistro.isAfter(existing.dataRegistro)) {
+            await _db.updateTrabalho(trabalho);
+          }
+        }
+      } catch (e) {
+        print('Erro ao fazer merge de trabalho: $e');
+      }
+    }
+  }
+
+  /// Merge gastos com estratégia last-write-wins
+  Future<void> _mergeGastos(List gastosList) async {
+    for (final gastoData in gastosList) {
+      try {
+        final gasto = GastoModel.fromJson(gastoData as Map<String, dynamic>);
+        
+        final existing = await _db.getGastoById(gasto.id);
+        
+        if (existing == null) {
+          await _db.insertGasto(gasto);
+        } else {
+          if (gasto.dataRegistro.isAfter(existing.dataRegistro)) {
+            await _db.updateGasto(gasto);
+          }
+        }
+      } catch (e) {
+        print('Erro ao fazer merge de gasto: $e');
+      }
+    }
+  }
+
+  /// Merge manutenções com estratégia last-write-wins
+  Future<void> _mergeManutencoes(List manutencoesList) async {
+    for (final manutencaoData in manutencoesList) {
+      try {
+        final manutencao = ManutencaoModel.fromJson(manutencaoData as Map<String, dynamic>);
+        
+        final existing = await _db.getManutencaoById(manutencao.id);
+        
+        if (existing == null) {
+          await _db.insertManutencao(manutencao);
+        } else {
+          if (manutencao.dataRegistro.isAfter(existing.dataRegistro)) {
+            await _db.updateManutencao(manutencao);
+          }
+        }
+      } catch (e) {
+        print('Erro ao fazer merge de manutenção: $e');
+      }
+    }
+  }
+
+  void _setSyncState(bool syncing, String status, double progress) {
+    _isSyncing = syncing;
+    _syncStatus = status;
+    _syncProgress = progress;
+    notifyListeners();
   }
 }
 
 class SyncResult {
   final bool success;
   final String message;
-  final SyncType syncType;
-  final int? conflictsResolved;
-  final int? recordsSynced;
+  final DateTime? syncTime;
 
   SyncResult({
     required this.success,
     required this.message,
-    required this.syncType,
-    this.conflictsResolved,
-    this.recordsSynced,
+    this.syncTime,
   });
 
   @override
   String toString() {
-    return 'SyncResult(success: $success, message: $message, type: $syncType)';
+    return 'SyncResult(success: $success, message: $message, syncTime: $syncTime)';
   }
-}
-
-class MergeResult {
-  final int conflictsCount;
-  final int recordsProcessed;
-
-  MergeResult({
-    required this.conflictsCount,
-    required this.recordsProcessed,
-  });
-}
-
-enum SyncType {
-  blocked,
-  offline,
-  authRequired,
-  error,
-  fullSync,
-  incrementalSync,
-  uploadOnly,
-  downloadOnly,
-  uploadFailed,
-  downloadFailed,
 }

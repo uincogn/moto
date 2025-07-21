@@ -3,9 +3,12 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  // static const String _baseUrl = 'https://api.kmdollar.com'; // Produção  
-  static const String _baseUrl = 'http://localhost:3000'; // Desenvolvimento local
-  // Nota: Backend rodando em localhost:3000 (HTTP para desenvolvimento)
+  // URL do backend - será atualizada quando deployado
+  static const String _baseUrl = 'https://km-dollar-backend.replit.app'; // Produção via Replit Deploy
+  // static const String _baseUrl = 'http://localhost:3000'; // Desenvolvimento local (não funciona no Replit)
+  
+  // IMPORTANTE: Backend deve estar deployado para funcionar
+  // Replit não suporta SDKs locais, apenas via deploy externo
   
   static const String _tokenKey = 'auth_token';
   static const String _userKey = 'user_data';
@@ -214,11 +217,113 @@ class ApiService {
     }
   }
 
-  // Backup
-  static Future<ApiResponse> uploadBackup(Map<String, dynamic> backupData) async {
+  // CRUD APIs - Trabalho
+  static Future<ApiResponse> uploadTrabalhos(List<Map<String, dynamic>> trabalhos) async {
     try {
       final response = await http.post(
-        Uri.parse('$_baseUrl/backup/upload'),
+        Uri.parse('$_baseUrl/api/trabalho/sync'),
+        headers: await _authHeaders,
+        body: jsonEncode({'trabalhos': trabalhos}),
+      );
+
+      return _handleResponse(response);
+    } catch (e) {
+      return ApiResponse(
+        success: false,
+        message: 'Erro ao sincronizar trabalhos: $e',
+      );
+    }
+  }
+
+  static Future<ApiResponse> downloadTrabalhos() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$_baseUrl/api/trabalho/'),
+        headers: await _authHeaders,
+      );
+
+      return _handleResponse(response);
+    } catch (e) {
+      return ApiResponse(
+        success: false,
+        message: 'Erro ao baixar trabalhos: $e',
+      );
+    }
+  }
+
+  // CRUD APIs - Gastos
+  static Future<ApiResponse> uploadGastos(List<Map<String, dynamic>> gastos) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$_baseUrl/api/gastos/sync'),
+        headers: await _authHeaders,
+        body: jsonEncode({'gastos': gastos}),
+      );
+
+      return _handleResponse(response);
+    } catch (e) {
+      return ApiResponse(
+        success: false,
+        message: 'Erro ao sincronizar gastos: $e',
+      );
+    }
+  }
+
+  static Future<ApiResponse> downloadGastos() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$_baseUrl/api/gastos/'),
+        headers: await _authHeaders,
+      );
+
+      return _handleResponse(response);
+    } catch (e) {
+      return ApiResponse(
+        success: false,
+        message: 'Erro ao baixar gastos: $e',
+      );
+    }
+  }
+
+  // CRUD APIs - Manutenções
+  static Future<ApiResponse> uploadManutencoes(List<Map<String, dynamic>> manutencoes) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$_baseUrl/api/manutencao/sync'),
+        headers: await _authHeaders,
+        body: jsonEncode({'manutencoes': manutencoes}),
+      );
+
+      return _handleResponse(response);
+    } catch (e) {
+      return ApiResponse(
+        success: false,
+        message: 'Erro ao sincronizar manutenções: $e',
+      );
+    }
+  }
+
+  static Future<ApiResponse> downloadManutencoes() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$_baseUrl/api/manutencao/'),
+        headers: await _authHeaders,
+      );
+
+      return _handleResponse(response);
+    } catch (e) {
+      return ApiResponse(
+        success: false,
+        message: 'Erro ao baixar manutenções: $e',
+      );
+    }
+  }
+
+  // Backup Completo (todos os dados)
+  static Future<ApiResponse> uploadFullBackup(Map<String, dynamic> backupData) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$_baseUrl/api/backup/upload'),
         headers: await _authHeaders,
         body: jsonEncode(backupData),
       );
@@ -227,15 +332,15 @@ class ApiService {
     } catch (e) {
       return ApiResponse(
         success: false,
-        message: 'Erro de conexão: $e',
+        message: 'Erro no backup completo: $e',
       );
     }
   }
 
-  static Future<ApiResponse> downloadBackup() async {
+  static Future<ApiResponse> downloadFullBackup() async {
     try {
       final response = await http.get(
-        Uri.parse('$_baseUrl/backup/download'),
+        Uri.parse('$_baseUrl/api/backup/download'),
         headers: await _authHeaders,
       );
 
@@ -243,7 +348,7 @@ class ApiService {
     } catch (e) {
       return ApiResponse(
         success: false,
-        message: 'Erro de conexão: $e',
+        message: 'Erro ao baixar backup: $e',
       );
     }
   }

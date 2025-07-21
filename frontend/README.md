@@ -86,27 +86,37 @@ flutter pub get
 flutter doctor  # verificar configuração
 ```
 
-### Executar
+### ⚠️ **LIMITAÇÃO CRÍTICA DO REPLIT**
 ```bash
-# Web (desenvolvimento)
-flutter run --web-port=5000 --web-hostname=0.0.0.0
+# ❌ IMPOSSÍVEL NO REPLIT:
+# flutter pub get
+# flutter run
+# flutter build apk
 
-# Android (device/emulador)
-flutter run
-
-# Debug específico
-flutter run --debug
-flutter run --profile
+# ✅ PROCESSO OBRIGATÓRIO:
+# 1. Editar código no Replit
+# 2. Commit e push para GitHub  
+# 3. Build automático via Codemagic
+# 4. Download APK para teste real
 ```
 
-### Build APK
-```bash
-# Debug
-flutter build apk --debug
+### Build APK (Via Codemagic)
+```yaml
+# ✅ ÚNICO MÉTODO FUNCIONAL:
+# codemagic.yaml já configurado
+# Trigger: push para main/develop
+# Output: APK Android compilado
+# Distribuição: Email automático
+```
 
-# Release
-flutter build apk --release
-# APK gerado em: build/app/outputs/flutter-apk/
+### Teste Local (IMPOSSÍVEL)
+```bash
+# ❌ Flutter SDK não funciona no Replit
+# ❌ Android SDK não disponível
+# ❌ Emuladores não suportados
+
+# ✅ ALTERNATIVA:
+# Testar apenas via APK em device real
 ```
 
 ## 📦 CI/CD Pipeline
