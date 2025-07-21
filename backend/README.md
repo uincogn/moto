@@ -77,22 +77,23 @@ GET  /health              # Status da API
 
 ## 🛠️ Tecnologias
 
-### Stack Principal
-- **Node.js 18+** - Runtime JavaScript
-- **Express.js 4.18+** - Framework web
-- **PostgreSQL** - Banco de dados principal
-- **JWT** - Autenticação stateless
-- **bcryptjs** - Hash de senhas
+### Stack Principal (100% Dart)
+- **Dart 3.0+** - Linguagem unificada com o frontend
+- **Shelf 1.4+** - Framework HTTP server
+- **Shelf Router** - Roteamento de APIs
+- **PostgreSQL** - Banco de dados principal via package postgres
+- **Jose** - JWT para autenticação Dart nativo
 
 ### Segurança
-- **Helmet** - Headers de segurança
-- **CORS** - Controle de acesso
-- **Rate Limiting** - Proteção DDoS
-- **Joi** - Validação de entrada
+- **CORS Headers** - Controle de acesso
+- **Rate Limiting** - Proteção DDoS customizada
+- **Crypto** - Hash de senhas nativo Dart
+- **Logging** - Sistema de logs estruturado
 
 ### Desenvolvimento
-- **Nodemon** - Auto-restart em desenvolvimento
-- **dotenv** - Variáveis de ambiente
+- **DotEnv** - Variáveis de ambiente
+- **Test** - Framework de testes Dart
+- **Lints** - Análise estática de código
 
 ## 🚀 Configuração e Execução
 

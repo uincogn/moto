@@ -100,10 +100,11 @@ flutter build apk --release
 4. **Deploy Produção**: API em hosting definitivo
 
 ### Questões para Debate
-1. **Conflitos Técnicos**: Dart puro vs Node.js backend
-2. **Preços Premium**: Valor da assinatura mensal/anual
-3. **Migração Dados**: Como transferir dados locais para nuvem
-4. **UX Premium**: Experiência de upgrade no app
+1. ✅ **Backend**: Dart puro implementado (Shelf + PostgreSQL)
+2. **Conflitos de Dados**: Sincronização cliente ↔ servidor
+3. **Preços Premium**: Valor da assinatura mensal/anual
+4. **Migração Dados**: Como transferir dados locais para nuvem
+5. **Resolução de Conflitos**: Last-write-wins vs manual vs field-level
 
 ## 🔄 Separação Futura
 
@@ -116,7 +117,8 @@ Por enquanto, mantemos organizados em pastas separadas para facilitar desenvolvi
 ## 📚 Documentação
 
 - [Frontend README](frontend/README.md) - Documentação do app Flutter
-- [Backend README](backend/README.md) - Documentação da API Node.js
+- [Backend README](backend/README.md) - Documentação da API Dart
+- [CONFLITOS E QUESTÕES](CONFLITOS_E_QUESTOES.md) - Questões críticas para debate
 - [replit.md](replit.md) - Histórico técnico e decisões arquiteturais
 
 ---
