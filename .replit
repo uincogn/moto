@@ -2,7 +2,7 @@ modules = ["python-3.11", "flutter"]
 
 [nix]
 channel = "stable-24_05"
-packages = ["SDL2", "SDL2_image", "SDL2_mixer", "SDL2_ttf", "glibcLocales", "libcxx", "mtdev", "pkg-config"]
+packages = ["SDL2", "SDL2_image", "SDL2_mixer", "SDL2_ttf", "glibcLocales", "libcxx", "mtdev", "pkg-config", "gt"]
 
 [deployment]
 deploymentTarget = "autoscale"
