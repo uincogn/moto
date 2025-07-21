@@ -1,9 +1,12 @@
 import 'dart:convert';
-// import 'dart:io';
-// import 'package:file_picker/file_picker.dart';
-// import 'package:path_provider/path_provider.dart';
-// import 'package:share_plus/share_plus.dart';
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:motouber/services/database_service.dart';
+import 'package:motouber/models/trabalho_model.dart';
+import 'package:motouber/models/gasto_model.dart';
+import 'package:motouber/models/manutencao_model.dart';
 
 class BackupService {
   static Future<Map<String, dynamic>> _exportAllData() async {
@@ -34,16 +37,13 @@ class BackupService {
       final data = await _exportAllData();
       final jsonString = const JsonEncoder.withIndent('  ').convert(data);
 
-      // Temporariamente desabilitado para resolver problemas de build
-      // final directory = await getApplicationDocumentsDirectory();
-      // final timestamp = DateTime.now().millisecondsSinceEpoch;
-      // final fileName = 'motouber_backup_$timestamp.json';
-      // final file = File('${directory.path}/$fileName');
+      final directory = await getApplicationDocumentsDirectory();
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final fileName = 'kmdollar_backup_$timestamp.json';
+      final file = File('${directory.path}/$fileName');
 
-      // await file.writeAsString(jsonString);
-      // return file.path;
-
-      return jsonString; // Retorna o JSON como string temporariamente
+      await file.writeAsString(jsonString);
+      return file.path;
     } catch (e) {
       throw Exception('Erro ao criar backup: $e');
     }
@@ -51,17 +51,13 @@ class BackupService {
 
   static Future<void> shareBackup() async {
     try {
-      final jsonString = await createBackup();
+      final filePath = await createBackup();
 
-      // Temporariamente desabilitado para resolver problemas de build
-      // await Share.shareXFiles(
-      //   [XFile(filePath)],
-      //   text: 'Backup Motouber - ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
-      //   subject: 'Backup dos dados do Motouber',
-      // );
-
-      // Placeholder - função será reativada após resolução do build
-      print('Backup criado (${jsonString.length} caracteres)');
+      await Share.shareXFiles(
+        [XFile(filePath)],
+        text: 'Backup KM$ - ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
+        subject: 'Backup dos dados do KM$',
+      );
     } catch (e) {
       throw Exception('Erro ao compartilhar backup: $e');
     }
@@ -69,30 +65,55 @@ class BackupService {
 
   static Future<bool> restoreBackup() async {
     try {
-      // Temporariamente desabilitado para resolver problemas de build
-      // final result = await FilePicker.platform.pickFiles(
-      //   type: FileType.custom,
-      //   allowedExtensions: ['json'],
-      //   withData: true,
-      // );
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+        withData: true,
+      );
 
-      // if (result != null && result.files.single.bytes != null) {
-      //   final content = utf8.decode(result.files.single.bytes!);
-      //   final data = jsonDecode(content) as Map<String, dynamic>;
-      //   
-      //   if (!data.containsKey('data')) {
-      //     throw Exception('Formato de backup inválido');
-      //   }
+      if (result != null && result.files.single.bytes != null) {
+        final content = utf8.decode(result.files.single.bytes!);
+        final data = jsonDecode(content) as Map<String, dynamic>;
+        
+        if (!data.containsKey('data')) {
+          throw Exception('Formato de backup inválido');
+        }
 
-      //   await _restoreData(data['data'] as Map<String, dynamic>);
-      //   return true;
-      // }
+        await _restoreData(data['data'] as Map<String, dynamic>);
+        return true;
+      }
 
-      // Placeholder - função será reativada após resolução do build
-      print('Função de restauração temporariamente desabilitada');
       return false;
     } catch (e) {
       throw Exception('Erro ao restaurar backup: $e');
+    }
+  }
+
+  static Future<void> _restoreData(Map<String, dynamic> data) async {
+    final db = DatabaseService.instance;
+    
+    // Restaurar trabalhos
+    if (data.containsKey('trabalhos')) {
+      for (var trabalhoData in data['trabalhos']) {
+        final trabalho = TrabalhoModel.fromMap(trabalhoData);
+        await db.insertTrabalho(trabalho);
+      }
+    }
+    
+    // Restaurar gastos
+    if (data.containsKey('gastos')) {
+      for (var gastoData in data['gastos']) {
+        final gasto = GastoModel.fromMap(gastoData);
+        await db.insertGasto(gasto);
+      }
+    }
+    
+    // Restaurar manutenções
+    if (data.containsKey('manutencoes')) {
+      for (var manutencaoData in data['manutencoes']) {
+        final manutencao = ManutencaoModel.fromMap(manutencaoData);
+        await db.insertManutencao(manutencao);
+      }
     }
   }
 
