@@ -9,6 +9,8 @@ import 'package:logging/logging.dart';
 import '../lib/routes/auth_routes.dart';
 import '../lib/routes/premium_routes.dart';
 import '../lib/routes/backup_routes.dart';
+import '../lib/services/auth_service.dart';
+import '../lib/services/supabase_service.dart';
 import '../lib/middleware/rate_limiter.dart';
 import '../lib/middleware/error_handler.dart';
 import '../lib/middleware/https_enforcer.dart';
@@ -29,13 +31,27 @@ void main() async {
   final port = int.parse(env['PORT'] ?? '3000');
   final host = env['HOST'] ?? '0.0.0.0';
 
-  // Inicializar banco de dados
-  try {
-    await DatabaseService.initialize();
-    _logger.info('Banco de dados conectado com sucesso');
-  } catch (e) {
-    _logger.severe('Erro ao conectar banco de dados: $e');
+  _logger.info('Iniciando servidor KM$ Backend Dart...');
+  
+  // Inicializar serviços
+  final supabaseUrl = env['SUPABASE_URL'];
+  final supabaseAnonKey = env['SUPABASE_ANON_KEY'];
+  final jwtSecret = env['JWT_SECRET'] ?? 'seu_jwt_secret_muito_seguro_km_dollar_backend_aqui';
+  
+  if (supabaseUrl == null || supabaseAnonKey == null) {
+    _logger.severe('SUPABASE_URL e SUPABASE_ANON_KEY são obrigatórios no .env');
     exit(1);
+  }
+  
+  final supabaseService = SupabaseService(supabaseUrl, supabaseAnonKey);
+  final authService = AuthService(supabaseService, jwtSecret);
+  
+  // Inicializar tabelas do banco (executar apenas uma vez)
+  try {
+    await supabaseService.initializeTables();
+    _logger.info('Banco de dados inicializado');
+  } catch (e) {
+    _logger.warning('Erro ao inicializar tabelas (pode já existirem): $e');
   }
 
   // Configurar router principal
@@ -44,9 +60,9 @@ void main() async {
     ..get('/health', _healthHandler)
     
     // Rotas da API
-    ..mount('/api/auth', AuthRoutes().router)
-    ..mount('/api/premium', PremiumRoutes().router)
-    ..mount('/api/backup', BackupRoutes().router)
+    ..mount('/api/auth/', AuthRoutes(authService).router)
+    ..mount('/api/premium/', PremiumRoutes().router)
+    ..mount('/api/backup/', BackupRoutes().router)
     
     // 404 para rotas não encontradas
     ..all('/<ignored|.*>', _notFoundHandler);
@@ -71,7 +87,6 @@ void main() async {
   ProcessSignal.sigint.watch().listen((_) async {
     _logger.info('Finalizando servidor...');
     await server.close();
-    await DatabaseService.close();
     exit(0);
   });
 }

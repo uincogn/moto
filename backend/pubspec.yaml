@@ -10,11 +10,11 @@ dependencies:
   shelf_router: ^1.1.4
   shelf_cors_headers: ^0.1.3
   shelf_rate_limiter: ^0.1.2
-  postgres: ^2.6.2
-  jose: ^0.3.4  # JWT para Dart
+  supabase: ^2.2.4  # Supabase client
+  dart_jsonwebtoken: ^2.12.2  # JWT melhor para Dart
   crypto: ^3.0.3
   dotenv: ^4.0.1
-  http: ^0.13.6
+  http: ^1.1.0
   logging: ^1.2.0
 
 dev_dependencies:
