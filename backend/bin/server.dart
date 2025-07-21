@@ -31,7 +31,7 @@ void main() async {
   final port = int.parse(env['PORT'] ?? '3000');
   final host = env['HOST'] ?? '0.0.0.0';
 
-  _logger.info('Iniciando servidor KM$ Backend Dart...');
+  _logger.info('Iniciando servidor KM\$ Backend Dart...');
   
   // Inicializar serviços
   final supabaseUrl = env['SUPABASE_URL'];
@@ -79,7 +79,7 @@ void main() async {
   // Iniciar servidor
   final server = await serve(handler, host, port);
   
-  _logger.info('🚀 KM$ Backend Dart rodando em ${server.address.host}:${server.port}');
+  _logger.info('🚀 KM\$ Backend Dart rodando em ${server.address.host}:${server.port}');
   _logger.info('📡 Health check: https://${server.address.host}:${server.port}/health');
   _logger.info('🔒 HTTPS OBRIGATÓRIO - Todas as comunicações devem usar SSL/TLS');
   
@@ -93,7 +93,7 @@ void main() async {
 
 Response _healthHandler(Request request) {
   return Response.ok(
-    '{"status": "OK", "message": "KM$ Backend Dart funcionando", "timestamp": "${DateTime.now().toIso8601String()}", "https_required": true}',
+    '{"status": "OK", "message": "KM\$ Backend Dart funcionando", "timestamp": "${DateTime.now().toIso8601String()}", "https_required": true}',
     headers: {
       'Content-Type': 'application/json',
       'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
