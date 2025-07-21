@@ -1,4 +1,4 @@
-modules = ["python-3.11", "flutter"]
+modules = ["python-3.11", "flutter", "postgresql-16"]
 
 [nix]
 channel = "stable-24_05"
