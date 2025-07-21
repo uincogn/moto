@@ -35,20 +35,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Backend"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
 args = "Backend API"
-
-[[workflows.workflow]]
-name = "Backend"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd backend && dart run bin/server.dart"
-waitForPort = 3000
 
 [[workflows.workflow]]
 name = "Backend API"

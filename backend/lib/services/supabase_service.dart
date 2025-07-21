@@ -105,7 +105,7 @@ class SupabaseService {
     try {
       final response = await _client
           .from('users')
-          .select('id, email, name, is_premium, created_at, premium_until')
+          .select('id, email, name, is_premium, created_at')
           .eq('email', email)
           .maybeSingle();
 
@@ -123,7 +123,7 @@ class SupabaseService {
     try {
       final response = await _client
           .from('users')
-          .select('id, email, name, is_premium, created_at, premium_until')
+          .select('id, email, name, is_premium, created_at')
           .eq('id', id)
           .maybeSingle();
 

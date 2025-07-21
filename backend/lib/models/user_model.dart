@@ -22,9 +22,7 @@ class User {
       name: json['name'] as String,
       isPremium: json['is_premium'] as bool? ?? false,
       createdAt: DateTime.parse(json['created_at'] as String),
-      premiumUntil: json['premium_until'] != null
-          ? DateTime.parse(json['premium_until'] as String)
-          : null,
+      premiumUntil: null, // Campo não disponível na tabela atual
     );
   }
 

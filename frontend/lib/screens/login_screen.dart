@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motouber/screens/register_screen.dart';
+import 'package:motouber/services/api_service.dart';
 import 'package:motouber/theme/app_theme.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -225,27 +226,37 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // TODO: Implementar login com backend
-      // Por enquanto, mock de login bem-sucedido
-      await Future.delayed(const Duration(seconds: 2));
+      final response = await ApiService.login(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      );
       
       if (!context.mounted) return;
       
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Login realizado com sucesso! (Mock)'),
-          backgroundColor: AppTheme.successColor,
-        ),
-      );
-      
-      // Navegar para home
-      Navigator.of(context).pushReplacementNamed('/home');
+      if (response.success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Login realizado com sucesso!'),
+            backgroundColor: AppTheme.successColor,
+          ),
+        );
+        
+        // Navegar para home
+        Navigator.of(context).pushReplacementNamed('/home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(response.message ?? 'Erro ao fazer login'),
+            backgroundColor: AppTheme.errorColor,
+          ),
+        );
+      }
     } catch (e) {
       if (!context.mounted) return;
       
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Erro ao fazer login: $e'),
+          content: Text('Erro de conexão: $e'),
           backgroundColor: AppTheme.errorColor,
         ),
       );

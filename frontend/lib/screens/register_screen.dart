@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:motouber/services/api_service.dart';
 import 'package:motouber/theme/app_theme.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -250,27 +251,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // TODO: Implementar cadastro com backend
-      // Por enquanto, mock de cadastro bem-sucedido
-      await Future.delayed(const Duration(seconds: 2));
+      final response = await ApiService.register(
+        name: _nomeController.text.trim(),
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      );
       
       if (!context.mounted) return;
       
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Conta criada com sucesso! (Mock)'),
-          backgroundColor: AppTheme.successColor,
-        ),
-      );
-      
-      // Voltar para login
-      Navigator.of(context).pop();
+      if (response.success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Conta criada com sucesso! Faça login para continuar.'),
+            backgroundColor: AppTheme.successColor,
+          ),
+        );
+        
+        // Voltar para login
+        Navigator.of(context).pop();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(response.message ?? 'Erro ao criar conta'),
+            backgroundColor: AppTheme.errorColor,
+          ),
+        );
+      }
     } catch (e) {
       if (!context.mounted) return;
       
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Erro ao criar conta: $e'),
+          content: Text('Erro de conexão: $e'),
           backgroundColor: AppTheme.errorColor,
         ),
       );

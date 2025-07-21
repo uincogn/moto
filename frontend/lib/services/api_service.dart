@@ -3,8 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  static const String _baseUrl = 'https://api.kmdollar.com'; // Produção
-  // static const String _baseUrl = 'http://localhost:3000'; // Desenvolvimento local
+  // static const String _baseUrl = 'https://api.kmdollar.com'; // Produção  
+  static const String _baseUrl = 'http://localhost:3000'; // Desenvolvimento local
+  // Nota: Backend rodando em localhost:3000 (HTTP para desenvolvimento)
   
   static const String _tokenKey = 'auth_token';
   static const String _userKey = 'user_data';
@@ -69,7 +70,7 @@ class ApiService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('$_baseUrl/auth/register'),
+        Uri.parse('$_baseUrl/api/auth/register'),
         headers: _defaultHeaders,
         body: jsonEncode({
           'name': name,
@@ -93,7 +94,7 @@ class ApiService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('$_baseUrl/auth/login'),
+        Uri.parse('$_baseUrl/api/auth/login'),
         headers: _defaultHeaders,
         body: jsonEncode({
           'email': email,
@@ -125,7 +126,7 @@ class ApiService {
   static Future<ApiResponse> logout() async {
     try {
       final response = await http.post(
-        Uri.parse('$_baseUrl/auth/logout'),
+        Uri.parse('$_baseUrl/api/auth/logout'),
         headers: await _authHeaders,
       );
 
@@ -144,7 +145,7 @@ class ApiService {
   static Future<ApiResponse> getMe() async {
     try {
       final response = await http.get(
-        Uri.parse('$_baseUrl/auth/me'),
+        Uri.parse('$_baseUrl/api/auth/me'),
         headers: await _authHeaders,
       );
 
@@ -168,7 +169,7 @@ class ApiService {
   static Future<ApiResponse> checkPremiumStatus() async {
     try {
       final response = await http.get(
-        Uri.parse('$_baseUrl/premium/status'),
+        Uri.parse('$_baseUrl/api/premium/status'),
         headers: await _authHeaders,
       );
 
@@ -184,7 +185,7 @@ class ApiService {
   static Future<ApiResponse> createPremiumSubscription() async {
     try {
       final response = await http.post(
-        Uri.parse('$_baseUrl/premium/subscribe'),
+        Uri.parse('$_baseUrl/api/premium/subscribe'),
         headers: await _authHeaders,
       );
 
@@ -200,7 +201,7 @@ class ApiService {
   static Future<ApiResponse> cancelPremiumSubscription() async {
     try {
       final response = await http.post(
-        Uri.parse('$_baseUrl/premium/cancel'),
+        Uri.parse('$_baseUrl/api/premium/cancel'),
         headers: await _authHeaders,
       );
 
