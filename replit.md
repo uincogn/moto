@@ -193,7 +193,13 @@ flutter build apk --release
 - ✅ Backend API: 100%
 - ✅ Frontend: 100%  
 - ✅ Integração: 100% (COMPLETO!)
-- ⚠️ Deploy: 30%
+- ⚠️ Deploy: Em andamento (Railway configuração)
+
+### 🚂 **RAILWAY DEPLOY EM PROGRESSO (21/01/2025)**
+- ⏳ **Usuário configurando Railway** - Conta e projeto sendo criados
+- ✅ **Variáveis preparadas** - JWT_SECRET e configs production prontas
+- ✅ **Guias criados** - RAILWAY_DEPLOY.md e .env.railway preparados
+- ⏳ **Próximo**: Deploy backend + atualizar URL no frontend + build APK
 
 ## 📊 Métricas e Performance
 
