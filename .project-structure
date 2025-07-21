@@ -1,0 +1,24 @@
+# KM$ - Estrutura do Projeto
+
+km$/
+├── frontend/              # Aplicativo Flutter
+├── backend/               # API Dart/Shelf  
+├── docs/                  # Documentação técnica
+│   ├── architecture/      # Arquitetura e decisões
+│   ├── setup/            # Guias configuração
+│   ├── api/              # Documentação API
+│   ├── decisions/        # Decisões tomadas
+│   ├── guides/           # Guias desenvolvimento
+│   ├── status/           # Status e pendências
+│   ├── deployment/       # Deploy e CI/CD
+│   └── production/       # Configs produção
+├── scripts/              # Scripts utilitários
+├── README.md             # Visão geral
+├── replit.md             # Histórico técnico
+└── LICENSE               # Licença MIT
+
+## Organização Aplicada (2025-01-21)
+- Documentação movida para docs/ por categoria
+- Scripts organizados em scripts/
+- Estrutura raiz limpa e organizada
+- Mantidos apenas arquivos essenciais na raiz

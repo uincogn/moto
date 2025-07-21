@@ -28,8 +28,17 @@ km$/
 │   ├── bin/              # Executável servidor
 │   ├── pubspec.yaml      # Dependências Dart
 │   └── README.md         # Documentação Backend
-├── README.md             # Este arquivo (visão geral)
-└── replit.md             # Documentação técnica detalhada
+├── docs/                 # Documentação técnica organizada
+│   ├── architecture/     # Arquitetura e decisões técnicas
+│   ├── setup/           # Guias de configuração
+│   ├── decisions/       # Decisões tomadas e questões
+│   ├── guides/          # Guias de desenvolvimento
+│   ├── status/          # Status atual e pendências
+│   └── deployment/      # Deploy e CI/CD
+├── scripts/             # Scripts utilitários
+├── README.md            # Este arquivo (visão geral)
+├── replit.md            # Histórico técnico detalhado
+└── LICENSE              # Licença MIT
 ```
 
 ## 🎯 Modelo de Negócio
@@ -122,12 +131,20 @@ Por enquanto, mantemos organizados em pastas separadas para facilitar desenvolvi
 
 ## 📚 Documentação
 
+### Documentação Principal
 - [Frontend README](frontend/README.md) - Documentação do app Flutter
 - [Backend README](backend/README.md) - Documentação da API Dart
-- [CONFLITOS E QUESTÕES](CONFLITOS_E_QUESTOES.md) - Questões críticas para debate
-- [DECISÕES TOMADAS](DECISOES_TOMADAS.md) - Decisões confirmadas pelo usuário  
-- [OPÇÕES BANCO DADOS](OPCOES_BANCO_DADOS.md) - Análise detalhada de opções de BD
 - [replit.md](replit.md) - Histórico técnico e decisões arquiteturais
+
+### Documentação Técnica (docs/)
+- [Arquitetura](docs/architecture/) - Decisões técnicas e opções de banco
+- [Setup](docs/setup/) - Guias de configuração (Supabase, etc.)
+- [Decisões](docs/decisions/) - Questões resolvidas e conflitos
+- [Guias](docs/guides/) - Exemplos de integração e desenvolvimento
+- [Status](docs/status/) - Situação atual e pendências
+
+### Scripts e Utilidades
+- [Scripts](scripts/) - Utilitários para teste e deployment
 
 ---
 
