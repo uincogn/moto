@@ -60,6 +60,48 @@ km$/
 5. Dados locais são enviados para nuvem
 6. Perfil Premium ativado
 
+## 🎯 **ETAPA 1 ATUAL: APRIMORAR BACKEND** (EM DESENVOLVIMENTO)
+
+### 📊 Status Backend
+- ✅ **API Funcionando**: Dart/Shelf rodando na porta 3000
+- ✅ **Supabase Conectado**: PostgreSQL + JWT auth operacional
+- ✅ **Rotas Básicas**: /health, /api/auth/register, /api/auth/login
+- ⏳ **Em Desenvolvimento**: Funcionalidades premium e sincronização
+
+### 🚀 Subetapas da Etapa 1
+
+#### **1.1 Expandir Rotas da API** (EM PROGRESSO)
+- ✅ Autenticação completa (register/login)
+- ⏳ Rotas de dados (trabalho, gastos, manutenções)
+- ⏳ Sistema de backup/sincronização
+- ⏳ Rotas premium e assinatura
+
+#### **1.2 Implementar Sincronização de Dados**
+- ⏳ Upload de dados SQLite → Supabase
+- ⏳ Download Supabase → SQLite
+- ⏳ Conflict resolution (merge strategy)
+- ⏳ Progress tracking
+
+#### **1.3 Sistema Premium**
+- ⏳ Verificação de assinatura
+- ⏳ Limites de funcionalidades
+- ⏳ Webhook de pagamento
+- ⏳ Multi-device support
+
+#### **1.4 Segurança e Performance**
+- ⏳ Rate limiting aprimorado
+- ⏳ Validação de dados
+- ⏳ Logging e monitoring
+- ⏳ Error handling robusto
+
+#### **1.5 Deploy Preparation**
+- ⏳ Configuração SSL/HTTPS
+- ⏳ Environment variables produção
+- ⏳ Health checks avançados
+- ⏳ Backup automatizado
+
+---
+
 ## 🔧 Tecnologias
 
 ### Frontend (Mobile App)
@@ -69,10 +111,10 @@ km$/
 - **Material Design** - Interface
 
 ### Backend (API Premium)
-- **Node.js 18+** - Runtime JavaScript
-- **Express.js** - Framework web
-- **PostgreSQL** - Banco de dados
-- **JWT** - Autenticação
+- **Dart/Shelf** - Framework web nativo
+- **Supabase** - PostgreSQL + Auth + Storage
+- **JWT** - Autenticação segura
+- **HTTPS** - Comunicação criptografada
 
 ## 🚀 Desenvolvimento
 

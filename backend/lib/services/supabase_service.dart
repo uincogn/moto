@@ -5,9 +5,19 @@ import '../models/user_model.dart' as UserModel;
 class SupabaseService {
   static final _logger = Logger('SupabaseService');
   final SupabaseClient _client;
+  static SupabaseService? _instance;
 
   SupabaseService(String url, String anonKey)
-      : _client = SupabaseClient(url, anonKey);
+      : _client = SupabaseClient(url, anonKey) {
+    _instance = this;
+  }
+
+  static SupabaseClient get client {
+    if (_instance == null) {
+      throw StateError('SupabaseService não foi inicializado');
+    }
+    return _instance!._client;
+  }
 
   /// Inicializar tabelas (executar uma vez)
   Future<void> initializeTables() async {

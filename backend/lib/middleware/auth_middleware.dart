@@ -44,6 +44,29 @@ Middleware authMiddleware(AuthService authService) {
   };
 }
 
+/// Classe helper para facilitar acesso aos dados do usuário nas rotas
+class AuthMiddleware {
+  /// Extrai o user_id do contexto da requisição (após middleware de auth)
+  static String? getUserId(Request request) {
+    return request.context['user_id'] as String?;
+  }
+
+  /// Extrai o email do usuário do contexto da requisição
+  static String? getUserEmail(Request request) {
+    return request.context['user_email'] as String?;
+  }
+
+  /// Verifica se o usuário é premium
+  static bool isPremium(Request request) {
+    return (request.context['is_premium'] as bool?) ?? false;
+  }
+
+  /// Aplica middleware de autenticação a um router
+  static Handler middleware(Handler handler, {required AuthService authService}) {
+    return authMiddleware(authService)(handler);
+  }
+}
+
 /// Middleware para validar apenas usuários Premium
 Middleware premiumMiddleware(AuthService authService) {
   return (Handler innerHandler) {

@@ -9,11 +9,15 @@ import 'package:logging/logging.dart';
 import '../lib/routes/auth_routes.dart';
 import '../lib/routes/premium_routes.dart';
 import '../lib/routes/backup_routes.dart';
+import '../lib/routes/trabalho_routes.dart';
+import '../lib/routes/gastos_routes.dart';
+import '../lib/routes/manutencao_routes.dart';
 import '../lib/services/auth_service.dart';
 import '../lib/services/supabase_service.dart';
 import '../lib/middleware/rate_limiter.dart';
 import '../lib/middleware/error_handler.dart';
 import '../lib/middleware/https_enforcer.dart';
+import '../lib/middleware/auth_middleware.dart';
 import '../lib/services/database_service.dart';
 
 final _logger = Logger('KMDollarServer');
@@ -61,8 +65,11 @@ void main() async {
     
     // Rotas da API
     ..mount('/api/auth/', AuthRoutes(authService).router)
-    ..mount('/api/premium/', PremiumRoutes().router)
-    ..mount('/api/backup/', BackupRoutes().router)
+    ..mount('/api/premium/', AuthMiddleware.middleware(PremiumRoutes().router, authService: authService))
+    ..mount('/api/backup/', AuthMiddleware.middleware(BackupRoutes().router, authService: authService))
+    ..mount('/api/trabalho/', AuthMiddleware.middleware(TrabalhoRoutes.router, authService: authService))
+    ..mount('/api/gastos/', AuthMiddleware.middleware(GastosRoutes.router, authService: authService))
+    ..mount('/api/manutencao/', AuthMiddleware.middleware(ManutencaoRoutes.router, authService: authService))
     
     // 404 para rotas não encontradas
     ..all('/<ignored|.*>', _notFoundHandler);
@@ -106,7 +113,7 @@ Response _healthHandler(Request request) {
 
 Response _notFoundHandler(Request request) {
   return Response.notFound(
-    '{"error": "Rota não encontrada", "path": "${request.url.path}"}',
+    '{"error": "Endpoint não encontrado", "path": "${request.url.path}"}',
     headers: {'Content-Type': 'application/json'},
   );
 }
