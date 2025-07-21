@@ -1,5 +1,11 @@
 # 🏗️ KM$ - Monorepo Organizado
 
+> ⚠️ **PROCESSO DE BUILD OBRIGATÓRIO**: Não é possível instalar Flutter SDK ou testar APKs diretamente no Replit. O fluxo de trabalho é sempre:
+> 1. **Desenvolvimento**: Código editado no Replit  
+> 2. **Push**: Alterações enviadas para GitHub  
+> 3. **Build**: Compilação automática no Codemagic CI/CD  
+> 4. **Teste**: Download do APK e instalação no dispositivo físico
+
 ## 📋 Visão Geral
 
 Monorepo organizado do KM$, sistema de controle financeiro para motoristas de aplicativo, dividido em duas partes principais:

@@ -165,14 +165,35 @@ flutter build apk --release
 - **Solução**: Padronização para salvar apenas YYYY-MM-DD em todos os modelos
 - **Resultado**: Cartões "Ganhos Hoje", "Gastos Hoje" e "Líquido Hoje" funcionam corretamente
 
-## 🚀 Próximos Passos
+## 🚀 Próximos Passos - ORDEM DE PRIORIDADE
 
-### Para Implementar
-- [ ] Sincronização em nuvem (opcional)
-- [ ] Exportação para PDF
-- [ ] Mais tipos de gráficos
-- [ ] Backup automático
-- [ ] Notificações push
+### ⚠️ PROCESSO DE BUILD OBRIGATÓRIO
+**Não é possível testar Flutter no Replit. Fluxo sempre:**
+1. **Desenvolvimento no Replit** → 2. **Push GitHub** → 3. **Build Codemagic** → 4. **Install APK no dispositivo**
+
+### 🎯 PRIORIDADE 1 - INTEGRAÇÃO FRONTEND-BACKEND
+- [ ] **1.1** - Conectar telas Login/Register ao backend Dart/Supabase
+- [ ] **1.2** - Implementar sistema de sincronização offline/online
+- [ ] **1.3** - Resolver conflito SQLite local vs PostgreSQL Supabase
+- [ ] **1.4** - Testar fluxo completo freemium (local → premium → cloud)
+
+### 🎯 PRIORIDADE 2 - FUNCIONALIDADES PREMIUM
+- [ ] **2.1** - Sistema de assinatura in-app (Google Play Billing)
+- [ ] **2.2** - Multi-device sync via Supabase
+- [ ] **2.3** - Export PDF avançado
+- [ ] **2.4** - Relatórios premium na nuvem
+
+### 🎯 PRIORIDADE 3 - DEPLOY PRODUÇÃO
+- [ ] **3.1** - Configurar domínio backend (api.kmdollar.com)
+- [ ] **3.2** - SSL/HTTPS produção 
+- [ ] **3.3** - Upload Google Play Store
+- [ ] **3.4** - Monitoramento e logs produção
+
+### ⚠️ STATUS ATUAL: 80% CONCLUÍDO
+- ✅ Backend API: 100%
+- ✅ Frontend: 100%
+- ❌ Integração: 0% (BLOQUEADOR)
+- ⚠️ Deploy: 30%
 
 ## 📊 Métricas e Performance
 
