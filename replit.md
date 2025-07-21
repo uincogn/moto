@@ -15,18 +15,31 @@ Criar um aplicativo móvel nativo para Android que permite aos motoristas de apl
 - **FL Chart** - Gráficos interativos
 - **Material Design** - Interface do usuário
 
-### Estrutura de Arquivos
+### Estrutura de Arquivos (Monorepo Organizado)
 ```
 motouber/
-├── lib/
-│   ├── main.dart                 # Ponto de entrada
-│   ├── models/                   # Modelos de dados
-│   ├── services/                 # Serviços (Database)
-│   ├── screens/                  # Telas do aplicativo
-│   └── theme/                    # Tema personalizado
-├── android/                      # Configurações Android
-├── pubspec.yaml                  # Dependências
-└── build_scripts/                # Scripts de build
+├── frontend/                     # Aplicativo Flutter
+│   ├── lib/                      # Código Dart
+│   │   ├── main.dart            # Ponto de entrada
+│   │   ├── models/              # Modelos de dados
+│   │   ├── services/            # Serviços (Database)
+│   │   ├── screens/             # Telas do aplicativo
+│   │   └── theme/               # Tema personalizado
+│   ├── android/                 # Configurações Android
+│   ├── assets/                  # Recursos (imagens, ícones)
+│   ├── pubspec.yaml            # Dependências Flutter
+│   └── README.md               # Documentação Frontend
+├── backend/                     # API Node.js para Premium
+│   ├── src/                     # Código fonte da API
+│   │   ├── routes/             # Endpoints (auth, premium, backup)
+│   │   ├── models/             # Esquemas de dados
+│   │   ├── services/           # Lógica de negócio
+│   │   └── middleware/         # Autenticação, validação
+│   ├── package.json            # Dependências Node.js
+│   ├── server.js               # Servidor Express
+│   └── README.md               # Documentação Backend
+├── README.md                    # Documentação geral
+└── replit.md                    # Histórico técnico detalhado
 ```
 
 ## 📱 Funcionalidades Implementadas
@@ -189,6 +202,25 @@ flutter build apk --release
 - Sem acesso à internet desnecessário
 
 ## 📝 Mudanças Recentes
+
+### 2025-01-21 - ✅ MONOREPO ORGANIZADO: Estrutura Limpa Implementada
+- ✅ **REORGANIZAÇÃO COMPLETA:**
+  - ✅ **Frontend**: Todos os arquivos Flutter movidos para `frontend/`
+  - ✅ **Backend**: Estrutura Node.js criada em `backend/`
+  - ✅ **Raiz limpa**: Apenas pastas principais + READMEs + replit.md
+  - ✅ **3 READMEs específicos**: Geral, Frontend, Backend
+- ✅ **ESTRUTURA BACKEND CRIADA:**
+  - ✅ **package.json**: Dependências Node.js definidas
+  - ✅ **server.js**: Servidor Express básico funcionando
+  - ✅ **Rotas placeholder**: /auth, /premium, /backup
+  - ✅ **Middleware**: Segurança (helmet, cors, rate-limit)
+  - ✅ **Configuração**: .env.example com todas as variáveis
+- ✅ **PREPARAÇÃO PARA SEPARAÇÃO:**
+  - ✅ Cada pasta tem README próprio
+  - ✅ Builds independentes (Flutter vs Node.js)
+  - ✅ Deploy separado planejado
+  - ✅ Comunicação via API REST definida
+- ✅ **STATUS**: Monorepo organizado, pronto para desenvolvimento backend
 
 ### 2025-01-17 - ✅ BUILD RESOURCE MERGE: Correção Radical Aplicada
 - ✅ **PROBLEMA IDENTIFICADO:** Erro MergeResources persistente durante build APK
