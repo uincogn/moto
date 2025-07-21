@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // Estética Grau 244 - Visual jovem motociclista urbano
-  static const Color primaryColor = Color(0xFF0066FF); // Azul vibrante
-  static const Color secondaryColor = Color(0xFF00D4AA); // Verde neon
-  static const Color accentColor = Color(0xFFFF6B35); // Laranja energia
-  static const Color darkColor = Color(0xFF1A1A1A); // Preto profundo
-  static const Color chromeColor = Color(0xFFB8BCC8); // Cromado
-  static const Color errorColor = Color(0xFFFF3B30);
-  static const Color successColor = Color(0xFF34C759);
-  static const Color warningColor = Color(0xFFFFCC02);
+  // Tema neutro e profissional
+  static const Color primaryColor = Color(0xFF1976D2); // Azul padrão Material
+  static const Color secondaryColor = Color(0xFF424242); // Cinza neutro
+  static const Color accentColor = Color(0xFF2196F3); // Azul secundário
+  static const Color darkColor = Color(0xFF212121); // Cinza escuro
+  static const Color lightColor = Color(0xFFE0E0E0); // Cinza claro
+  static const Color errorColor = Color(0xFFD32F2F);
+  static const Color successColor = Color(0xFF388E3C);
+  static const Color warningColor = Color(0xFFF57C00);
 
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
@@ -53,7 +53,7 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: chromeColor),
+        borderSide: BorderSide(color: lightColor),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -88,7 +88,7 @@ class AppTheme {
       shadowColor: secondaryColor.withOpacity(0.3),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: chromeColor.withOpacity(0.2)),
+        side: BorderSide(color: lightColor.withOpacity(0.2)),
       ),
       color: const Color(0xFF2A2A2A),
     ),
@@ -107,7 +107,7 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: chromeColor.withOpacity(0.3)),
+        borderSide: BorderSide(color: lightColor.withOpacity(0.3)),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -118,21 +118,21 @@ class AppTheme {
     ),
   );
   
-  // Gradientes para visual jovem/urbano
+  // Gradientes neutros
   static const LinearGradient primaryGradient = LinearGradient(
-    colors: [primaryColor, secondaryColor],
+    colors: [primaryColor, accentColor],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
   
   static const LinearGradient darkGradient = LinearGradient(
-    colors: [darkColor, Color(0xFF2A2A2A)],
+    colors: [darkColor, Color(0xFF424242)],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
   
-  static const LinearGradient accentGradient = LinearGradient(
-    colors: [accentColor, Color(0xFFFF8F65)],
+  static const LinearGradient neutralGradient = LinearGradient(
+    colors: [Color(0xFFE3F2FD), Color(0xFFBBDEFB)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );

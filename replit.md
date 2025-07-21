@@ -203,6 +203,17 @@ flutter build apk --release
 
 ## 📝 Mudanças Recentes
 
+### 2025-01-21 - ✅ TEMA NEUTRO IMPLEMENTADO: Grau 244 → Design Profissional
+- ✅ **REBRAND VISUAL COMPLETO:**
+  - ✅ **Cores neutras**: Azul Material #1976D2 + Cinza #424242
+  - ✅ **Gradientes suaves**: Removidos efeitos vibrantes
+  - ✅ **Tema profissional**: Foco em usabilidade vs estética jovem
+  - ✅ **Paleta consistente**: Material Design padrão
+- ✅ **REFERÊNCIAS ATUALIZADAS:**
+  - ✅ **Título app**: Motouber → KM$ 
+  - ✅ **README**: Documentação tema neutro
+  - ✅ **AppTheme.dart**: Cores e gradientes atualizados
+
 ### 2025-01-21 - ✅ REBRAND + DECISÕES CRÍTICAS: KM$ e HTTPS Implementados
 - ✅ **REBRAND COMPLETO:**
   - ✅ **Nome**: Motouber → KM$ (todos os arquivos atualizados)

@@ -1,8 +1,8 @@
-# 📱 Motouber Frontend - App Flutter
+# 📱 KM$ Frontend - App Flutter
 
 ## 📋 Sobre
 
-Aplicativo móvel Flutter para controle financeiro de motoristas de aplicativo. Interface moderna com tema personalizado "Grau 244" focado na estética jovem motociclista brasileira.
+Aplicativo móvel Flutter para controle financeiro de motoristas de aplicativo. Interface moderna com tema neutro e profissional.
 
 ## 🎯 Funcionalidades
 
@@ -57,20 +57,20 @@ lib/
 - **Shared Preferences** (configurações)
 - **Material Design 3**
 
-## 🎨 Design "Grau 244"
+## 🎨 Design Neutro
 
 ### Conceito Visual
-- Inspirado no movimento motociclista jovem brasileiro
-- Cores vibrantes: azul elétrico + verde neon + cromado
-- Cards modernos com gradientes e sombras
+- Interface limpa e profissional
+- Cores neutras baseadas no Material Design
+- Cards modernos com sombras suaves
 - Animações suaves (flutter_staggered_animations)
-- Navegação colorida por categoria
+- Navegação clara e intuitiva
 
 ### Paleta de Cores
-- **Primária**: Azul #1E88E5
-- **Secundária**: Verde #26A69A
-- **Accent**: Laranja #FF9800
-- **Background**: Gradientes dinâmicos
+- **Primária**: Azul #1976D2
+- **Secundária**: Cinza #424242
+- **Accent**: Azul #2196F3
+- **Background**: Tons neutros
 
 ## 🚀 Desenvolvimento
 

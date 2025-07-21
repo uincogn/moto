@@ -23,7 +23,7 @@ class MotouberApp extends StatelessWidget {
       child: Consumer<ThemeService>(
         builder: (context, themeService, child) {
           return MaterialApp(
-            title: 'Motouber - Controle Financeiro',
+            title: 'KM$ - Controle Financeiro',
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeService.themeMode,
