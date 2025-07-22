@@ -1,0 +1,23 @@
+# Dart
+.dart_tool/
+build/
+
+# Environment
+.env*
+!.env.example
+
+# Docs
+*.md
+README.md
+RAILWAY_DEPLOY.md
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log

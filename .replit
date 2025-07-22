@@ -9,7 +9,6 @@ deploymentTarget = "autoscale"
 run = ["streamlit", "run", "app.py", "--server.port", "5000"]
 
 [workflows]
-runButton = "Project"
 
 [[workflows.workflow]]
 name = "Run Flutter"
@@ -27,24 +26,6 @@ args = "flutter pub get"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "flutter run --web-port=5000 --web-hostname=0.0.0.0"
-
-[[workflows.workflow]]
-name = "Project"
-mode = "parallel"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Backend API"
-
-[[workflows.workflow]]
-name = "Backend API"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd backend && dart run bin/server.dart"
-waitForPort = 3000
 
 [[ports]]
 localPort = 3000
