@@ -1,24 +1,128 @@
-# KM$ - Estrutura do Projeto
+# 📂 KM$ - Estrutura Organizada do Projeto
 
+## 🗂️ Estrutura Raiz
+```
 km$/
-├── frontend/              # Aplicativo Flutter
-├── backend/               # API Dart/Shelf  
-├── docs/                  # Documentação técnica
-│   ├── architecture/      # Arquitetura e decisões
-│   ├── setup/            # Guias configuração
-│   ├── api/              # Documentação API
-│   ├── decisions/        # Decisões tomadas
-│   ├── guides/           # Guias desenvolvimento
-│   ├── status/           # Status e pendências
-│   ├── deployment/       # Deploy e CI/CD
-│   └── production/       # Configs produção
-├── scripts/              # Scripts utilitários
-├── README.md             # Visão geral
-├── replit.md             # Histórico técnico
-└── LICENSE               # Licença MIT
+├── README.md                 # Documentação principal
+├── replit.md                 # Histórico técnico e configurações
+├── LICENSE                   # Licença MIT
+├── render.yaml               # Deploy alternativo Render
+├── REORGANIZACAO_CONCLUIDA.md # Log da reorganização
+├── attached_assets/          # Screenshots e assets do projeto
+├── backend/                  # API Dart/Shelf + Supabase
+├── frontend/                 # App Flutter/Dart
+├── docs/                     # Documentação técnica organizada
+└── scripts/                  # Scripts utilitários
+```
 
-## Organização Aplicada (2025-01-21)
-- Documentação movida para docs/ por categoria
-- Scripts organizados em scripts/
-- Estrutura raiz limpa e organizada
-- Mantidos apenas arquivos essenciais na raiz
+## 🖥️ Backend (Dart + Supabase)
+```
+backend/
+├── README.md                 # Documentação backend
+├── pubspec.yaml              # Dependências Dart
+├── .env                      # Configurações desenvolvimento
+├── .env.example              # Template configurações
+├── .env.railway              # Configurações Railway deploy
+├── bin/server.dart           # Servidor principal
+├── lib/
+│   ├── models/              # Modelos de dados (User, etc.)
+│   ├── services/            # Serviços (Auth, Supabase, Database)
+│   ├── routes/              # Endpoints API (auth, premium, backup)
+│   └── middleware/          # Middlewares (auth, https, rate limit)
+├── sql/                     # Scripts SQL Supabase
+│   ├── create_trabalho_table.sql
+│   └── setup_tables.sql
+├── docs/                    # Documentação deploy
+│   ├── DEPLOY_ALTERNATIVAS.md
+│   └── RAILWAY_DEPLOY.md
+├── scripts/                 # Scripts desenvolvimento
+└── tools/                   # Ferramentas deploy (Docker, Render)
+```
+
+## 📱 Frontend (Flutter)
+```
+frontend/
+├── README.md                # Documentação frontend
+├── pubspec.yaml             # Dependências Flutter
+├── analysis_options.yaml   # Regras código Dart
+├── codemagic.yaml          # CI/CD pipeline
+├── lib/
+│   ├── main.dart           # App principal
+│   ├── models/             # Modelos SQLite (Trabalho, Gasto, Manutencao)
+│   ├── services/           # Serviços (Database, API, Sync, Premium)
+│   ├── screens/            # Telas do app (15+ telas)
+│   ├── widgets/            # Componentes reutilizáveis
+│   ├── theme/              # Tema personalizado
+│   └── utils/              # Utilitários
+├── android/                # Configurações Android
+├── assets/                 # Recursos (ícones, imagens)
+├── test/                   # Testes unitários
+├── temp/                   # Arquivos temporários organizados
+│   ├── build_logs/         # Logs antigos de build
+│   ├── scripts/            # Scripts Python antigos
+│   └── old_assets/         # Assets antigos/APKs
+├── *.sh                    # Scripts desenvolvimento VPS
+└── *.md                    # Guias técnicos específicos
+```
+
+## 📚 Documentação (docs/)
+```
+docs/
+├── README.md               # Índice documentação
+├── architecture/           # Decisões arquiteturais
+│   └── OPCOES_BANCO_DADOS.md
+├── decisions/              # Decisões tomadas
+│   ├── DECISOES_TOMADAS.md
+│   └── CONFLITOS_E_QUESTOES.md
+├── guides/                 # Guias práticos
+│   └── EXEMPLO_INTEGRACAO_COMPLETA.md
+├── setup/                  # Configurações
+│   └── SETUP_SUPABASE.md
+└── status/                 # Status atual
+    ├── ajuda.md
+    ├── etapa1_implementacao.md
+    └── pendenciasrelease.md
+```
+
+## 🔧 Scripts Utilitários
+```
+scripts/
+├── README.md              # Documentação scripts
+└── test_backend.sh        # Teste integração backend
+```
+
+## 📊 Estatísticas do Projeto
+
+### Arquivos por Tipo
+- **50 arquivos Dart** (backend + frontend)
+- **37 arquivos Markdown** (documentação)
+- **10 arquivos YAML** (configs CI/CD)
+- **3 arquivos .env** (configurações)
+
+### Linhas de Código
+- **Frontend**: ~8.000+ linhas Dart
+- **Backend**: ~3.000+ linhas Dart  
+- **Documentação**: ~2.500+ linhas Markdown
+- **Total**: ~13.500+ linhas
+
+### Estrutura Técnica
+- **Monorepo organizado** com separação clara
+- **Documentação categorizada** por tipo/função
+- **Arquivos temporários organizados** em pasta /temp
+- **Scripts SQL organizados** em pasta /sql
+- **CI/CD configurado** (Codemagic, GitHub Actions)
+
+## ✅ Limpeza Realizada
+1. **Arquivos temporários** movidos para frontend/temp/
+2. **Scripts SQL** organizados em backend/sql/
+3. **Documentação deploy** movida para backend/docs/
+4. **Tools Docker/Render** organizados em backend/tools/
+5. **Estrutura limpa** na raiz do projeto
+6. **Assets antigos** organizados em frontend/temp/old_assets/
+
+## 🎯 Estado Atual
+- **Estrutura 100% organizada e limpa**
+- **Arquivos categorizados logicamente**
+- **Documentação estruturada e acessível**
+- **Pronto para desenvolvimento continuado**
+- **Deploy e CI/CD configurados**

@@ -1,5 +1,0 @@
-Build failed due to use of deleted Android v1 embedding.
-
-
-Build failed :|
-Step 5 script `Build release APK` exited with status code 1

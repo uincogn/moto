@@ -1,6 +1,0 @@
-== Gathering artifacts ==
-
-== Publishing artifacts ==
-
-Publishing artifact app-release.apk
-Publishing artifact app-release-unsigned.apk
