@@ -1,22 +1,23 @@
 # Dockerfile para KM$ Backend - Dart/Shelf
-FROM dart:stable AS build
+FROM dart:stable
+
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configurar diretório de trabalho
+WORKDIR /app
 
 # Copiar arquivos de dependência
-WORKDIR /app
 COPY pubspec.* ./
 RUN dart pub get
 
 # Copiar código fonte
 COPY . .
-RUN dart compile exe bin/server.dart -o bin/server
 
-# Imagem de produção
-FROM scratch
-COPY --from=build /runtime/ /
-COPY --from=build /app/bin/server /app/bin/
-
-# Expor porta
-EXPOSE 3000
+# Expor porta (Render usa PORT env var)
+EXPOSE 10000
 
 # Executar servidor
-ENTRYPOINT ["/app/bin/server"]
+CMD ["dart", "run", "bin/server.dart"]
