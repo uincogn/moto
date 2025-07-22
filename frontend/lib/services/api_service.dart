@@ -3,11 +3,11 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  // URL do backend - será atualizada quando deployado
-  static const String _baseUrl = 'https://km-dollar-backend.replit.app'; // Produção via Replit Deploy
+  // URL do backend - Fly.io deploy
+  static const String _baseUrl = 'https://km-dollar.fly.dev'; // Produção via Fly.io
   // static const String _baseUrl = 'http://localhost:3000'; // Desenvolvimento local (não funciona no Replit)
   
-  // IMPORTANTE: Backend deve estar deployado para funcionar
+  // IMPORTANTE: Backend deployado no Fly.io para funcionar
   // Replit não suporta SDKs locais, apenas via deploy externo
   
   static const String _tokenKey = 'auth_token';

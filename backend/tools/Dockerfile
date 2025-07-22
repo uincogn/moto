@@ -16,8 +16,8 @@ RUN dart pub get
 # Copiar código fonte
 COPY . .
 
-# Expor porta (Render usa PORT env var)
-EXPOSE 10000
+# Expor porta (Fly.io usa PORT env var, padrão 8080)
+EXPOSE 8080
 
 # Executar servidor
 CMD ["dart", "run", "bin/server.dart"]

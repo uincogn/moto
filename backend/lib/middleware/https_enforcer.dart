@@ -10,13 +10,16 @@ Middleware httpsEnforcerMiddleware() {
       // Verificar se a requisição é HTTPS
       final isHttps = request.headers['x-forwarded-proto'] == 'https' ||
                       request.url.scheme == 'https' ||
-                      request.headers['x-forwarded-ssl'] == 'on';
+                      request.headers['x-forwarded-ssl'] == 'on' ||
+                      request.headers['fly-forwarded-proto'] == 'https' ||  // Fly.io specific
+                      request.headers['host']?.contains('.fly.dev') == true;  // Fly.io domain
       
       // Em desenvolvimento, permitir HTTP local
       final isDevelopment = 
         request.headers['host']?.contains('localhost') == true ||
         request.headers['host']?.contains('127.0.0.1') == true ||
-        request.headers['host']?.contains('replit.') == true;
+        request.headers['host']?.contains('replit.') == true ||
+        request.headers['host']?.contains('.fly.dev') == true;  // Fly.io para debug
       
       if (!isHttps && !isDevelopment) {
         _logger.warning('Requisição HTTP rejeitada de ${request.headers['host']}');

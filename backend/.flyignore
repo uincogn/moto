@@ -1,0 +1,42 @@
+# Fly.io ignore file
+# Evita enviar arquivos desnecessários para o deploy
+
+# Dart/Flutter
+.dart_tool/
+build/
+.packages
+.pub-cache/
+.pub/
+
+# Development files
+.env
+.env.local
+.env.example
+.env.railway
+
+# Documentation
+docs/
+README.md
+*.md
+
+# Scripts
+scripts/
+sql/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Logs
+*.log
+
+# Other platforms deploy files
+render.yaml
+railway.json
+Dockerfile.railway
