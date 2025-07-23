@@ -26,7 +26,6 @@ kill_timeout = 5
     method = "GET"
     path = "/health"
     timeout = "10s"
-    protocol = "https"
 
 [vm]
   cpu_kind = "shared"

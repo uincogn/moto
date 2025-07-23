@@ -195,11 +195,14 @@ flutter build apk --release
 - ✅ Integração: 100% (COMPLETO!)
 - ⚠️ Deploy: Em andamento (Railway configuração)
 
-### 🚂 **RAILWAY DEPLOY EM PROGRESSO (21/01/2025)**
-- ⏳ **Usuário configurando Railway** - Conta e projeto sendo criados
-- ✅ **Variáveis preparadas** - JWT_SECRET e configs production prontas
-- ✅ **Guias criados** - RAILWAY_DEPLOY.md e .env.railway preparados
-- ⏳ **Próximo**: Deploy backend + atualizar URL no frontend + build APK
+### 🚀 **FLY.IO DEPLOY CONCLUÍDO (23/07/2025)**
+- ✅ **Deploy via CLI realizado** - Token de organização funcionou perfeitamente
+- ✅ **Aplicação deployada** - https://moto.fly.dev com SSL válido
+- ✅ **Secrets configurados** - JWT_SECRET, SUPABASE_* todas as variáveis
+- ✅ **Docker build** - 302 MB, imagem criada com sucesso
+- ✅ **Máquina ativa** - 1 máquina rodando conforme dashboard
+- ⚠️ **Health check issue** - Configuração HTTPS conflitando com health check interno
+- ⏳ **Próximo**: Correção middleware HTTPS + testes endpoints funcionais
 
 ## 📊 Métricas e Performance
 

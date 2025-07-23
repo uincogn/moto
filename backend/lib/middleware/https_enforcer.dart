@@ -24,7 +24,11 @@ Middleware httpsEnforcerMiddleware() {
       // Permitir HTTP para health check (usado pelo Fly.io)
       final isHealthCheck = request.url.path == '/health';
       
-      if (!isHttps && !isDevelopment && !isHealthCheck) {
+      // Permitir requisições internas do Fly.io
+      final isFlyInternal = request.headers['fly-client-ip'] != null ||
+                           request.headers['x-forwarded-for']?.contains('172.') == true;
+      
+      if (!isHttps && !isDevelopment && !isHealthCheck && !isFlyInternal) {
         _logger.warning('Requisição HTTP rejeitada de ${request.headers['host']}');
         
         return Response.movedPermanently(
