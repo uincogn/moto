@@ -21,7 +21,10 @@ Middleware httpsEnforcerMiddleware() {
         request.headers['host']?.contains('replit.') == true ||
         request.headers['host']?.contains('.fly.dev') == true;  // Fly.io para debug
       
-      if (!isHttps && !isDevelopment) {
+      // Permitir HTTP para health check (usado pelo Fly.io)
+      final isHealthCheck = request.url.path == '/health';
+      
+      if (!isHttps && !isDevelopment && !isHealthCheck) {
         _logger.warning('Requisição HTTP rejeitada de ${request.headers['host']}');
         
         return Response.movedPermanently(

@@ -37,6 +37,10 @@ author = "agent"
 task = "workflow.run"
 args = "FlyDeploy"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "FlyDeployFixed"
+
 [[workflows.workflow]]
 name = "FlyDeploy"
 author = "agent"
@@ -44,6 +48,14 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd backend && export FLY_ACCESS_TOKEN=\"FlyV1 fm2_lJPECAAAAAAACYErxBCsx5An0c0XQxiXaNqYX3hhwrVodHRwczovL2FwaS5mbHkuaW8vdjGWAJLOABI7SB8Lk7lodHRwczovL2FwaS5mbHkuaW8vYWFhL3YxxDy6v0hhoUkMWNTKnemXY4yXfG1xFZpZGkxBOgfn+R4HvoV+BRjRwEdKsPa87TDJi5gMPzVDEf4sDvvT9aDETvakJGEgi3R2KddVN8YCt2bPfDi8XLLBiY9bGJ4TQRJgc9rqsPxywA3F9R7mHtrEHs5X7iJVa8/XIqs6ZKuNmJvCRE5OYhWamUk5c6X26g2SlAORgc4AiK4cHwWRgqdidWlsZGVyH6J3Zx8BxCBH1XfsQZ3r2e7W78ywpO1Xt0Q/vi1cjy5ecLNOuAiaVw==,fm2_lJPETvakJGEgi3R2KddVN8YCt2bPfDi8XLLBiY9bGJ4TQRJgc9rqsPxywA3F9R7mHtrEHs5X7iJVa8/XIqs6ZKuNmJvCRE5OYhWamUk5c6X26sQQPzqFpoe8TI5PQqtd+Keo38O5aHR0cHM6Ly9hcGkuZmx5LmlvL2FhYS92MZgEks5ogQuizwAAAAEkeSnAF84AEYXNCpHOABGFzQzEEGEqYTD7frBfNvjswLBshrvEIE7wgo4IIw3WUISR7R2dOkIlAeQL6Iwnu+e9lVyJ/hv7\" && $HOME/.fly/bin/flyctl logs --app moto"
+
+[[workflows.workflow]]
+name = "FlyDeployFixed"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd backend && export FLY_ACCESS_TOKEN=\"FlyV1 fm2_lJPECAAAAAAACYErxBCQGQgyMVHno1JvFCen3wUmwrVodHRwczovL2FwaS5mbHkuaW8vdjGUAJLOABI7SB8Lk7lodHRwczovL2FwaS5mbHkuaW8vYWFhL3YxxDwAWRD/nVGYinnK7D4rMEGm+LnHnZNAWP9taMgquwhTHtzYfr9d8U0mJpKlZMp2AHYf3iS5T+/RgbrL3hXETvUuFloC704WsBN2jFuHVg8fyuKTYdgcTE9EyHFLAyRYl+uS1XTa4V6tA6HPHa8N+X0g3DH//lidZTDYrc3q6EZT1vkzT4ZUO4kXLZ+0usQgYSKUZnJ1yY9zMwhGSGwa8r4TmGaq3Mt3IgJth4EDL5g=,fm2_lJPETvUuFloC704WsBN2jFuHVg8fyuKTYdgcTE9EyHFLAyRYl+uS1XTa4V6tA6HPHa8N+X0g3DH//lidZTDYrc3q6EZT1vkzT4ZUO4kXLZ+0usQgYSKUZnJ1yY9zMwhGSGwa8r4TmGaq3Mt3IgJth4EDL5g=,fm2_lJPETvUuFloC704WsBN2jFuHVg8fyuKTYdgcTE9EyHFLAyRYl+uS1XTa4V6tA6HPHa8N+X0g3DH//lidZTDYrc3q6EZT1vkzT4ZUO4kXLZ+0usQgYSKUZnJ1yY9zMwhGSGwa8r4TmGaq3Mt3IgJth4EDL5g=,fm2_lJPETvUuFloC704WsBN2jFuHVg8fyuKTYdgcTE9EyHFLAyRYl+uS1XTa4V6tA6HPHa8N+X0g3DH//lidZTDYrc3q6EZT1vkzT4ZUO4kXLZ+0usQgYSKUZnJ1yY9zMwhGSGwa8r4TmGaq3Mt3IgJth4EDL5g=,fm2_lJPETvUuFloC704WsBN2jFuHVg8fyuKTYdgcTE9EyHFlLAyRYl+uS1XTa4V6tA6HPHa8N+X0g3DH//lidZTDYrc3q6EZT1vkzT4ZUO4kXLZ+0usQQsPGwnMwB3OXC3dh91Ny+k8O5aHR0cHM6Ly9hcGkuZmx5LmlvL2FhYS92MZgEks5ogRBvzmpiRA0XzgARhc0Kkc4AEYXNDMQQV8l2ggnHw5ik3rv6YNg38sQgmayB1wW50f60C9XzHGcqo8AzQ4xMuQArBFKrwkloFKY=\" && $HOME/.fly/bin/flyctl deploy --app moto && sleep 30 && curl -v https://moto.fly.dev/health"
 
 [[ports]]
 localPort = 3000
