@@ -4,6 +4,7 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 
 [build]
+  dockerfile = "Dockerfile"
 
 [env]
   PORT = "8080"
@@ -29,9 +30,4 @@ kill_timeout = 5
 [vm]
   cpu_kind = "shared"
   cpus = 1
-  memory_mb = 256
-
-[[mounts]]
-  source = "data"
-  destination = "/data"
-  initial_size = "1gb"
+  memory_mb = 512

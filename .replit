@@ -9,6 +9,7 @@ deploymentTarget = "autoscale"
 run = ["streamlit", "run", "app.py", "--server.port", "5000"]
 
 [workflows]
+runButton = "Project"
 
 [[workflows.workflow]]
 name = "Run Flutter"
@@ -26,6 +27,23 @@ args = "flutter pub get"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "flutter run --web-port=5000 --web-hostname=0.0.0.0"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "FlyDeploy"
+
+[[workflows.workflow]]
+name = "FlyDeploy"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd backend && export FLY_ACCESS_TOKEN=\"FlyV1 fm2_lJPECAAAAAAACYErxBCsx5An0c0XQxiXaNqYX3hhwrVodHRwczovL2FwaS5mbHkuaW8vdjGWAJLOABI7SB8Lk7lodHRwczovL2FwaS5mbHkuaW8vYWFhL3YxxDy6v0hhoUkMWNTKnemXY4yXfG1xFZpZGkxBOgfn+R4HvoV+BRjRwEdKsPa87TDJi5gMPzVDEf4sDvvT9aDETvakJGEgi3R2KddVN8YCt2bPfDi8XLLBiY9bGJ4TQRJgc9rqsPxywA3F9R7mHtrEHs5X7iJVa8/XIqs6ZKuNmJvCRE5OYhWamUk5c6X26g2SlAORgc4AiK4cHwWRgqdidWlsZGVyH6J3Zx8BxCBH1XfsQZ3r2e7W78ywpO1Xt0Q/vi1cjy5ecLNOuAiaVw==,fm2_lJPETvakJGEgi3R2KddVN8YCt2bPfDi8XLLBiY9bGJ4TQRJgc9rqsPxywA3F9R7mHtrEHs5X7iJVa8/XIqs6ZKuNmJvCRE5OYhWamUk5c6X26sQQPzqFpoe8TI5PQqtd+Keo38O5aHR0cHM6Ly9hcGkuZmx5LmlvL2FhYS92MZgEks5ogQuizwAAAAEkeSnAF84AEYXNCpHOABGFzQzEEGEqYTD7frBfNvjswLBshrvEIE7wgo4IIw3WUISR7R2dOkIlAeQL6Iwnu+e9lVyJ/hv7\" && $HOME/.fly/bin/flyctl logs --app moto"
 
 [[ports]]
 localPort = 3000
