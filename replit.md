@@ -201,8 +201,10 @@ flutter build apk --release
 - ✅ **Secrets configurados** - JWT_SECRET, SUPABASE_* todas as variáveis
 - ✅ **Docker build** - 302 MB, imagem criada com sucesso
 - ✅ **Máquina ativa** - 1 máquina rodando conforme dashboard
-- ⚠️ **Health check issue** - Configuração HTTPS conflitando com health check interno
-- ⏳ **Próximo**: Correção middleware HTTPS + testes endpoints funcionais
+- ⚠️ **Health check issue** - Configuração HTTPS conflitando com health check interno (CORRIGIDO)
+- ✅ **Middleware HTTPS corrigido** - Permite requisições internas Fly.io + health check HTTP
+- ✅ **Scripts de teste criados** - deploy_web_guide.md + test_backend.sh
+- ⏳ **Próximo**: Deploy via web interface + testes completos
 
 ## 📊 Métricas e Performance
 
