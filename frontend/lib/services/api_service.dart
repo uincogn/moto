@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
   // URL do backend - Fly.io deploy
-  static const String _baseUrl = 'https://km-dollar.fly.dev'; // Produção via Fly.io
+  static const String _baseUrl = 'https://moto.fly.dev'; // Produção via Fly.io
   // static const String _baseUrl = 'http://localhost:3000'; // Desenvolvimento local (não funciona no Replit)
   
   // IMPORTANTE: Backend deployado no Fly.io para funcionar
