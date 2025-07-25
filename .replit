@@ -2,7 +2,7 @@ modules = ["python-3.11", "flutter", "postgresql-16", "dart"]
 
 [nix]
 channel = "stable-24_05"
-packages = ["SDL2", "SDL2_image", "SDL2_mixer", "SDL2_ttf", "dart", "glibcLocales", "gt", "jq", "libcxx", "mtdev", "pkg-config", "postgresql"]
+packages = ["SDL2", "SDL2_image", "SDL2_mixer", "SDL2_ttf", "dart", "glibcLocales", "gt", "jq", "libcxx", "mtdev", "pkg-config", "postgresql", "fly", "k3s_1_28"]
 
 [deployment]
 deploymentTarget = "autoscale"
