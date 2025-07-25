@@ -41,6 +41,18 @@ args = "FlyDeploy"
 task = "workflow.run"
 args = "FlyDeployFixed"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Backend-Server"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "KM-Backend"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "KM-Backend-Prod"
+
 [[workflows.workflow]]
 name = "FlyDeploy"
 author = "agent"
@@ -56,6 +68,33 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd backend && export FLY_ACCESS_TOKEN=\"FlyV1 fm2_lJPECAAAAAAACYErxBCQGQgyMVHno1JvFCen3wUmwrVodHRwczovL2FwaS5mbHkuaW8vdjGUAJLOABI7SB8Lk7lodHRwczovL2FwaS5mbHkuaW8vYWFhL3YxxDwAWRD/nVGYinnK7D4rMEGm+LnHnZNAWP9taMgquwhTHtzYfr9d8U0mJpKlZMp2AHYf3iS5T+/RgbrL3hXETvUuFloC704WsBN2jFuHVg8fyuKTYdgcTE9EyHFLAyRYl+uS1XTa4V6tA6HPHa8N+X0g3DH//lidZTDYrc3q6EZT1vkzT4ZUO4kXLZ+0usQgYSKUZnJ1yY9zMwhGSGwa8r4TmGaq3Mt3IgJth4EDL5g=,fm2_lJPETvUuFloC704WsBN2jFuHVg8fyuKTYdgcTE9EyHFLAyRYl+uS1XTa4V6tA6HPHa8N+X0g3DH//lidZTDYrc3q6EZT1vkzT4ZUO4kXLZ+0usQgYSKUZnJ1yY9zMwhGSGwa8r4TmGaq3Mt3IgJth4EDL5g=,fm2_lJPETvUuFloC704WsBN2jFuHVg8fyuKTYdgcTE9EyHFLAyRYl+uS1XTa4V6tA6HPHa8N+X0g3DH//lidZTDYrc3q6EZT1vkzT4ZUO4kXLZ+0usQgYSKUZnJ1yY9zMwhGSGwa8r4TmGaq3Mt3IgJth4EDL5g=,fm2_lJPETvUuFloC704WsBN2jFuHVg8fyuKTYdgcTE9EyHFLAyRYl+uS1XTa4V6tA6HPHa8N+X0g3DH//lidZTDYrc3q6EZT1vkzT4ZUO4kXLZ+0usQgYSKUZnJ1yY9zMwhGSGwa8r4TmGaq3Mt3IgJth4EDL5g=,fm2_lJPETvUuFloC704WsBN2jFuHVg8fyuKTYdgcTE9EyHFlLAyRYl+uS1XTa4V6tA6HPHa8N+X0g3DH//lidZTDYrc3q6EZT1vkzT4ZUO4kXLZ+0usQQsPGwnMwB3OXC3dh91Ny+k8O5aHR0cHM6Ly9hcGkuZmx5LmlvL2FhYS92MZgEks5ogRBvzmpiRA0XzgARhc0Kkc4AEYXNDMQQV8l2ggnHw5ik3rv6YNg38sQgmayB1wW50f60C9XzHGcqo8AzQ4xMuQArBFKrwkloFKY=\" && $HOME/.fly/bin/flyctl deploy --app moto && sleep 30 && curl -v https://moto.fly.dev/health"
+
+[[workflows.workflow]]
+name = "Backend-Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd backend && dart pub get && dart run bin/server.dart"
+waitForPort = 3000
+
+[[workflows.workflow]]
+name = "KM-Backend"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd backend && PORT=5000 dart run bin/server.dart"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "KM-Backend-Prod"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd backend && dart run bin/server.dart"
+waitForPort = 5000
 
 [[ports]]
 localPort = 3000
